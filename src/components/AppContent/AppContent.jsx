@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
 
 export default function AppContent() {
-  return <Box sx={{ border: '5px solid blue' }}>Main content area</Box>;
+  return <Box sx={{ height: 'calc(100vh - 64px)' }}>Main content area</Box>;
 }
