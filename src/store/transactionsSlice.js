@@ -11,6 +11,9 @@ const initialState = {
   data: [],
 };
 
+const findTransactionIndexById = (state, id) =>
+  state.data.indexOf((transaction) => transaction.id === id);
+
 export const transactionsSlice = createSlice({
   name: 'transactions',
   initialState,
@@ -18,10 +21,16 @@ export const transactionsSlice = createSlice({
     addTransaction: (state, action) => {
       state.data.push(action.payload);
     },
-    removeTransaction: (state, action) => {
-      const transactionIndex = state.data.indexOf(
-        (transaction) => transaction.id === action.payload
+    updateTransaction: (state, action) => {
+      const transactionIndex = findTransactionIndexById(
+        state,
+        action.payload.id
       );
+      console.log('updateTransaction', transactionIndex);
+      state.data[transactionIndex] = action.payload;
+    },
+    removeTransaction: (state, action) => {
+      const transactionIndex = findTransactionIndexById(state, action.payload);
       if (transactionIndex !== -1) {
         state.data.splice(transactionIndex, 1);
       }
