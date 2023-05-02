@@ -10,6 +10,7 @@ import {
 import { useSelector } from 'react-redux';
 
 import { selectTransactions } from '../../store/transactionsSlice';
+import TransactionStatusSelect from '../../components/TransactionStatusSelect/TransactionStatusSelect';
 
 export default function LedgerTable() {
   const transactions = useSelector(selectTransactions);
@@ -33,7 +34,12 @@ export default function LedgerTable() {
             return (
               <TableRow key={row.id}>
                 <TableCell>{new Date(row.date).toDateString()}</TableCell>
-                <TableCell>{row.status}</TableCell>
+                <TableCell>
+                  <TransactionStatusSelect
+                    currentStatus={row.status}
+                    transactionId={row.id}
+                  />
+                </TableCell>
                 <TableCell>{row.description}</TableCell>
                 <TableCell>$ {parseFloat(row.amount).toFixed(2)}</TableCell>
                 <TableCell>$ {parseFloat(balance).toFixed(2)}</TableCell>
