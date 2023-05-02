@@ -32,7 +32,7 @@ export default function LedgerTable() {
             balance += parseFloat(row.amount);
             return (
               <TableRow key={row.id}>
-                <TableCell>{row.date}</TableCell>
+                <TableCell>{new Date(row.date).toDateString()}</TableCell>
                 <TableCell>{row.status}</TableCell>
                 <TableCell>{row.description}</TableCell>
                 <TableCell>$ {parseFloat(row.amount).toFixed(2)}</TableCell>
