@@ -35,10 +35,7 @@ export default function LedgerTable() {
               <TableRow key={row.id}>
                 <TableCell>{new Date(row.date).toDateString()}</TableCell>
                 <TableCell>
-                  <TransactionStatusSelect
-                    currentStatus={row.status}
-                    transactionId={row.id}
-                  />
+                  <TransactionStatusSelect transaction={row} />
                 </TableCell>
                 <TableCell>{row.description}</TableCell>
                 <TableCell>$ {parseFloat(row.amount).toFixed(2)}</TableCell>
