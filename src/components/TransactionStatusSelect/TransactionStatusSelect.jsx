@@ -2,15 +2,21 @@ import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { TransactionStatusEnum } from '../../store/transactionsSlice';
+import {
+  TransactionStatusEnum,
+  updateTransaction,
+} from '../../store/transactionsSlice';
 
 export default function TransactionStatusSelect({ transaction }) {
   const [status, setStatus] = useState(transaction.status);
   const dispatch = useDispatch();
 
   const handleChange = (event) => {
-    setStatus(event.target.value);
-    dispatch();
+    const newStatus = event.target.value;
+    const newTransaction = { ...transaction };
+    newTransaction.status = newStatus;
+    dispatch(updateTransaction(newTransaction));
+    setStatus(newStatus);
   };
 
   return (
@@ -26,7 +32,10 @@ export default function TransactionStatusSelect({ transaction }) {
         >
           {Object.keys(TransactionStatusEnum).map((key) => {
             return (
-              <MenuItem value={TransactionStatusEnum[key]}>
+              <MenuItem
+                key={key}
+                value={TransactionStatusEnum[key]}
+              >
                 {TransactionStatusEnum[key]}
               </MenuItem>
             );

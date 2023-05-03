@@ -11,8 +11,8 @@ const initialState = {
   data: [],
 };
 
-const findTransactionIndexById = (state, id) =>
-  state.data.indexOf((transaction) => transaction.id === id);
+const findTransactionIndexById = (transactions, id) =>
+  transactions.findIndex((transaction) => transaction.id === id);
 
 export const transactionsSlice = createSlice({
   name: 'transactions',
@@ -23,21 +23,30 @@ export const transactionsSlice = createSlice({
     },
     updateTransaction: (state, action) => {
       const transactionIndex = findTransactionIndexById(
-        state,
+        state.data,
         action.payload.id
       );
-      console.log('updateTransaction', transactionIndex);
-      state.data[transactionIndex] = action.payload;
+      if (transactionIndex !== -1) {
+        state.data[transactionIndex] = action.payload;
+      } else {
+        console.log('Error updating transaction: Not Found', action.payload.id);
+      }
     },
     removeTransaction: (state, action) => {
-      const transactionIndex = findTransactionIndexById(state, action.payload);
+      const transactionIndex = findTransactionIndexById(
+        state.data,
+        action.payload
+      );
       if (transactionIndex !== -1) {
         state.data.splice(transactionIndex, 1);
+      } else {
+        console.log('Error updating transaction: Not Found', action.payload);
       }
     },
   },
 });
 
-export const { addTransaction, removeTransaction } = transactionsSlice.actions;
+export const { addTransaction, updateTransaction, removeTransaction } =
+  transactionsSlice.actions;
 export const selectTransactions = (state) => state.transactions;
 export default transactionsSlice.reducer;

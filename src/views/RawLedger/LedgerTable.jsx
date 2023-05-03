@@ -2,15 +2,14 @@ import {
   Paper,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TableHead,
-  TableRow,
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import { selectTransactions } from '../../store/transactionsSlice';
-import TransactionStatusSelect from '../../components/TransactionStatusSelect/TransactionStatusSelect';
+import LedgerHeader from './LedgerHeader';
+import LedgerRow from './LedgerRow';
 
 export default function LedgerTable() {
   const transactions = useSelector(selectTransactions);
@@ -20,27 +19,17 @@ export default function LedgerTable() {
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
-          <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell>Amount</TableCell>
-            <TableCell>Balance</TableCell>
-          </TableRow>
+          <LedgerHeader />
         </TableHead>
         <TableBody>
           {transactions.data.map((row) => {
             balance += parseFloat(row.amount);
             return (
-              <TableRow key={row.id}>
-                <TableCell>{new Date(row.date).toDateString()}</TableCell>
-                <TableCell>
-                  <TransactionStatusSelect transaction={row} />
-                </TableCell>
-                <TableCell>{row.description}</TableCell>
-                <TableCell>$ {parseFloat(row.amount).toFixed(2)}</TableCell>
-                <TableCell>$ {parseFloat(balance).toFixed(2)}</TableCell>
-              </TableRow>
+              <LedgerRow
+                key={row.id}
+                row={row}
+                balance={balance}
+              />
             );
           })}
         </TableBody>
