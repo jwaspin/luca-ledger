@@ -4,9 +4,14 @@ import { useDispatch } from 'react-redux';
 
 import { updateTransaction } from '../../store/transactionsSlice';
 
+const parseFloatDoublePrecision = (value) =>
+  parseFloat(parseFloat(value).toFixed(2));
+
 export default function AmountCell({ transaction }) {
   const [edit, setEdit] = useState(false);
-  const [value, setValue] = useState(parseFloat(transaction.amount).toFixed(2));
+  const [value, setValue] = useState(
+    parseFloatDoublePrecision(transaction.amount)
+  );
   const dispatch = useDispatch();
 
   const handleChange = (event) => {
@@ -16,14 +21,14 @@ export default function AmountCell({ transaction }) {
 
   const handleSave = () => {
     const newTransaction = { ...transaction };
-    newTransaction.amount = parseFloat(parseFloat(value).toFixed(2));
+    newTransaction.amount = parseFloatDoublePrecision(value);
     setValue(newTransaction.amount);
     dispatch(updateTransaction(newTransaction));
     setEdit(false);
   };
 
   const handleCancel = () => {
-    setValue(parseFloat(transaction.amount).toFixed(2));
+    setValue(parseFloatDoublePrecision(transaction.amount));
     setEdit(false);
   };
 
