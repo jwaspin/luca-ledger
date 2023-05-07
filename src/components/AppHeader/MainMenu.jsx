@@ -1,41 +1,30 @@
-import React, { useState } from 'react';
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import { IconButton, ListItemButton, Menu, MenuItem } from '@mui/material';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { selectTransactions } from '../../store/transactionsSlice';
+import { loadTransactions } from '../../store/transactionsSlice';
+import SaveModal from './SaveModal';
 
 import { Menu as MenuIcon } from '@mui/icons-material';
-import { useSelector } from 'react-redux';
 
 export default function MainMenu() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const transactions = useSelector(selectTransactions);
+  const dispatch = useDispatch();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleLoad = () => {
+
+  const handleLoad = async () => {
+    dispatch(loadTransactions());
     handleClose();
   };
-  const handleSave = () => {
-    const saveObject = {
-      account: 'test account',
-      transactions: transactions.data,
-    };
-    const saveString = JSON.stringify(saveObject, null, 2);
-    const saveBlob = new Blob([saveString]);
-    const url = URL.createObjectURL(saveBlob);
-    const link = document.createElement('a');
-    link.download = 'test.json';
-    link.href = url;
-    link.append('test.json');
-    link.click();
-    URL.revokeObjectURL(url);
-    handleClose();
-  };
+
   const handleReset = () => {
     handleClose();
   };
@@ -65,9 +54,15 @@ export default function MainMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleLoad}>Load</MenuItem>
-        <MenuItem onClick={handleSave}>Save</MenuItem>
-        <MenuItem onClick={handleReset}>Reset</MenuItem>
+        <MenuItem onClick={handleLoad}>
+          <ListItemButton>Load</ListItemButton>
+        </MenuItem>
+        <MenuItem>
+          <SaveModal closeCb={handleClose} />
+        </MenuItem>
+        <MenuItem onClick={handleReset}>
+          <ListItemButton>Reset</ListItemButton>
+        </MenuItem>
       </Menu>
     </>
   );

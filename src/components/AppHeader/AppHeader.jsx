@@ -1,20 +1,27 @@
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import { AppBar, Toolbar, Typography } from '@mui/material';
+
+import { useSelector } from 'react-redux';
+import { selectTransactions } from '../../store/transactionsSlice';
 import MainMenu from './MainMenu';
+import AccountNameField from './AccountNameField';
 
 export default function AppHeader() {
+  const transactions = useSelector(selectTransactions);
+  const { modified, accountName } = transactions;
+
   return (
     <AppBar position='static'>
       <Toolbar>
         <MainMenu />
         <Typography
-          variant='h6'
+          variant='h4'
           component='div'
           sx={{ flexGrow: 1 }}
         >
-          Financial Tracker
+          Finance Tracker
         </Typography>
+        <AccountNameField accountName={accountName} />
+        {modified && <Typography variant='body1'>Modified</Typography>}
       </Toolbar>
     </AppBar>
   );
