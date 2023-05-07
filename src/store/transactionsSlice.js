@@ -77,7 +77,6 @@ const loadTransactions = () => async (dispatch) => {
   const file = await fileHandle.getFile();
   const fileContent = await file.text();
   const parsedContent = JSON.parse(fileContent);
-  console.log('parsed', parsedContent);
   dispatch(setTransactions(parsedContent.transactions));
   dispatch(setAccountName(parsedContent.account));
 };
