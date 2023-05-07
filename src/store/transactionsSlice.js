@@ -49,6 +49,10 @@ export const transactionsSlice = createSlice({
         console.log('Error updating transaction: Not Found', action.payload);
       }
     },
+    resetTransactions: (state) => {
+      state.data = state.original;
+      state.modified = false;
+    },
     setTransactions: (state, action) => {
       state.data = action.payload;
       state.original = action.payload;
@@ -67,6 +71,7 @@ const {
   addTransaction,
   updateTransaction,
   removeTransaction,
+  resetTransactions,
   setTransactions,
   setModified,
   setAccountName,
@@ -111,6 +116,7 @@ export {
   addTransaction,
   loadTransactions,
   removeTransaction,
+  resetTransactions,
   updateTransaction,
   saveTransactions,
   selectTransactions,

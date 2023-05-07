@@ -2,7 +2,10 @@ import { IconButton, ListItemButton, Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { loadTransactions } from '../../store/transactionsSlice';
+import {
+  loadTransactions,
+  resetTransactions,
+} from '../../store/transactionsSlice';
 import SaveModal from './SaveModal';
 
 import { Menu as MenuIcon } from '@mui/icons-material';
@@ -26,6 +29,7 @@ export default function MainMenu() {
   };
 
   const handleReset = () => {
+    dispatch(resetTransactions());
     handleClose();
   };
 
