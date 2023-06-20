@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   saveTransactions,
   selectTransactions,
-} from '../../store/transactionsSlice';
+} from '@/store/transactionsSlice';
 
 const style = {
   position: 'absolute',

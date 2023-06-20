@@ -1,7 +1,7 @@
 import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 
 import { useSelector } from 'react-redux';
-import { selectTransactions } from '../../store/transactionsSlice';
+import { selectTransactions } from '@/store/transactionsSlice';
 import AccountNameField from './AccountNameField';
 import MainMenu from './MainMenu';
 
