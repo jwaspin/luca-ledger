@@ -29,8 +29,8 @@ export default function LedgerRow({ row, balance }) {
 
   return (
     <TableRow style={{ background: bgColor }}>
-      <DateCell transaction={row} />
       <StatusCell transaction={row} />
+      <DateCell transaction={row} />
       <DescriptionCell transaction={row} />
       <AmountCell transaction={row} />
       <BalanceCell amount={balance} />
