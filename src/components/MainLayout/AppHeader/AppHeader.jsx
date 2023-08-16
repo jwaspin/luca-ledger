@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 
 import { useSelector } from 'react-redux';
@@ -14,6 +15,9 @@ export default function AppHeader() {
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         <Box sx={{ flexDirection: 'row', display: 'flex' }}>
           <MainMenu />
+          <Link to='/'>Dashboard</Link>
+          <Link to='/accounts'>Accounts</Link>  
+          <Link to='/transactions'>Transactions</Link>
           <Typography variant='h4'>Finance Tracker</Typography>
         </Box>
         <Box sx={{ flexDirection: 'row', display: 'flex' }}>

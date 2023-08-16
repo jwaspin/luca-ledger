@@ -1,11 +1,19 @@
+import { Routes, Route } from 'react-router-dom';
+
 import AppHeader from './AppHeader';
-import AppContent from './AppContent';
+import Dashboard from '@/views/Dashboard';  
+import Accounts from '@/views/Accounts';
+import AccountLedger from '@/views/AccountLedger';
 
 export default function MainLayout() {
   return (
     <>
       <AppHeader />
-      <AppContent />
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/accounts" element={<Accounts />} />
+        <Route path="/transactions" element={<AccountLedger />} />
+      </Routes>
     </>
   );
 }
