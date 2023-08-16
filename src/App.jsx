@@ -9,7 +9,7 @@ import store from '@/store';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '*',
     element: <MainLayout />,
     errorElement: <div>404 Not Found</div>,
   },

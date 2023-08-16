@@ -1,3 +1,1 @@
-import RawLedger from './RawLedger';
-
-export default RawLedger;
+export {default} from './AccountLedger';

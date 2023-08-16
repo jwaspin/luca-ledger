@@ -1,3 +1,1 @@
-import TransactionStatusSelect from './TransactionStatusSelect';
-
-export default TransactionStatusSelect;
+export {default} from './TransactionStatusSelect';
