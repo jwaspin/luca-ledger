@@ -3,11 +3,11 @@ import dayjs from 'dayjs';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
-import config from '../../config';
+import config from '@/config';
 import {
   TransactionStatusEnum,
   addTransaction,
-} from '../../store/transactionsSlice';
+} from '@/store/transactionsSlice';
 
 export default function NewTransactionButton() {
   const dispatch = useDispatch();
