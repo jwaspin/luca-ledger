@@ -59,15 +59,13 @@ const generateAccountObject = (id, name, balance, transactions) => ({
 const createNewAccount = () =>
   generateAccountObject(uuidv4(), 'New Account', 0.0, []);
 
-// const loadAccountFromFile = (filename) => {
-//   const accountData = readFromLocalFile(filename);
-//   return generateAccountObject(
-//     accountData.id,
-//     accountData.name,
-//     accountData.balance,
-//     accountData.transactions
-//   );
-// };
+const loadAccountFromFile = async () => {
+  const [fileHandle] = await window.showOpenFilePicker();
+  const file = await fileHandle.getFile();
+  const fileContent = await file.text();
+  const parsedContent = JSON.parse(fileContent);
+  return parsedContent;
+};
 
 export const createNewAccountAsync = () => (dispatch) => {
   setTimeout(() => {
@@ -75,8 +73,19 @@ export const createNewAccountAsync = () => (dispatch) => {
   }, 1000);
 };
 
-export const loadAccountAsync = () => (dispatch) => {
-  console.log('loadAccountAsync');
+export const loadAccountAsync = () => async (dispatch) => {
+  const data = await loadAccountFromFile();
+  const balance = data.transactions.reduce(
+    (acc, transaction) => acc + transaction.amount,
+    0.0
+  );
+  const account = generateAccountObject(
+    data.id,
+    data.name,
+    balance,
+    data.transactions
+  );
+  dispatch(addAccount(account));
 };
 
 export const removeAccountAsync = (id) => (dispatch) => {
