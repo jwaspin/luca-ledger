@@ -8,10 +8,8 @@ export const TransactionStatusEnum = Object.freeze({
 });
 
 const initialState = {
-  data: [],
+  transactions: [],
   original: [],
-  modified: false,
-  accountName: '',
 };
 
 const findTransactionIndexById = (transactions, id) =>
@@ -22,47 +20,35 @@ export const transactionsSlice = createSlice({
   initialState,
   reducers: {
     addTransaction: (state, action) => {
-      state.data.push(action.payload);
+      state.transactions.push(action.payload);
       state.modified = true;
     },
     updateTransaction: (state, action) => {
-      const transactionIndex = findTransactionIndexById(
-        state.data,
-        action.payload.id
+      const updatedTransaction = action.payload;
+      const updatedTransactions = state.transactions.map((transaction) =>
+        transaction.id === updatedTransaction.id
+          ? { ...transaction, ...updatedTransaction }
+          : transaction
       );
-      if (transactionIndex !== -1) {
-        state.data[transactionIndex] = action.payload;
-        state.modified = true;
-      } else {
-        console.log('Error updating transaction: Not Found', action.payload.id);
-      }
+      state.transactions = updatedTransactions;
     },
     removeTransaction: (state, action) => {
-      const transactionIndex = findTransactionIndexById(
-        state.data,
-        action.payload
+      const transactionId = action.payload;
+      const newData = state.transactions.filter(
+        (transaction) => transaction.id !== transactionId
       );
-      if (transactionIndex !== -1) {
-        state.data.splice(transactionIndex, 1);
-        state.modified = true;
+      if (newData.length === state.transactions.length) {
+        console.log('Error updating transaction: Not Found', transactionId);
       } else {
-        console.log('Error updating transaction: Not Found', action.payload);
+        state.transactions = newData;
       }
     },
     resetTransactions: (state) => {
-      state.data = state.original;
-      state.modified = false;
+      state.transactions = state.original;
     },
     setTransactions: (state, action) => {
-      state.data = action.payload;
+      state.transactions = action.payload;
       state.original = action.payload;
-      state.modified = false;
-    },
-    setModified: (state, action) => {
-      state.modified = !!action.payload;
-    },
-    setAccountName: (state, action) => {
-      state.accountName = action.payload;
     },
   },
 });
@@ -73,8 +59,6 @@ const {
   removeTransaction,
   resetTransactions,
   setTransactions,
-  setModified,
-  setAccountName,
 } = transactionsSlice.actions;
 
 const loadTransactions = () => async (dispatch) => {
