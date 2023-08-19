@@ -1,21 +1,21 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
+// import { useParams } from 'react-router-dom';
 
-import {
-  TransactionStatusEnum,
-  updateTransaction,
-} from '../../store/transactionsSlice';
+import { TransactionStatusEnum } from '@/store/transactionsSlice';
 
 export default function TransactionStatusSelect({ transaction }) {
+  // const { accoundId } = useParams();
   const [status, setStatus] = useState(transaction.status);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const handleChange = (event) => {
     const newStatus = event.target.value;
     const newTransaction = { ...transaction };
     newTransaction.status = newStatus;
-    dispatch(updateTransaction(newTransaction));
+    // dispatch(updateTransaction(newTransaction));
     setStatus(newStatus);
   };
 
@@ -45,3 +45,7 @@ export default function TransactionStatusSelect({ transaction }) {
     </Box>
   );
 }
+
+TransactionStatusSelect.propTypes = {
+  transaction: PropTypes.object.isRequired,
+};

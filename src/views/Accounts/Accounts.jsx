@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,11 +22,24 @@ export default function Accounts() {
       <h1>Accounts</h1>
       <ul>
         {accounts.map((account) => (
-          <li
-            key={account.id}
-            onClick={() => navigate(`/accounts/${account.id}`)}
-          >
-            {account.name} - {account.balance}
+          <li key={account.id}>
+            <Box
+              onClick={() => navigate(`/accounts/${account.id}`)}
+              onKeyDown={() => navigate(`/accounts/${account.id}`)}
+            >
+              <Typography
+                variant='body1'
+                component='span'
+              >
+                {account.name}
+              </Typography>
+              <Typography
+                variant='body2'
+                component='span'
+              >
+                {account.balance}
+              </Typography>
+            </Box>
           </li>
         ))}
       </ul>

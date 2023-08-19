@@ -29,7 +29,7 @@ const compareFn = (a, b) => {
 export default function LedgerTable() {
   const { accountId } = useParams();
   const account = useSelector(selectAccountById(accountId));
-  const { balance, transactions } = account;
+  const { transactions } = account;
 
   let currentBalance = 0.0;
 

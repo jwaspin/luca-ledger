@@ -1,4 +1,5 @@
 import { Box, Button, TableCell, TextField, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -57,3 +58,7 @@ export default function DescriptionCell({ transaction }) {
     </TableCell>
   );
 }
+
+DescriptionCell.propTypes = {
+  transaction: PropTypes.object.isRequired,
+};

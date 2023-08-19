@@ -1,11 +1,12 @@
 import { Button, TableCell } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { updateTransaction } from '../../store/transactionsSlice';
-import config from '../../config';
+import config from '@/config';
+import { updateTransaction } from '@/store/transactionsSlice';
 
 export default function DateCell({ transaction }) {
   const [edit, setEdit] = useState(false);
@@ -58,3 +59,7 @@ export default function DateCell({ transaction }) {
     </TableCell>
   );
 }
+
+DateCell.propTypes = {
+  transaction: PropTypes.object.isRequired,
+};

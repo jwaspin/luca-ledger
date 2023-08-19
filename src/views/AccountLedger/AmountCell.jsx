@@ -1,4 +1,5 @@
 import { Button, TableCell, TextField } from '@mui/material';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -75,3 +76,7 @@ export default function AmountCell({ transaction }) {
     </TableCell>
   );
 }
+
+AmountCell.propTypes = {
+  transaction: PropTypes.object.isRequired,
+};

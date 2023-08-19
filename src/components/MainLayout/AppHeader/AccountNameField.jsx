@@ -1,4 +1,5 @@
 import { TextField } from '@mui/material';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -21,3 +22,7 @@ export default function AccountNameField({ accountName }) {
     />
   );
 }
+
+AccountNameField.propTypes = {
+  accountName: PropTypes.string.isRequired,
+};

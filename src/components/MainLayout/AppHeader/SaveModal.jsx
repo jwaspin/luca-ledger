@@ -7,12 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import {
-  saveTransactions,
-  selectTransactions,
-} from '@/store/transactionsSlice';
+import PropTypes from 'prop-types';
 
 const style = {
   position: 'absolute',
@@ -29,8 +24,6 @@ const style = {
 export default function SaveModal({ closeCb }) {
   const [filename, setFilename] = useState('transactions');
   const [open, setOpen] = useState(false);
-  const dispatch = useDispatch();
-  const transactions = useSelector(selectTransactions);
 
   const handleOpen = () => setOpen(true);
 
@@ -40,7 +33,6 @@ export default function SaveModal({ closeCb }) {
   };
 
   const handleSave = () => {
-    dispatch(saveTransactions(transactions, `${filename}.json`));
     handleClose();
   };
 
@@ -78,3 +70,7 @@ export default function SaveModal({ closeCb }) {
     </>
   );
 }
+
+SaveModal.propTypes = {
+  closeCb: PropTypes.func.isRequired,
+};

@@ -1,1 +1,1 @@
-export {default} from './TransactionStatusSelect';
+export { default } from './TransactionStatusSelect';
