@@ -1,1 +1,1 @@
-export {default} from './AccountLedger';
+export { default } from './AccountLedger';

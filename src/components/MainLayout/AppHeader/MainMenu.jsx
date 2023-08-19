@@ -1,8 +1,6 @@
 import { IconButton, ListItemButton, Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
-import { loadTransactions, resetTransactions } from '@/store/transactionsSlice';
 import SaveModal from './SaveModal';
 
 import { Menu as MenuIcon } from '@mui/icons-material';
@@ -10,7 +8,6 @@ import { Menu as MenuIcon } from '@mui/icons-material';
 export default function MainMenu() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const dispatch = useDispatch();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -18,16 +15,6 @@ export default function MainMenu() {
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleLoad = async () => {
-    dispatch(loadTransactions());
-    handleClose();
-  };
-
-  const handleReset = () => {
-    dispatch(resetTransactions());
-    handleClose();
   };
 
   return (
@@ -55,13 +42,13 @@ export default function MainMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleLoad}>
+        <MenuItem onClick={() => console.log('load clicked')}>
           <ListItemButton>Load</ListItemButton>
         </MenuItem>
         <MenuItem>
           <SaveModal closeCb={handleClose} />
         </MenuItem>
-        <MenuItem onClick={handleReset}>
+        <MenuItem onClick={() => console.log('reset clicked')}>
           <ListItemButton>Reset</ListItemButton>
         </MenuItem>
       </Menu>

@@ -7,11 +7,12 @@ import {
 } from '@mui/material';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
-import { selectTransactions } from '../../store/transactionsSlice';
+import config from '@/config';
+import { selectAccountById } from '@/store/accountsSlice';
 import LedgerHeader from './LedgerHeader';
 import LedgerRow from './LedgerRow';
-import config from '../../config';
 
 const compareFn = (a, b) => {
   const aDate = dayjs(a.date).format(config.compareDateFormatString);
@@ -26,8 +27,11 @@ const compareFn = (a, b) => {
 };
 
 export default function LedgerTable() {
-  const transactions = useSelector(selectTransactions);
-  let balance = 0.0;
+  const { accountId } = useParams();
+  const account = useSelector(selectAccountById(accountId));
+  const { transactions } = account;
+
+  let currentBalance = 0.0;
 
   return (
     <TableContainer component={Paper}>
@@ -36,13 +40,13 @@ export default function LedgerTable() {
           <LedgerHeader />
         </TableHead>
         <TableBody>
-          {[...transactions.data].sort(compareFn).map((row) => {
-            balance += parseFloat(row.amount);
+          {[...transactions].sort(compareFn).map((row) => {
+            currentBalance += parseFloat(row.amount);
             return (
               <LedgerRow
                 key={row.id}
                 row={row}
-                balance={balance}
+                balance={currentBalance}
               />
             );
           })}

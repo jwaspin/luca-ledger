@@ -1,11 +1,12 @@
 import { TableRow } from '@mui/material';
+import PropTypes from 'prop-types';
 
+import { TransactionStatusEnum } from '../../store/transactionsSlice';
 import AmountCell from './AmountCell';
 import BalanceCell from './BalanceCell';
 import DateCell from './DateCell';
 import DescriptionCell from './DescriptionCell';
 import StatusCell from './StatusCell';
-import { TransactionStatusEnum } from '../../store/transactionsSlice';
 
 const setBgColor = (status) => {
   switch (status) {
@@ -25,8 +26,6 @@ const setBgColor = (status) => {
 export default function LedgerRow({ row, balance }) {
   const bgColor = setBgColor(row.status);
 
-  console.log('bgColor', bgColor);
-
   return (
     <TableRow style={{ background: bgColor }}>
       <StatusCell transaction={row} />
@@ -37,3 +36,8 @@ export default function LedgerRow({ row, balance }) {
     </TableRow>
   );
 }
+
+LedgerRow.propTypes = {
+  row: PropTypes.object.isRequired,
+  balance: PropTypes.number.isRequired,
+};

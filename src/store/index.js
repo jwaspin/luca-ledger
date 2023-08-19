@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import transactionsReducer from './transactionsSlice';
+import accountsReducer from './accountsSlice';
 
 export default configureStore({
   reducer: {
-    transactions: transactionsReducer,
+    accounts: accountsReducer,
   },
 });
