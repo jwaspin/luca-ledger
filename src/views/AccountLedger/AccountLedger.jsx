@@ -10,8 +10,6 @@ export default function AccountLedger() {
   const { accountId } = useParams();
   const account = useSelector(selectAccountById(accountId));
 
-  console.log('AccountLedger', account);
-
   return (
     <Box>
       <h1>Account Ledger {account.name}</h1>

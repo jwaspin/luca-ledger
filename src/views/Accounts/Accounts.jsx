@@ -30,6 +30,7 @@ export default function Accounts() {
               <Typography
                 variant='body1'
                 component='span'
+                style={{ marginRight: '1rem' }}
               >
                 {account.name}
               </Typography>
