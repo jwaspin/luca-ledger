@@ -1,5 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
+import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
+
+import config from '@/config';
 
 export const TransactionStatusEnum = Object.freeze({
   PENDING: 'pending ',
@@ -8,19 +11,14 @@ export const TransactionStatusEnum = Object.freeze({
   PLANNED: 'planned ',
 });
 
-const initialState = {
-  transactions: [],
-};
-
 export const transactionsSlice = createSlice({
   name: 'transactions',
-  initialState,
   reducers: {
     addTransaction: (state, action) => {
       state.transactions.push(action.payload);
     },
     updateTransaction: (state, action) => {
-      const updatedTransaction = action.payload;
+      const updatedTransaction = action.payload.transaction;
       const updatedTransactions = state.transactions.map((transaction) =>
         transaction.id === updatedTransaction.id
           ? { ...transaction, ...updatedTransaction }
@@ -52,9 +50,7 @@ export const createNewTransaction = () =>
   generateTransactionObject(
     uuidv4(),
     TransactionStatusEnum.PLANNED,
-    new Date(),
+    dayjs().format(config.dateFormatString),
     0.0,
     ''
   );
-
-export default transactionsSlice.reducer;

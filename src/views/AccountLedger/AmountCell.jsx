@@ -1,10 +1,9 @@
 import { Button, TableCell, TextField } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { selectAccounts } from '@/store/accountsSlice';
 import { updateTransaction } from '@/store/transactionsSlice';
 
 const parseFloatDoublePrecision = (value) =>
@@ -13,7 +12,6 @@ const parseFloatDoublePrecision = (value) =>
 export default function AmountCell({ transaction }) {
   const dispatch = useDispatch();
   const { accountId } = useParams();
-  const accounts = useSelector(selectAccounts);
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState(
     parseFloatDoublePrecision(transaction.amount)
@@ -24,17 +22,11 @@ export default function AmountCell({ transaction }) {
     setValue(value);
   };
 
-  const handleUpdateTransaction = (accountId, transaction) => {
-    const account = accounts.find((a) => a.id === accountId);
-    if (account) {
-      const updatedTransaction = { ...transaction, modified: true };
-      dispatch(
-        updateTransaction({
-          accountId,
-          transaction: updatedTransaction,
-        })
-      );
-    }
+  const handleSave = () => {
+    const newTransaction = { ...transaction };
+    newTransaction.amount = parseFloatDoublePrecision(value);
+    const actionPayload = { accountId, transaction: newTransaction };
+    dispatch(updateTransaction(actionPayload));
     setEdit(false);
   };
 
@@ -53,7 +45,7 @@ export default function AmountCell({ transaction }) {
         />
         <Button
           variant='contained'
-          onClick={() => handleUpdateTransaction(accountId, transaction)}
+          onClick={handleSave}
         >
           Save
         </Button>

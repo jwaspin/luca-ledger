@@ -39,6 +39,7 @@ export const accountsSlice = createSlice({
       }
     });
     builder.addCase(updateTransaction, (state, action) => {
+      console.log('updateTransaction accountsSlice', action.payload);
       const { accountId, transaction } = action.payload;
       const accountIndex = state.accounts.findIndex(
         (account) => account.id === accountId

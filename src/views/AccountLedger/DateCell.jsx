@@ -4,21 +4,24 @@ import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import config from '@/config';
 import { updateTransaction } from '@/store/transactionsSlice';
 
 export default function DateCell({ transaction }) {
+  const dispatch = useDispatch();
+  const { accountId } = useParams();
   const [edit, setEdit] = useState(false);
   const [dateValue, setDateValue] = useState(
     dayjs(transaction.date, config.dateFormatString)
   );
-  const dispatch = useDispatch();
 
   const handleSave = () => {
     const newTransaction = { ...transaction };
     newTransaction.date = dateValue.format(config.dateFormatString);
-    dispatch(updateTransaction(newTransaction));
+    const actionPayload = { accountId, transaction: newTransaction };
+    dispatch(updateTransaction(actionPayload));
     setEdit(false);
   };
 
