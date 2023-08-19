@@ -25,8 +25,6 @@ const setBgColor = (status) => {
 export default function LedgerRow({ row, balance }) {
   const bgColor = setBgColor(row.status);
 
-  console.log('bgColor', bgColor);
-
   return (
     <TableRow style={{ background: bgColor }}>
       <StatusCell transaction={row} />
