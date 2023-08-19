@@ -17,6 +17,23 @@ export default function Accounts() {
     dispatch(createNewAccount());
   };
 
+  const saveAccount = (account, filename) => {
+    const saveString = JSON.stringify(account, null, 2);
+    const saveBlob = new Blob([saveString]);
+    const url = URL.createObjectURL(saveBlob);
+    const link = document.createElement('a');
+    link.download = filename;
+    link.href = url;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleSaveAllAccounts = () => {
+    accounts.forEach((account) => {
+      saveAccount(account, `${account.name}.json`);
+    });
+  };
+
   return (
     <div>
       <h1>Accounts</h1>
@@ -57,6 +74,13 @@ export default function Accounts() {
         onClick={handleCreateAccount}
       >
         Create New Account
+      </Button>
+      <Button
+        variant='contained'
+        color='secondary'
+        onClick={handleSaveAllAccounts}
+      >
+        Save All Accounts
       </Button>
     </div>
   );
