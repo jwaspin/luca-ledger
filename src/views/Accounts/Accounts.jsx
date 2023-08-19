@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import {
-  createNewAccountAsync,
+  createNewAccount,
   loadAccountAsync,
   selectAccounts,
 } from '@/store/accountsSlice';
@@ -14,7 +14,7 @@ export default function Accounts() {
   const accounts = useSelector(selectAccounts);
 
   const handleCreateAccount = () => {
-    dispatch(createNewAccountAsync());
+    dispatch(createNewAccount());
   };
 
   return (
