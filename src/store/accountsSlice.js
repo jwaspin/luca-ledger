@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
+
 import { addTransaction, updateTransaction } from './transactionsSlice';
 
 const initialState = {
@@ -13,9 +14,18 @@ export const accountsSlice = createSlice({
     addAccount: (state, action) => {
       state.accounts.push(action.payload);
     },
+    updateAccount: (state, action) => {
+      const updatedAccount = action.payload;
+      const updatedAccounts = state.accounts.map((account) =>
+        account.id === updatedAccount.id
+          ? { ...account, ...updatedAccount }
+          : account
+      );
+      state.accounts = updatedAccounts;
+    },
     removeAccount: (state, action) => {
       const accountId = action.payload;
-      return state.filter((account) => account.id !== accountId);
+      return state.accounts.filter((account) => account.id !== accountId);
     },
   },
   extraReducers: (builder) => {
@@ -46,31 +56,31 @@ export const accountsSlice = createSlice({
   },
 });
 
-const { addAccount, removeAccount } = accountsSlice.actions;
+const { addAccount, removeAccount, updateAccount } = accountsSlice.actions;
+
+export { updateAccount };
 
 const generateAccountObject = (id, name, balance, transactions) => ({
   id,
   name,
   balance,
-  modified: false,
   transactions,
+  modified: false,
 });
 
-const createNewAccount = () =>
-  generateAccountObject(uuidv4(), 'New Account', 0.0, []);
+export const createNewAccount = () => (dispatch) => {
+  dispatch(addAccount(generateAccountObject(uuidv4(), 'New Account', 0.0, [])));
+};
+
+export const removeAccountById = (id) => (dispatch) => {
+  dispatch(removeAccount(id));
+};
 
 const loadAccountFromFile = async () => {
   const [fileHandle] = await window.showOpenFilePicker();
   const file = await fileHandle.getFile();
   const fileContent = await file.text();
-  const parsedContent = JSON.parse(fileContent);
-  return parsedContent;
-};
-
-export const createNewAccountAsync = () => (dispatch) => {
-  setTimeout(() => {
-    dispatch(addAccount(createNewAccount()));
-  }, 1000);
+  return JSON.parse(fileContent);
 };
 
 export const loadAccountAsync = () => async (dispatch) => {
@@ -88,15 +98,8 @@ export const loadAccountAsync = () => async (dispatch) => {
   dispatch(addAccount(account));
 };
 
-export const removeAccountAsync = (id) => (dispatch) => {
-  setTimeout(() => {
-    dispatch(removeAccount(id));
-  }, 1000);
-};
-
-export const selectAccountById = (id) => (state) => {
-  return state.accounts.accounts.find((account) => account.id === id);
-};
+export const selectAccountById = (id) => (state) =>
+  state.accounts.accounts.find((account) => account.id === id);
 
 export const selectAccounts = (state) => state.accounts.accounts;
 
