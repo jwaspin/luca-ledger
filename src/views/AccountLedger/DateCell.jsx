@@ -58,7 +58,7 @@ export default function DateCell({ transaction }) {
       style={{ cursor: 'pointer' }}
       onClick={() => setEdit(true)}
     >
-      {dateValue.format('MMM DD')}
+      {dateValue.format('MMM DD YYYY')}
     </TableCell>
   );
 }

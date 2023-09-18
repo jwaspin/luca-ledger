@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -46,11 +46,77 @@ const generateTransactionObject = (id, status, date, amount, description) => ({
   description,
 });
 
-export const createNewTransaction = () =>
+export const createNewTransaction = (date = null) =>
   generateTransactionObject(
     uuidv4(),
     TransactionStatusEnum.PLANNED,
-    dayjs().format(config.dateFormatString),
+    date || dayjs().format(config.dateFormatString),
     0.0,
     ''
   );
+
+export const createRepeatTransaction = createAsyncThunk(
+  'transactions/createRepeat',
+  async (
+    {
+      startDate,
+      amount,
+      description,
+      frequency,
+      frequencyCount,
+      occurrences,
+      accountId,
+    },
+    { dispatch }
+  ) => {
+    let nextDate = dayjs(startDate);
+
+    for (let i = 0; i < occurrences; i++) {
+      if (frequency === 'Bi-Monthly') {
+        // Create transaction for the 1st of the month
+        let firstTransactionDate = nextDate.date(1);
+        let firstTransaction = createNewTransaction(
+          firstTransactionDate.format(config.dateFormatString)
+        );
+        firstTransaction.amount = amount;
+        firstTransaction.description = description;
+
+        let firstActionPayload = { accountId, transaction: firstTransaction };
+        dispatch(addTransaction(firstActionPayload));
+
+        // Create transaction for the 15th of the month
+        let secondTransactionDate = nextDate.date(15);
+        let secondTransaction = createNewTransaction(
+          secondTransactionDate.format(config.dateFormatString)
+        );
+        secondTransaction.amount = amount;
+        secondTransaction.description = description;
+
+        let secondActionPayload = { accountId, transaction: secondTransaction };
+        dispatch(addTransaction(secondActionPayload));
+
+        // Advance to the next month
+        nextDate = nextDate.add(1, 'month');
+      } else {
+        const newTransaction = createNewTransaction(
+          nextDate.format(config.dateFormatString)
+        );
+        newTransaction.amount = amount;
+        newTransaction.description = description;
+
+        const actionPayload = { accountId, transaction: newTransaction };
+        dispatch(addTransaction(actionPayload));
+
+        if (frequency === 'Days') {
+          nextDate = nextDate.add(frequencyCount, 'day');
+        } else if (frequency === 'Weeks') {
+          nextDate = nextDate.add(frequencyCount, 'week');
+        } else if (frequency === 'Months') {
+          nextDate = nextDate.add(frequencyCount, 'month');
+        } else if (frequency === 'Years') {
+          nextDate = nextDate.add(frequencyCount, 'year');
+        }
+      }
+    }
+  }
+);
