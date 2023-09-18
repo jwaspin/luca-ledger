@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { selectAccountById } from '@/store/accountsSlice';
 import LedgerTable from './LedgerTable';
 import NewTransactionButton from './NewTransactionButton';
+import RepeatedTransactionsModal from '@/components/RepeatedTransactionsModal';
 
 export default function AccountLedger() {
   const { accountId } = useParams();
@@ -15,6 +16,7 @@ export default function AccountLedger() {
       <h1>Account Ledger {account.name}</h1>
       <LedgerTable />
       <NewTransactionButton />
+      <RepeatedTransactionsModal />
     </Box>
   );
 }
