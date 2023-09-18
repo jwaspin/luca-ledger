@@ -72,25 +72,50 @@ export const createRepeatTransaction = createAsyncThunk(
     let nextDate = dayjs(startDate);
 
     for (let i = 0; i < occurrences; i++) {
-      const newTransaction = createNewTransaction(
-        nextDate.format(config.dateFormatString)
-      );
-      newTransaction.amount = amount;
-      newTransaction.description = description;
+      if (frequency === 'Bi-Monthly') {
+        // Create transaction for the 1st of the month
+        let firstTransactionDate = nextDate.date(1);
+        let firstTransaction = createNewTransaction(
+          firstTransactionDate.format(config.dateFormatString)
+        );
+        firstTransaction.amount = amount;
+        firstTransaction.description = description;
 
-      const actionPayload = { accountId, transaction: newTransaction };
-      dispatch(addTransaction(actionPayload));
+        let firstActionPayload = { accountId, transaction: firstTransaction };
+        dispatch(addTransaction(firstActionPayload));
 
-      if (frequency === 'Days') {
-        nextDate = nextDate.add(frequencyCount, 'day');
-      } else if (frequency === 'Weeks') {
-        nextDate = nextDate.add(frequencyCount, 'week');
-      } else if (frequency === 'Months') {
-        nextDate = nextDate.add(frequencyCount, 'month');
-      } else if (frequency === 'Years') {
-        nextDate = nextDate.add(frequencyCount, 'year');
-      } else if (frequency === 'Bi-Monthly') {
-        nextDate = nextDate.add(frequencyCount * 2, 'month');
+        // Create transaction for the 15th of the month
+        let secondTransactionDate = nextDate.date(15);
+        let secondTransaction = createNewTransaction(
+          secondTransactionDate.format(config.dateFormatString)
+        );
+        secondTransaction.amount = amount;
+        secondTransaction.description = description;
+
+        let secondActionPayload = { accountId, transaction: secondTransaction };
+        dispatch(addTransaction(secondActionPayload));
+
+        // Advance to the next month
+        nextDate = nextDate.add(1, 'month');
+      } else {
+        const newTransaction = createNewTransaction(
+          nextDate.format(config.dateFormatString)
+        );
+        newTransaction.amount = amount;
+        newTransaction.description = description;
+
+        const actionPayload = { accountId, transaction: newTransaction };
+        dispatch(addTransaction(actionPayload));
+
+        if (frequency === 'Days') {
+          nextDate = nextDate.add(frequencyCount, 'day');
+        } else if (frequency === 'Weeks') {
+          nextDate = nextDate.add(frequencyCount, 'week');
+        } else if (frequency === 'Months') {
+          nextDate = nextDate.add(frequencyCount, 'month');
+        } else if (frequency === 'Years') {
+          nextDate = nextDate.add(frequencyCount, 'year');
+        }
       }
     }
   }

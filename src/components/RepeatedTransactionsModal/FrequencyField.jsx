@@ -15,6 +15,8 @@ export default function FrequencyField({
   frequencyCount,
   setFrequencyCount,
 }) {
+  const isFrequencyCountDisabled = frequency === 'Bi-Monthly';
+
   const onFrequencyChange = (event) => {
     setFrequency(event.target.value);
   };
@@ -44,6 +46,7 @@ export default function FrequencyField({
           type='number'
           value={frequencyCount === null ? '' : frequencyCount}
           onChange={onFrequencyCountChange}
+          disabled={isFrequencyCountDisabled}
         />
       </Grid>
       <Grid
