@@ -7,6 +7,7 @@ import BalanceCell from './BalanceCell';
 import DateCell from './DateCell';
 import DescriptionCell from './DescriptionCell';
 import StatusCell from './StatusCell';
+import DeleteButtonCell from './DeleteButtonCell';
 
 const setBgColor = (status) => {
   switch (status) {
@@ -33,6 +34,7 @@ export default function LedgerRow({ row, balance }) {
       <DescriptionCell transaction={row} />
       <AmountCell transaction={row} />
       <BalanceCell amount={balance} />
+      <DeleteButtonCell transaction={row} />
     </TableRow>
   );
 }
