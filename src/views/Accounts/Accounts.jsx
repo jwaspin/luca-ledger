@@ -85,8 +85,8 @@ export default function Accounts() {
                     borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
                   }}
                 >
-                  <div>{'Current: '}</div>
-                  <div>
+                  <span>{'Current: '}</span>
+                  <span>
                     {'$ '}
                     {account.transactions
                       .filter((t) => ['complete '].includes(t.status))
@@ -95,7 +95,7 @@ export default function Accounts() {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })}
-                  </div>
+                  </span>
                 </Typography>
                 <Typography
                   variant='body1'
@@ -107,8 +107,8 @@ export default function Accounts() {
                     borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
                   }}
                 >
-                  <div>{'Pending: '}</div>
-                  <div>
+                  <span>{'Pending: '}</span>
+                  <span>
                     {'$ '}
                     {account.transactions
                       .filter((t) =>
@@ -119,7 +119,7 @@ export default function Accounts() {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })}
-                  </div>
+                  </span>
                 </Typography>
                 <Typography
                   variant='body1'
@@ -131,8 +131,8 @@ export default function Accounts() {
                     borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
                   }}
                 >
-                  <div>{'Scheduled: '}</div>
-                  <div>
+                  <span>{'Scheduled: '}</span>
+                  <span>
                     {'$ '}
                     {account.transactions
                       .filter((t) =>
@@ -145,7 +145,7 @@ export default function Accounts() {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })}
-                  </div>
+                  </span>
                 </Typography>
                 <Typography
                   variant='body1'
@@ -157,8 +157,8 @@ export default function Accounts() {
                     borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
                   }}
                 >
-                  <div>{'Future: '}</div>
-                  <div>
+                  <span>{'Future: '}</span>
+                  <span>
                     {'$ '}
                     {account.transactions
                       .reduce((acc, t) => acc + Number(t.amount), 0)
@@ -166,7 +166,7 @@ export default function Accounts() {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })}
-                  </div>
+                  </span>
                 </Typography>
               </CardContent>
             </Card>
