@@ -5,7 +5,12 @@ import TransactionStatusSelect from '@/components/TransactionStatusSelect';
 
 export default function StatusCell({ transaction }) {
   return (
-    <TableCell style={{ maxWidth: '50px' }}>
+    <TableCell
+      style={{
+        width: '175px',
+        padding: '0px 0px 0px 10px',
+      }}
+    >
       <TransactionStatusSelect transaction={transaction} />
     </TableCell>
   );

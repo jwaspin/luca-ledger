@@ -14,7 +14,7 @@ import { selectAccountById } from '@/store/accountsSlice';
 import LedgerHeader from './LedgerHeader';
 import LedgerRow from './LedgerRow';
 
-const compareFn = (a, b) => {
+const dateCompareFn = (a, b) => {
   const aDate = dayjs(a.date).format(config.compareDateFormatString);
   const bDate = dayjs(b.date).format(config.compareDateFormatString);
   if (aDate < bDate) {
@@ -40,7 +40,7 @@ export default function LedgerTable() {
           <LedgerHeader />
         </TableHead>
         <TableBody>
-          {[...transactions].sort(compareFn).map((row) => {
+          {[...transactions].sort(dateCompareFn).map((row) => {
             currentBalance += parseFloat(row.amount);
             return (
               <LedgerRow

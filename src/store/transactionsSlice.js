@@ -27,7 +27,7 @@ export const transactionsSlice = createSlice({
       state.transactions = updatedTransactions;
     },
     removeTransaction: (state, action) => {
-      const transactionId = action.payload;
+      const { transactionId } = action.payload;
       return state.transactions.filter(
         (transaction) => transaction.id !== transactionId
       );

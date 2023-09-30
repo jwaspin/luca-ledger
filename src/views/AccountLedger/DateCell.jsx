@@ -55,7 +55,10 @@ export default function DateCell({ transaction }) {
 
   return (
     <TableCell
-      style={{ cursor: 'pointer' }}
+      style={{
+        cursor: 'pointer',
+        width: '150px',
+      }}
       onClick={() => setEdit(true)}
     >
       {dateValue.format('MMM DD YYYY')}
