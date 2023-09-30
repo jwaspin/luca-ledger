@@ -17,7 +17,7 @@ export default function DeleteButtonCell({ transaction }) {
   };
 
   return (
-    <TableCell>
+    <TableCell style={{ width: '50px' }}>
       <DeleteIcon
         onClick={handleDelete}
         style={{ cursor: 'pointer' }}

@@ -61,7 +61,7 @@ export default function AmountCell({ transaction }) {
 
   return (
     <TableCell
-      style={{ cursor: 'pointer' }}
+      style={{ cursor: 'pointer', width: '150px' }}
       onClick={() => setEdit(true)}
     >
       $ {parseFloat(transaction.amount).toFixed(2)}

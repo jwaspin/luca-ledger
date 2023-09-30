@@ -26,7 +26,7 @@ export default function DescriptionCell({ transaction }) {
   };
 
   return (
-    <TableCell>
+    <TableCell style={{ width: '500px' }}>
       {edit ? (
         <Box>
           <TextField

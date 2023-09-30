@@ -12,9 +12,16 @@ export default function AccountLedger() {
   const account = useSelector(selectAccountById(accountId));
 
   return (
-    <Box>
-      <h1>Account Ledger {account.name}</h1>
-      <LedgerTable />
+    <Box sx={{ width: '60%', mx: 'auto' }}>
+      <h1>{account.name} Bank</h1>
+      <Box
+        sx={{
+          height: 'calc(100vh - 300px)',
+          overflowY: 'scroll',
+        }}
+      >
+        <LedgerTable />
+      </Box>
       <NewTransactionButton />
       <RepeatedTransactionsModal />
     </Box>
