@@ -1,7 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 
-import { addTransaction, updateTransaction } from './transactionsSlice';
+import {
+  addTransaction,
+  updateTransaction,
+  removeTransaction,
+} from './transactionsSlice';
 
 const initialState = {
   accounts: [],
@@ -51,6 +55,17 @@ export const accountsSlice = createSlice({
           state.accounts[accountIndex].transactions[transactionIndex] =
             transaction;
         }
+      }
+    });
+    builder.addCase(removeTransaction, (state, action) => {
+      const { accountId, transactionId } = action.payload;
+      const accountIndex = state.accounts.findIndex(
+        (account) => account.id === accountId
+      );
+      if (accountIndex !== -1) {
+        state.accounts[accountIndex].transactions = state.accounts[
+          accountIndex
+        ].transactions.filter((t) => t.id !== transactionId);
       }
     });
   },
