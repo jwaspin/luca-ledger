@@ -39,9 +39,7 @@ export default function LedgerTable() {
         <TableHead>
           <LedgerHeader />
         </TableHead>
-        <TableBody
-          style={{ overflowY: 'scroll', height: 'calc(100vh - 500px)' }}
-        >
+        <TableBody>
           {[...transactions].sort(dateCompareFn).map((row) => {
             currentBalance += parseFloat(row.amount);
             return (
