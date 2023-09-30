@@ -6,15 +6,18 @@ import { useParams } from 'react-router-dom';
 
 import { updateTransaction } from '@/store/transactionsSlice';
 
-const parseFloatDoublePrecision = (value) =>
-  parseFloat(parseFloat(value).toFixed(2));
+const doublePrecisionFormatString = (value) =>
+  value.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
 export default function AmountCell({ transaction }) {
   const dispatch = useDispatch();
   const { accountId } = useParams();
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState(
-    parseFloatDoublePrecision(transaction.amount)
+    doublePrecisionFormatString(transaction.amount)
   );
 
   const handleChange = (event) => {
@@ -24,14 +27,14 @@ export default function AmountCell({ transaction }) {
 
   const handleSave = () => {
     const newTransaction = { ...transaction };
-    newTransaction.amount = parseFloatDoublePrecision(value);
+    newTransaction.amount = doublePrecisionFormatString(value);
     const actionPayload = { accountId, transaction: newTransaction };
     dispatch(updateTransaction(actionPayload));
     setEdit(false);
   };
 
   const handleCancel = () => {
-    setValue(parseFloatDoublePrecision(transaction.amount));
+    setValue(doublePrecisionFormatString(transaction.amount));
     setEdit(false);
   };
 
@@ -64,7 +67,7 @@ export default function AmountCell({ transaction }) {
       style={{ cursor: 'pointer', width: '150px' }}
       onClick={() => setEdit(true)}
     >
-      $ {parseFloat(transaction.amount).toFixed(2)}
+      $ {doublePrecisionFormatString(transaction.amount)}
     </TableCell>
   );
 }

@@ -8,7 +8,13 @@ export default function BalanceCell({ amount }) {
   };
 
   return (
-    <TableCell style={cellStyle}>$ {parseFloat(amount).toFixed(2)}</TableCell>
+    <TableCell style={cellStyle}>
+      {'$ '}
+      {amount.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}
+    </TableCell>
   );
 }
 
