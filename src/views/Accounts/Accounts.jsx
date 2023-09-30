@@ -1,4 +1,11 @@
-import { Box, Button, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Typography,
+  Card,
+  CardContent,
+  Grid,
+} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -35,53 +42,191 @@ export default function Accounts() {
   };
 
   return (
-    <div>
+    <Box
+      display='flex'
+      flexDirection='column'
+      alignItems='center'
+      height='100vh'
+    >
       <h1>Accounts</h1>
-      <ul>
+      <Grid
+        container
+        spacing={2}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
         {accounts.map((account) => (
-          <li key={account.id}>
-            <Box
+          <Grid
+            item
+            key={account.id}
+          >
+            <Card
               onClick={() => navigate(`/accounts/${account.id}`)}
-              onKeyDown={() => navigate(`/accounts/${account.id}`)}
+              sx={{
+                width: '250px',
+                height: '250px',
+                '&:hover': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                  cursor: 'pointer',
+                },
+              }}
             >
-              <Typography
-                variant='body1'
-                component='span'
-                style={{ marginRight: '1rem' }}
-              >
-                {account.name}
-              </Typography>
-              <Typography
-                variant='body2'
-                component='span'
-              >
-                {account.balance}
-              </Typography>
-            </Box>
-          </li>
+              <CardContent>
+                <Typography variant='h4'>{account.name}</Typography>
+                <Typography
+                  variant='body1'
+                  color='text.secondary'
+                  style={{
+                    marginTop: '10px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+                  }}
+                >
+                  <div>{'Current: '}</div>
+                  <div>
+                    {'$ '}
+                    {account.transactions
+                      .filter((t) => ['complete '].includes(t.status))
+                      .reduce((acc, t) => acc + Number(t.amount), 0)
+                      .toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                  </div>
+                </Typography>
+                <Typography
+                  variant='body1'
+                  color='text.secondary'
+                  style={{
+                    marginTop: '5px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+                  }}
+                >
+                  <div>{'Pending: '}</div>
+                  <div>
+                    {'$ '}
+                    {account.transactions
+                      .filter((t) =>
+                        ['complete ', 'pending '].includes(t.status)
+                      )
+                      .reduce((acc, t) => acc + Number(t.amount), 0)
+                      .toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                  </div>
+                </Typography>
+                <Typography
+                  variant='body1'
+                  color='text.secondary'
+                  style={{
+                    marginTop: '5px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+                  }}
+                >
+                  <div>{'Scheduled: '}</div>
+                  <div>
+                    {'$ '}
+                    {account.transactions
+                      .filter((t) =>
+                        ['complete ', 'pending ', 'scheduled '].includes(
+                          t.status
+                        )
+                      )
+                      .reduce((acc, t) => acc + Number(t.amount), 0)
+                      .toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                  </div>
+                </Typography>
+                <Typography
+                  variant='body1'
+                  color='text.secondary'
+                  style={{
+                    marginTop: '5px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+                  }}
+                >
+                  <div>{'Future: '}</div>
+                  <div>
+                    {'$ '}
+                    {account.transactions
+                      .reduce((acc, t) => acc + Number(t.amount), 0)
+                      .toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                  </div>
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
         ))}
-      </ul>
-      <Button
-        variant='contained'
-        color='primary'
-        onClick={() => dispatch(loadAccountAsync())}
+      </Grid>
+      <Box
+        style={{
+          marginTop: '10px',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
       >
-        Load Account
-      </Button>
-      <Button
-        variant='contained'
-        color='secondary'
-        onClick={handleCreateAccount}
-      >
-        Create New Account
-      </Button>
-      <Button
-        variant='contained'
-        color='secondary'
-        onClick={handleSaveAllAccounts}
-      >
-        Save All Accounts
-      </Button>
-    </div>
+        <Grid
+          container
+          spacing={2}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <Grid
+            item
+            key={0}
+          >
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={() => dispatch(loadAccountAsync())}
+            >
+              Load Account
+            </Button>
+          </Grid>
+          <Grid
+            item
+            key={1}
+          >
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={handleCreateAccount}
+            >
+              Create New Account
+            </Button>
+          </Grid>
+          <Grid
+            item
+            key={2}
+          >
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={handleSaveAllAccounts}
+            >
+              Save All Accounts
+            </Button>
+          </Grid>
+        </Grid>
+      </Box>
+    </Box>
   );
 }
