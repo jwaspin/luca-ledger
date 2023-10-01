@@ -32,7 +32,7 @@ export default function ModalDialog({ open, handleClose, reset, setReset }) {
     dispatch(
       createRepeatTransaction({
         startDate,
-        amount,
+        amount: Number(amount),
         description,
         frequency,
         frequencyCount,
