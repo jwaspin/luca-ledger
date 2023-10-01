@@ -75,16 +75,14 @@ const { addAccount, removeAccount, updateAccount } = accountsSlice.actions;
 
 export { updateAccount };
 
-const generateAccountObject = (id, name, balance, transactions) => ({
+const generateAccountObject = (id, name, transactions) => ({
   id,
   name,
-  balance,
   transactions,
-  modified: false,
 });
 
 export const createNewAccount = () => (dispatch) => {
-  dispatch(addAccount(generateAccountObject(uuidv4(), 'New Account', 0.0, [])));
+  dispatch(addAccount(generateAccountObject(uuidv4(), 'New Account', [])));
 };
 
 export const removeAccountById = (id) => (dispatch) => {
@@ -100,15 +98,10 @@ const loadAccountFromFile = async () => {
 
 export const loadAccountAsync = () => async (dispatch) => {
   const data = await loadAccountFromFile();
-  const balance = data.transactions.reduce(
-    (acc, transaction) => acc + transaction.amount,
-    0.0
-  );
   const account = generateAccountObject(
     data.id,
     data.name,
-    balance,
-    data.transactions
+    data.transactions.map((t) => ({ ...t, amount: parseFloat(t.amount) }))
   );
   dispatch(addAccount(account));
 };
