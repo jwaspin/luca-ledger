@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types';
 import { TextField, Typography, InputAdornment } from '@mui/material';
 
+const parseFloatDoublePrecision = (value) =>
+  parseFloat(parseFloat(value).toFixed(2));
+
 export default function AmountField({ amount, setAmount }) {
   const onAmountChange = (event) => {
     const newValue = event.target.value;
-    setAmount(newValue);
+    setAmount(parseFloatDoublePrecision(newValue));
   };
 
   return (
@@ -14,7 +17,7 @@ export default function AmountField({ amount, setAmount }) {
         variant='filled'
         fullWidth
         type='number'
-        value={typeof amount === 'number' ? amount.toFixed(2) : amount}
+        value={amount}
         onChange={onAmountChange}
         inputProps={{ step: '0.01' }}
         InputProps={{
