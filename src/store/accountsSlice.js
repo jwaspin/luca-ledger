@@ -106,6 +106,10 @@ export const loadAccountAsync = () => async (dispatch) => {
   dispatch(addAccount(account));
 };
 
+export const editAccountName = (id, name) => (dispatch) => {
+  dispatch(updateAccount({ id, name }));
+};
+
 export const selectAccountById = (id) => (state) =>
   state.accounts.accounts.find((account) => account.id === id);
 

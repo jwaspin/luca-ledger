@@ -6,7 +6,7 @@ import { Link, useParams } from 'react-router-dom';
 import { selectAccountById } from '@/store/accountsSlice';
 import AccountNameField from './AccountNameField';
 
-import HomeIcon from '@mui/icons-material/Home';
+import { Home as HomeIcon } from '@mui/icons-material';
 
 const StyledLink = styled(Link)`
   color: white;

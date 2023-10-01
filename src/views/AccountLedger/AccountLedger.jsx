@@ -1,53 +1,13 @@
-import { Box, Typography } from '@mui/material';
-import PropTypes from 'prop-types';
+import { Box } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import RepeatedTransactionsModal from '@/components/RepeatedTransactionsModal';
 import { selectAccountById } from '@/store/accountsSlice';
+import AccountNameDisplay from './AccountNameDisplay';
+import BalanceDisplay from './BalanceDisplay';
 import LedgerTable from './LedgerTable';
 import NewTransactionButton from './NewTransactionButton';
-
-const BalanceDisplay = ({ label, balance }) => {
-  const textStyle = {
-    color: balance < 0 ? 'red' : 'inherit',
-    fontSize: '1.5em',
-  };
-
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <Typography
-        variant='body1'
-        display='block'
-        sx={textStyle}
-      >
-        {label}
-      </Typography>
-      <Typography
-        variant='subtitle1'
-        sx={textStyle}
-        display='block'
-      >
-        $
-        {balance.toLocaleString(undefined, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })}
-      </Typography>
-    </Box>
-  );
-};
-
-BalanceDisplay.propTypes = {
-  label: PropTypes.string.isRequired,
-  balance: PropTypes.number.isRequired,
-};
 
 export default function AccountLedger() {
   const { accountId } = useParams();
@@ -77,7 +37,7 @@ export default function AccountLedger() {
 
   return (
     <Box sx={{ width: '60%', mx: 'auto' }}>
-      <h1>{account.name} Bank</h1>
+      <AccountNameDisplay account={account} />
       <Box
         sx={{
           display: 'flex',
