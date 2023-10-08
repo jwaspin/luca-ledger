@@ -7,6 +7,12 @@ import {
   removeTransaction,
 } from './transactionsSlice';
 
+export const AccountType = Object.freeze({
+  SAVINGS: 'Savings',
+  CHECKING: 'Checking',
+  CREDIT_CARD: 'Credit Card',
+});
+
 const initialState = {
   accounts: [],
 };
@@ -75,14 +81,19 @@ const { addAccount, removeAccount, updateAccount } = accountsSlice.actions;
 
 export { updateAccount };
 
-const generateAccountObject = (id, name, transactions) => ({
+const generateAccountObject = (id, name, type, transactions) => ({
   id,
   name,
+  type,
   transactions,
 });
 
 export const createNewAccount = () => (dispatch) => {
-  dispatch(addAccount(generateAccountObject(uuidv4(), 'New Account', [])));
+  dispatch(
+    addAccount(
+      generateAccountObject(uuidv4(), 'New Account', AccountType.CHECKING, [])
+    )
+  );
 };
 
 export const removeAccountById = (id) => (dispatch) => {
@@ -101,6 +112,7 @@ export const loadAccountAsync = () => async (dispatch) => {
   const account = generateAccountObject(
     data.id,
     data.name,
+    data.type || AccountType.CHECKING,
     data.transactions.map((t) => ({ ...t, amount: parseFloat(t.amount) }))
   );
   dispatch(addAccount(account));
@@ -108,6 +120,10 @@ export const loadAccountAsync = () => async (dispatch) => {
 
 export const editAccountName = (id, name) => (dispatch) => {
   dispatch(updateAccount({ id, name }));
+};
+
+export const editAccountType = (id, type) => (dispatch) => {
+  dispatch(updateAccount({ id, type }));
 };
 
 export const selectAccountById = (id) => (state) =>
