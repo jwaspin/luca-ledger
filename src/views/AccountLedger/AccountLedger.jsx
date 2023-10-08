@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import RepeatedTransactionsModal from '@/components/RepeatedTransactionsModal';
 import { selectAccountById } from '@/store/accountsSlice';
 import AccountNameDisplay from './AccountNameDisplay';
+import AccountTypeDisplay from './AccountTypeDisplay';
 import BalanceDisplay from './BalanceDisplay';
 import LedgerTable from './LedgerTable';
 import NewTransactionButton from './NewTransactionButton';
@@ -37,7 +38,17 @@ export default function AccountLedger() {
 
   return (
     <Box sx={{ width: '60%', mx: 'auto' }}>
-      <AccountNameDisplay account={account} />
+      <Box
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <AccountNameDisplay account={account} />
+        <AccountTypeDisplay account={account} />
+      </Box>
       <Box
         sx={{
           display: 'flex',

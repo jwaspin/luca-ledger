@@ -75,6 +75,7 @@ export default function Accounts() {
             >
               <CardContent>
                 <Typography variant='h4'>{account.name}</Typography>
+                <Typography variant='subtitle1'>{account.type}</Typography>
                 <Typography
                   variant='body1'
                   color='text.secondary'
