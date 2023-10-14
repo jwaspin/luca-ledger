@@ -5,9 +5,9 @@ import { TransactionStatusEnum } from '@/store/transactionsSlice';
 import AmountCell from './AmountCell';
 import BalanceCell from './BalanceCell';
 import DateCell from './DateCell';
+import DeleteButtonCell from './DeleteButtonCell';
 import DescriptionCell from './DescriptionCell';
 import StatusCell from './StatusCell';
-import DeleteButtonCell from './DeleteButtonCell';
 
 const setBgColor = (status) => {
   switch (status) {
