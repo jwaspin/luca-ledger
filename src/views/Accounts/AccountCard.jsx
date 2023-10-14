@@ -118,14 +118,14 @@ export default function AccountCard({ account }) {
 
 AccountCard.propTypes = {
   account: PropTypes.shape({
-    id: PropTypes.number.isRequired, // Example: ID is a number and required
-    name: PropTypes.string.isRequired, // Example: Name is a string and required
-    type: PropTypes.string.isRequired, // Example: Type is a string and required
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
     transactions: PropTypes.arrayOf(
       PropTypes.shape({
-        status: PropTypes.string.isRequired, // Example: Status is a string and required
-        amount: PropTypes.number.isRequired, // Example: Amount is a number and required
+        status: PropTypes.string.isRequired,
+        amount: PropTypes.number.isRequired,
       })
-    ).isRequired, // Example: Transactions is an array of objects with specific properties
+    ).isRequired,
   }).isRequired,
 };
