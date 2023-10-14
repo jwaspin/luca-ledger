@@ -2,10 +2,14 @@ import {
   Paper,
   Table,
   TableBody,
+  TableCell,
   TableContainer,
   TableHead,
+  TableRow,
+  Typography,
 } from '@mui/material';
 import dayjs from 'dayjs';
+import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -32,6 +36,7 @@ export default function LedgerTable() {
   const { transactions } = account;
 
   let currentBalance = 0.0;
+  let previousMonth = null;
 
   return (
     <TableContainer component={Paper}>
@@ -42,6 +47,35 @@ export default function LedgerTable() {
         <TableBody>
           {[...transactions].sort(dateCompareFn).map((row) => {
             currentBalance += parseFloat(row.amount);
+            const transactionDate = dayjs(row.date);
+            const transactionMonth = transactionDate.format('MMMM YYYY');
+            if (transactionMonth !== previousMonth) {
+              previousMonth = transactionMonth;
+              return (
+                <Fragment key={transactionMonth}>
+                  <TableRow>
+                    <TableCell colSpan={6}>
+                      <Typography
+                        variant='h4'
+                        style={{
+                          justifyContent: 'center',
+                          textAlign: 'center',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        {transactionMonth}
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                  <LedgerRow
+                    key={row.id}
+                    row={row}
+                    balance={currentBalance}
+                  />
+                </Fragment>
+              );
+            }
+
             return (
               <LedgerRow
                 key={row.id}

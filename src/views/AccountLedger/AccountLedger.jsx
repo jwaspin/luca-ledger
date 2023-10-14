@@ -2,12 +2,12 @@ import { Box } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
+import LedgerTable from '@/components/LedgerTable';
 import RepeatedTransactionsModal from '@/components/RepeatedTransactionsModal';
 import { selectAccountById } from '@/store/accountsSlice';
 import AccountNameDisplay from './AccountNameDisplay';
 import AccountTypeDisplay from './AccountTypeDisplay';
 import BalanceDisplay from './BalanceDisplay';
-import LedgerTable from './LedgerTable';
 import NewTransactionButton from './NewTransactionButton';
 
 export default function AccountLedger() {
