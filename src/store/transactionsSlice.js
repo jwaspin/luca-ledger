@@ -69,6 +69,7 @@ export const createRepeatTransaction = createAsyncThunk(
     },
     { dispatch }
   ) => {
+    const startDay = dayjs(startDate).date();
     let nextDate = dayjs(startDate);
 
     for (let i = 0; i < occurrences; i++) {
@@ -112,7 +113,13 @@ export const createRepeatTransaction = createAsyncThunk(
         } else if (frequency === 'Weeks') {
           nextDate = nextDate.add(frequencyCount, 'week');
         } else if (frequency === 'Months') {
-          nextDate = nextDate.add(frequencyCount, 'month');
+          const nextMonth = nextDate.add(frequencyCount, 'month');
+          const nextMonthDays = nextMonth.daysInMonth();
+          let nextDay = startDay;
+          if (startDay > nextMonthDays) {
+            nextDay = nextMonthDays;
+          }
+          nextDate = nextMonth.date(nextDay);
         } else if (frequency === 'Years') {
           nextDate = nextDate.add(frequencyCount, 'year');
         }
