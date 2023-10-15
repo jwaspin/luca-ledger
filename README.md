@@ -1,4 +1,4 @@
-# financeTracker
+# Luca Ledger
 
 This application is for tracking finances from the perspective of accounts.
 This includes checking, savings, credit card, and loan accounts.
