@@ -38,9 +38,7 @@ export default function AccountNameEdit({ account, setIsEditing }) {
         onChange={handleNameChange}
       />
       <Button onClick={handleSaveClick}>
-        <Button onClick={handleSaveClick}>
-          <SaveIcon />
-        </Button>
+        <SaveIcon />
       </Button>
       <Button onClick={handleCancelClick}>
         <CancelIcon />
