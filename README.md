@@ -1,6 +1,6 @@
 # Luca Ledger
 
-Luca Ledger provides a simple user interface for tracking financial transactions through a basic ledger.
+Luca Ledger provides a simple user interface for tracking financial transactions through a basic ledger. The goal is to provide an easy to use interface for financial planning and budgeting through the point of view of accounts and transactions.
 
 *If more information is desired in this README, please open an issue and provide a brief description about the type of information desired.*
 
