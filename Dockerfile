@@ -1,5 +1,5 @@
 # Build the React application
-FROM node:20.3.1-alpine3.17 AS builder
+FROM node:16-alpine3.17 AS builder
 WORKDIR /app
 COPY . .
 RUN yarn install
