@@ -5,14 +5,10 @@ import { version } from '../../../package.json';
 export default function VersionDisplay() {
   return (
     <Typography
-      variant='body2'
-      style={{
-        fontSize: '1.5rem',
-        fontWeight: 'bold',
-        color: 'white',
-      }}
+      variant='subtitle1'
+      style={{ color: 'white', position: 'absolute', bottom: '0', right: '15px' }}
     >
-      {version}
+      v{version}
     </Typography>
   );
 }
