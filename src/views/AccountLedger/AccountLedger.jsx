@@ -63,7 +63,7 @@ export default function AccountLedger() {
       {account.type === AccountType.CREDIT_CARD && (
         <CreditCardSettings account={account} />
       )}
-      <Box sx={{ width: '60%', padding: '5px' }}>
+      <Box sx={{ width: '70%', padding: '5px' }}>
         <Box
           style={{
             display: 'flex',

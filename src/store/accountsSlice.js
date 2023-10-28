@@ -91,18 +91,25 @@ const { addAccount, removeAccount, updateAccount } = accountsSlice.actions;
 
 export { updateAccount };
 
-const generateAccountObject = (id, name, type, transactions) => ({
+const generateAccountObject = (id, name, type, statementDay, transactions) => ({
   version: AccountSchema[type].version,
   id,
   name,
   type,
+  statementDay,
   transactions,
 });
 
 export const createNewAccount = () => (dispatch) => {
   dispatch(
     addAccount(
-      generateAccountObject(uuidv4(), 'New Account', AccountType.CHECKING, [])
+      generateAccountObject(
+        uuidv4(),
+        'New Account',
+        AccountType.CHECKING,
+        null,
+        []
+      )
     )
   );
 };
@@ -132,6 +139,7 @@ export const loadAccountAsync = () => async (dispatch) => {
     data.id,
     data.name,
     data.type || AccountType.CHECKING,
+    data.statementDay || null,
     data.transactions.map((t) => ({ ...t, amount: parseFloat(t.amount) }))
   );
   dispatch(addAccount(account));
@@ -143,6 +151,10 @@ export const editAccountName = (id, name) => (dispatch) => {
 
 export const editAccountType = (id, type) => (dispatch) => {
   dispatch(updateAccount({ id, type }));
+};
+
+export const editStatementDay = (id, statementDay) => (dispatch) => {
+  dispatch(updateAccount({ id, statementDay }));
 };
 
 export const saveAccount = (account, filename) => {
