@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import LedgerTable from '@/components/LedgerTable';
 import RepeatedTransactionsModal from '@/components/RepeatedTransactionsModal';
@@ -12,7 +13,19 @@ import NewTransactionButton from './NewTransactionButton';
 
 export default function AccountLedger() {
   const { accountId } = useParams();
+  const navigate = useNavigate();
   const account = useSelector(selectAccountById(accountId));
+
+  useEffect(() => {
+    if (!account) {
+      navigate('/accounts');
+    }
+  }, [account, navigate]);
+
+  if (!account) {
+    return null;
+  }
+
   const { transactions } = account;
 
   const completedBalance = transactions
@@ -37,7 +50,7 @@ export default function AccountLedger() {
   );
 
   return (
-    <Box sx={{ width: '60%', mx: 'auto' }}>
+    <Box sx={{ width: '60%', mx: 'auto', border: '1px solid red' }}>
       <Box
         style={{
           display: 'flex',

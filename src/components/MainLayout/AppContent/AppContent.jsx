@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import AccountLedger from '@/views/AccountLedger';
 import Accounts from '@/views/Accounts';
@@ -18,6 +18,15 @@ export default function AppContent() {
       <Route
         path='/accounts/:accountId'
         element={<AccountLedger />}
+      />
+      <Route
+        path='*'
+        element={
+          <Navigate
+            to='/'
+            replace
+          />
+        }
       />
     </Routes>
   );
