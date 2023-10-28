@@ -1,14 +1,9 @@
-import { Box, Typography, Grid } from '@mui/material';
-import PropTypes from 'prop-types';
+import { Box, Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { selectAccounts } from '@/store/accountsSlice';
-
-const doublePrecisionFormatString = (value) =>
-  value.toLocaleString(undefined, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+import { AccountType, selectAccounts } from '@/store/accountsSlice';
+import { doublePrecisionFormatString } from '@/utils';
+import AccountContainer from './AccountContainer';
 
 const calculateBalance = (transactions, statuses) => {
   return transactions
@@ -16,66 +11,9 @@ const calculateBalance = (transactions, statuses) => {
     .reduce((acc, tx) => acc + Number(tx.amount), 0);
 };
 
-const AccountContainer = ({ account }) => {
-  const { currentBalance, pendingBalance, scheduledBalance, futureBalance } =
-    account;
-
-  return (
-    <Grid
-      container
-      spacing={2}
-    >
-      <Grid
-        item
-        xs={2}
-      >
-        <Typography variant='h5'>{account.name}</Typography>
-      </Grid>
-      <Grid
-        item
-        xs={2}
-      >
-        <Typography variant='h6'>
-          $ {doublePrecisionFormatString(currentBalance)}
-        </Typography>
-      </Grid>
-      <Grid
-        item
-        xs={2}
-      >
-        <Typography variant='h6'>
-          $ {doublePrecisionFormatString(pendingBalance)}
-        </Typography>
-      </Grid>
-      <Grid
-        item
-        xs={2}
-      >
-        <Typography variant='h6'>
-          $ {doublePrecisionFormatString(scheduledBalance)}
-        </Typography>
-      </Grid>
-      <Grid
-        item
-        xs={2}
-      >
-        <Typography variant='h6'>
-          $ {doublePrecisionFormatString(futureBalance)}
-        </Typography>
-      </Grid>
-    </Grid>
-  );
-};
-
-AccountContainer.propTypes = {
-  account: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    currentBalance: PropTypes.number.isRequired,
-    pendingBalance: PropTypes.number.isRequired,
-    scheduledBalance: PropTypes.number.isRequired,
-    futureBalance: PropTypes.number.isRequired,
-  }).isRequired,
-};
+function subtractPositiveBalance(totalBalance, currentBalance) {
+  return totalBalance - (currentBalance > 0 ? currentBalance : 0);
+}
 
 export default function Dashboard() {
   const accounts = useSelector(selectAccounts);
@@ -105,11 +43,29 @@ export default function Dashboard() {
       'planned ',
     ]);
 
-    totalCurrentBalance += currentBalance;
-    totalPendingBalance += pendingBalance;
-    totalScheduledBalance += scheduledBalance;
-    totalFutureBalance += futureBalance;
-
+    if (account.type === AccountType.CREDIT_CARD) {
+      totalCurrentBalance = subtractPositiveBalance(
+        totalCurrentBalance,
+        currentBalance
+      );
+      totalPendingBalance = subtractPositiveBalance(
+        totalPendingBalance,
+        pendingBalance
+      );
+      totalScheduledBalance = subtractPositiveBalance(
+        totalScheduledBalance,
+        scheduledBalance
+      );
+      totalFutureBalance = subtractPositiveBalance(
+        totalFutureBalance,
+        futureBalance
+      );
+    } else {
+      totalCurrentBalance += currentBalance;
+      totalPendingBalance += pendingBalance;
+      totalScheduledBalance += scheduledBalance;
+      totalFutureBalance += futureBalance;
+    }
     return {
       ...account,
       currentBalance,
