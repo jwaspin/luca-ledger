@@ -50,7 +50,7 @@ export default function AccountLedger() {
   );
 
   return (
-    <Box sx={{ width: '60%', mx: 'auto', border: '1px solid red' }}>
+    <Box sx={{ width: '60%', mx: 'auto' }}>
       <Box
         style={{
           display: 'flex',
