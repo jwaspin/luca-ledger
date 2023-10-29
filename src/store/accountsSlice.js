@@ -139,7 +139,7 @@ export const loadAccountAsync = () => async (dispatch) => {
     data.id,
     data.name,
     data.type || AccountType.CHECKING,
-    data.statementDay || null,
+    data.statementDay || data.type === AccountType.CREDIT_CARD ? 1 : null,
     data.transactions.map((t) => ({ ...t, amount: parseFloat(t.amount) }))
   );
   dispatch(addAccount(account));
