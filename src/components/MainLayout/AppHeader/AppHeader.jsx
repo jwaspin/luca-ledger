@@ -51,7 +51,7 @@ export default function AppHeader() {
           variant='h4'
           sx={{ flexGrow: 1, textAlign: 'center' }}
         >
-          Finance Tracker
+          Luca Ledger
         </Typography>
         <VersionDisplay />
       </Toolbar>
