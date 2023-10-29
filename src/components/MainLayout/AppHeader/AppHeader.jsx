@@ -1,10 +1,8 @@
 import styled from '@emotion/styled';
 import { AppBar, Box, Toolbar, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import { selectAccountById } from '@/store/accountsSlice';
-import AccountNameField from './AccountNameField';
+import VersionDisplay from '@/components/VersionDisplay';
 
 import { Home as HomeIcon } from '@mui/icons-material';
 
@@ -20,15 +18,6 @@ const StyledLink = styled(Link)`
 `;
 
 export default function AppHeader() {
-  const { accountId } = useParams();
-  const account = useSelector(selectAccountById(accountId));
-  const accountInfo = account ? (
-    <Box sx={{ flexDirection: 'row', display: 'flex' }}>
-      <AccountNameField accountName={account.name} />
-      {account.modified && <Typography variant='body1'>Modified</Typography>}
-    </Box>
-  ) : null;
-
   return (
     <AppBar position='static'>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -64,7 +53,7 @@ export default function AppHeader() {
         >
           Finance Tracker
         </Typography>
-        {accountInfo}
+        <VersionDisplay />
       </Toolbar>
     </AppBar>
   );
