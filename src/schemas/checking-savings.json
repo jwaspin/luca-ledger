@@ -14,12 +14,12 @@
     "type": {
       "type": "string"
     },
-    "statementDay": {
-      "type": "string"
-    },
     "transactions": {
-      "$ref": "./transactionSchema.json"
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
     }
   },
-  "required": ["version", "id", "name", "type", "statementDay", "transactions"]
+  "required": ["version", "id", "name", "type", "transactions"]
 }
