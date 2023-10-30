@@ -7,20 +7,10 @@ import {
   removeTransaction,
 } from './transactionsSlice';
 
-import checkingSchema from '@/schemas/checking.json';
-import savingsSchema from '@/schemas/savings.json';
-import creditCardSchema from '@/schemas/creditCard.json';
-
 export const AccountType = Object.freeze({
   SAVINGS: 'Savings',
   CHECKING: 'Checking',
   CREDIT_CARD: 'Credit Card',
-});
-
-export const AccountSchema = Object.freeze({
-  [AccountType.SAVINGS]: savingsSchema,
-  [AccountType.CHECKING]: checkingSchema,
-  [AccountType.CREDIT_CARD]: creditCardSchema,
 });
 
 const initialState = {
@@ -92,7 +82,7 @@ const { addAccount, removeAccount, updateAccount } = accountsSlice.actions;
 export { updateAccount };
 
 const generateAccountObject = (id, name, type, statementDay, transactions) => ({
-  version: AccountSchema[type].version,
+  version: '1.0.0',
   id,
   name,
   type,
@@ -128,13 +118,13 @@ const loadAccountFromFile = async () => {
 export const loadAccountAsync = () => async (dispatch) => {
   const data = await loadAccountFromFile();
   if (!data) return;
-  if (data.version !== AccountSchema[data.type].version) {
-    console.log(
-      'Version mismatch',
-      AccountSchema[data.type].version,
-      data.version
-    );
-  }
+  // if (data.version !== AccountSchema[data.type].version) {
+  //   console.log(
+  //     'Version mismatch',
+  //     AccountSchema[data.type].version,
+  //     data.version
+  //   );
+  // }
   const account = generateAccountObject(
     data.id,
     data.name,
