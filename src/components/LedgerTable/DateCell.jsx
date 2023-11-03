@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import config from '@/config';
-import { updateTransaction } from '@/store/transactionsSlice';
+import { updateTransaction } from '@/store/transactions';
 
 export default function DateCell({ transaction }) {
   const dispatch = useDispatch();

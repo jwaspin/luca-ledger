@@ -4,10 +4,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import {
-  TransactionStatusEnum,
-  updateTransaction,
-} from '@/store/transactionsSlice';
+import { TransactionStatusEnum, updateTransaction } from '@/store/transactions';
 
 export default function TransactionStatusSelect({ transaction }) {
   const dispatch = useDispatch();

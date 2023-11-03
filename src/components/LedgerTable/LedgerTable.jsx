@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import config from '@/config';
-import { selectAccountById } from '@/store/accountsSlice';
+import { selectAccountById } from '@/store/accounts';
 import LedgerHeader from './LedgerHeader';
 import LedgerRow from './LedgerRow';
 import MonthSeparatorRow from './MonthSeparatorRow';

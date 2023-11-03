@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { editStatementDay } from '@/store/accountsSlice';
+import { editStatementDay } from '@/store/accounts';
 
 export default function CreditCardSettings({ account }) {
   const dispatch = useDispatch();

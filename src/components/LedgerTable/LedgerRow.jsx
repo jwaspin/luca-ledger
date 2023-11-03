@@ -1,7 +1,7 @@
 import { TableRow } from '@mui/material';
 import PropTypes from 'prop-types';
 
-import { TransactionStatusEnum } from '@/store/transactionsSlice';
+import { TransactionStatusEnum } from '@/store/transactions';
 import AmountCell from './AmountCell';
 import BalanceCell from './BalanceCell';
 import DateCell from './DateCell';

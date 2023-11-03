@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import LedgerTable from '@/components/LedgerTable';
 import RepeatedTransactionsModal from '@/components/RepeatedTransactionsModal';
-import { AccountType, selectAccountById } from '@/store/accountsSlice';
+import { AccountType, selectAccountById } from '@/store/accounts';
 import AccountNameDisplay from './AccountNameDisplay';
 import AccountTypeDisplay from './AccountTypeDisplay';
 import BalanceDisplay from './BalanceDisplay';

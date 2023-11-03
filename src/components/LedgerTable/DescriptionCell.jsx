@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { updateTransaction } from '@/store/transactionsSlice';
+import { updateTransaction } from '@/store/transactions';
 
 export default function DescriptionCell({ transaction }) {
   const dispatch = useDispatch();

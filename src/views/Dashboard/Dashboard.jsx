@@ -1,7 +1,7 @@
 import { Box, Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { AccountType, selectAccounts } from '@/store/accountsSlice';
+import { AccountType, selectAccounts } from '@/store/accounts';
 import { doublePrecisionFormatString } from '@/utils';
 import AccountContainer from './AccountContainer';
 

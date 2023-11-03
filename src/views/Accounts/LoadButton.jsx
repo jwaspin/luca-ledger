@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
-import { loadAccountAsync } from '@/store/accountsSlice';
+import { loadAccountAsync } from '@/store/accounts';
 
 export default function LoadButton() {
   const dispatch = useDispatch();

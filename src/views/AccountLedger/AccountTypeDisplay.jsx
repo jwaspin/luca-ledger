@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { AccountType, editAccountType } from '@/store/accountsSlice';
+import { AccountType, editAccountType } from '@/store/accounts';
 
 export default function AccountTypeDisplay({ account }) {
   const [type, setType] = useState(account.type);
