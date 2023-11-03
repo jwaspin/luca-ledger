@@ -10,12 +10,12 @@ export const addAccountReducer = (state, action) => {
 
 export const updateAccountReducer = (state, action) => {
   const updatedAccount = action.payload;
-  const accounts = state.map((account) =>
-    account.id === updatedAccount.id
-      ? { ...account, ...updatedAccount }
-      : account
+  const accountIndex = state.findIndex(
+    (account) => account.id === updatedAccount.id
   );
-  state = accounts;
+  if (accountIndex !== -1) {
+    state[accountIndex] = { ...state[accountIndex], ...updatedAccount };
+  }
 };
 
 export const removeAccountReducer = (state, action) => {
