@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { editStatementDay } from '@/store/accounts';
+import { actions } from '@/store/accounts';
 
 export default function CreditCardSettings({ account }) {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ export default function CreditCardSettings({ account }) {
       newValue = 28;
     }
     setStatementDay(newValue);
-    dispatch(editStatementDay(account.id, newValue));
+    dispatch(actions.editStatementDay(account.id, newValue));
   };
 
   return (

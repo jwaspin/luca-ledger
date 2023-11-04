@@ -1,7 +1,7 @@
 import { Box, Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { AccountType, selectAccounts } from '@/store/accounts';
+import { constants, selectors } from '@/store/accounts';
 import { doublePrecisionFormatString } from '@/utils';
 import AccountContainer from './AccountContainer';
 
@@ -16,7 +16,7 @@ function subtractPositiveBalance(totalBalance, currentBalance) {
 }
 
 export default function Dashboard() {
-  const accounts = useSelector(selectAccounts);
+  const accounts = useSelector(selectors.selectAccounts);
 
   let totalCurrentBalance = 0;
   let totalPendingBalance = 0;
@@ -43,7 +43,7 @@ export default function Dashboard() {
       'planned ',
     ]);
 
-    if (account.type === AccountType.CREDIT_CARD) {
+    if (account.type === constants.AccountType.CREDIT_CARD) {
       totalCurrentBalance = subtractPositiveBalance(
         totalCurrentBalance,
         currentBalance

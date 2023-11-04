@@ -4,18 +4,11 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { updateTransaction } from '@/store/transactions';
-
-const parseFloatDoublePrecision = (value) =>
-  parseFloat(parseFloat(value).toFixed(2));
-
-const doublePrecisionFormatString = (value) => {
-  const formatValue = value.toLocaleString(undefined, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-  return formatValue;
-};
+import { actions } from '@/store/transactions';
+import {
+  doublePrecisionFormatString,
+  parseFloatDoublePrecision,
+} from '@/utils';
 
 export default function AmountCell({ transaction }) {
   const dispatch = useDispatch();
@@ -27,14 +20,13 @@ export default function AmountCell({ transaction }) {
 
   const handleChange = (event) => {
     const { value } = event.target;
-    setValue(value);
+    setValue(parseFloatDoublePrecision(value));
   };
 
   const handleSave = () => {
-    const newTransaction = { ...transaction };
-    newTransaction.amount = parseFloatDoublePrecision(value);
-    const actionPayload = { accountId, transaction: newTransaction };
-    dispatch(updateTransaction(actionPayload));
+    dispatch(
+      actions.updateTransactionProperty(accountId, transaction, 'amount', value)
+    );
     setEdit(false);
   };
 

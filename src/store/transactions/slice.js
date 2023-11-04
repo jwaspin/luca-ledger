@@ -6,7 +6,7 @@ import {
   updateTransactionReducer,
 } from './reducers';
 
-export const transactions = createSlice({
+const transactions = createSlice({
   name: 'transactions',
   reducers: {
     addTransaction: addTransactionReducer,
@@ -14,8 +14,6 @@ export const transactions = createSlice({
     removeTransaction: removeTransactionReducer,
   },
 });
-
-export default transactions.reducer;
 
 export const { addTransaction, updateTransaction, removeTransaction } =
   transactions.actions;

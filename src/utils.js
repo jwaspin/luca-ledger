@@ -3,3 +3,6 @@ export const doublePrecisionFormatString = (value) =>
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+
+export const parseFloatDoublePrecision = (value) =>
+  parseFloat(parseFloat(value).toFixed(2));

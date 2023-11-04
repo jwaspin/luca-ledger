@@ -3,18 +3,20 @@ import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 
 import config from '@/config';
-import { addTransaction } from '@/store/transactions/slice';
-import { TransactionStatusEnum } from './constants';
-import { generateTransactionObject } from './generators';
+import { reducers, constants } from '@/store/transactions';
+import { generateTransaction } from './generators';
 
-export const createNewTransaction = (date = null) =>
-  generateTransactionObject(
+export const createNewTransaction = (accountId) => (dispatch) => {
+  const newTransaction = generateTransaction(
     uuidv4(),
-    TransactionStatusEnum.PLANNED,
-    date || dayjs().format(config.dateFormatString),
+    constants.TransactionStatusEnum.PLANNED,
+    dayjs().format(config.dateFormatString),
     0.0,
     ''
   );
+  const actionPayload = { accountId, transaction: newTransaction };
+  dispatch(reducers.addTransaction(actionPayload));
+};
 
 export const createRepeatTransaction = createAsyncThunk(
   'transactions/createRepeat',
@@ -44,7 +46,7 @@ export const createRepeatTransaction = createAsyncThunk(
         firstTransaction.description = description;
 
         let firstActionPayload = { accountId, transaction: firstTransaction };
-        dispatch(addTransaction(firstActionPayload));
+        dispatch(reducers.addTransaction(firstActionPayload));
 
         // Create transaction for the 15th of the month
         let secondTransactionDate = nextDate.date(15);
@@ -55,7 +57,7 @@ export const createRepeatTransaction = createAsyncThunk(
         secondTransaction.description = description;
 
         let secondActionPayload = { accountId, transaction: secondTransaction };
-        dispatch(addTransaction(secondActionPayload));
+        dispatch(reducers.addTransaction(secondActionPayload));
 
         // Advance to the next month
         nextDate = nextDate.add(1, 'month');
@@ -67,7 +69,7 @@ export const createRepeatTransaction = createAsyncThunk(
         newTransaction.description = description;
 
         const actionPayload = { accountId, transaction: newTransaction };
-        dispatch(addTransaction(actionPayload));
+        dispatch(reducers.addTransaction(actionPayload));
 
         if (frequency === 'Days') {
           nextDate = nextDate.add(frequencyCount, 'day');
@@ -88,3 +90,18 @@ export const createRepeatTransaction = createAsyncThunk(
     }
   }
 );
+
+export const updateTransactionProperty =
+  (accountId, transaction, property, value) => (dispatch) => {
+    const updatedTransaction = {
+      ...transaction,
+      [property]: value,
+    };
+    const actionPayload = { accountId, updatedTransaction };
+    dispatch(reducers.updateTransaction(actionPayload)); // Assuming you have an updateTransaction action
+  };
+
+export const removeTransaction = (accountId, transaction) => (dispatch) => {
+  const actionPayload = { accountId, transactionId: transaction.id };
+  dispatch(reducers.removeTransaction(actionPayload));
+};

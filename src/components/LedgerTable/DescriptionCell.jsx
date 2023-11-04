@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { updateTransaction } from '@/store/transactions';
+import { actions } from '@/store/transactions';
 
 export default function DescriptionCell({ transaction }) {
   const dispatch = useDispatch();
@@ -13,10 +13,14 @@ export default function DescriptionCell({ transaction }) {
   const [description, setDescription] = useState(transaction.description);
 
   const handleSave = () => {
-    const newTransaction = { ...transaction };
-    newTransaction.description = description;
-    const actionPayload = { accountId, transaction: newTransaction };
-    dispatch(updateTransaction(actionPayload));
+    dispatch(
+      actions.updateTransactionProperty(
+        accountId,
+        transaction,
+        'description',
+        description
+      )
+    );
     setEdit(false);
   };
 

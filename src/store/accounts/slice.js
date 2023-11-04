@@ -7,7 +7,7 @@ import {
   updateAccountReducer,
 } from './reducers';
 
-export const accounts = createSlice({
+const accounts = createSlice({
   name: 'accounts',
   initialState: [],
   reducers: {

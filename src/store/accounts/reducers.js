@@ -1,8 +1,4 @@
-import {
-  addTransaction,
-  updateTransaction,
-  removeTransaction,
-} from '@/store/transactions';
+import { reducers } from '@/store/transactions';
 
 export const addAccountReducer = (state, action) => {
   state.push(action.payload);
@@ -24,14 +20,14 @@ export const removeAccountReducer = (state, action) => {
 };
 
 export const extraReducers = (builder) => {
-  builder.addCase(addTransaction, (state, action) => {
+  builder.addCase(reducers.addTransaction, (state, action) => {
     const { accountId, transaction } = action.payload;
     const accountIndex = state.findIndex((account) => account.id === accountId);
     if (accountIndex !== -1) {
       state[accountIndex].transactions.push(transaction);
     }
   });
-  builder.addCase(updateTransaction, (state, action) => {
+  builder.addCase(reducers.updateTransaction, (state, action) => {
     const { accountId, transaction } = action.payload;
     const accountIndex = state.findIndex((account) => account.id === accountId);
     if (accountIndex !== -1) {
@@ -43,7 +39,7 @@ export const extraReducers = (builder) => {
       }
     }
   });
-  builder.addCase(removeTransaction, (state, action) => {
+  builder.addCase(reducers.removeTransaction, (state, action) => {
     const { accountId, transactionId } = action.payload;
     const accountIndex = state.findIndex((account) => account.id === accountId);
     if (accountIndex !== -1) {

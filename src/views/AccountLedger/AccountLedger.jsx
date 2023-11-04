@@ -1,21 +1,21 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import CreditCardSettings from '@/components/CreditCardSettings';
 import LedgerTable from '@/components/LedgerTable';
 import RepeatedTransactionsModal from '@/components/RepeatedTransactionsModal';
-import { AccountType, selectAccountById } from '@/store/accounts';
+import { constants, selectors } from '@/store/accounts';
 import AccountNameDisplay from './AccountNameDisplay';
 import AccountTypeDisplay from './AccountTypeDisplay';
 import BalanceDisplay from './BalanceDisplay';
 import NewTransactionButton from './NewTransactionButton';
-import CreditCardSettings from '@/components/CreditCardSettings';
 
 export default function AccountLedger() {
   const { accountId } = useParams();
   const navigate = useNavigate();
-  const account = useSelector(selectAccountById(accountId));
+  const account = useSelector(selectors.selectAccountById(accountId));
 
   useEffect(() => {
     if (!account) {
@@ -60,7 +60,7 @@ export default function AccountLedger() {
         justifyContent: 'space-around',
       }}
     >
-      {account.type === AccountType.CREDIT_CARD && (
+      {account.type === constants.AccountType.CREDIT_CARD && (
         <CreditCardSettings account={account} />
       )}
       <Box sx={{ width: '70%', padding: '5px' }}>

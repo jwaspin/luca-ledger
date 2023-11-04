@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
+import { schemas } from '@/store/transactions';
 import { AccountType } from './constants';
-import transactionsSchema from '@/store/transactions/schemas';
 
 const commonAccountSchema = yup
   .object({
@@ -11,7 +11,7 @@ const commonAccountSchema = yup
     type: yup.string().required('Type is required'),
     transactions: yup
       .array()
-      .of(transactionsSchema)
+      .of(schemas.transaction)
       .required('Transactions are required'),
   })
   .noUnknown();

@@ -1,14 +1,14 @@
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { selectAccounts, saveAccount } from '@/store/accounts';
+import { selectors, actions } from '@/store/accounts';
 
 export default function SaveAllButton() {
-  const accounts = useSelector(selectAccounts);
+  const accounts = useSelector(selectors.selectAccounts);
 
   const handleSaveAllAccounts = () => {
     accounts.forEach((account) => {
-      saveAccount(account, `${account.name}.json`);
+      actions.saveAccount(account, `${account.name}.json`);
     });
   };
 
