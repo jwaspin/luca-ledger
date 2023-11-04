@@ -4,3 +4,11 @@ export const TransactionStatusEnum = Object.freeze({
   SCHEDULED: 'scheduled ',
   PLANNED: 'planned ',
 });
+
+export const TransactionFields = Object.freeze({
+  ID: 'id',
+  STATUS: 'status',
+  DATE: 'date',
+  AMOUNT: 'amount',
+  DESCRIPTION: 'description',
+});

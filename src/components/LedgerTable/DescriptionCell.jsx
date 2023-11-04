@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { actions } from '@/store/transactions';
+import { actions, constants } from '@/store/transactions';
 
 export default function DescriptionCell({ transaction }) {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ export default function DescriptionCell({ transaction }) {
       actions.updateTransactionProperty(
         accountId,
         transaction,
-        'description',
+        constants.TransactionFields.DESCRIPTION,
         description
       )
     );
