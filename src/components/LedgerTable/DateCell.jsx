@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import config from '@/config';
-import { actions } from '@/store/transactions';
+import { actions, constants } from '@/store/transactions';
 
 export default function DateCell({ transaction }) {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ export default function DateCell({ transaction }) {
       actions.updateTransactionProperty(
         accountId,
         transaction,
-        'date',
+        constants.TransactionFields.DATE,
         dateValue.format(config.dateFormatString)
       )
     );
