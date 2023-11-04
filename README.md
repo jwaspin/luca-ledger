@@ -55,5 +55,3 @@ This repository will make use of GitHub's tools to track and maintain bugs and f
 For a list of known bugs, visit the issues page on GitHub. This would be a good place to start contributing. Start by creating a branch from the issues page and do all development work in that branch. When ready, create a Pull Request to merge the changes into the dev branch. This will require a review and approval, at which point the branch will be merged using a squash commit and then the issue branch will be deleted. Merging the PR is expected to close the issue.
 
 More guidelines can be provided upon request using an issue to detail the request.
-
-Test commit signing.
