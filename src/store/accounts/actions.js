@@ -2,6 +2,7 @@ import { v4 as uuid } from 'uuid';
 
 import { AccountType } from './constants';
 import { generateAccountObject } from './generators';
+import schemas from './schemas';
 import { addAccount, updateAccount, removeAccount } from './slice';
 
 export const createNewAccount = () => (dispatch) => {
@@ -35,6 +36,12 @@ export const loadAccountAsync = () => async (dispatch) => {
     data.statementDay || (data.type === AccountType.CREDIT_CARD ? 1 : null),
     data.transactions.map((t) => ({ ...t, amount: parseFloat(t.amount) }))
   );
+  try {
+    await schemas[account.type].validate(account);
+  } catch (error) {
+    console.error(error);
+    return;
+  }
   dispatch(addAccount(account));
 };
 
