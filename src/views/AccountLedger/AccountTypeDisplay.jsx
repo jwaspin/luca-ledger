@@ -10,16 +10,22 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { constants, actions } from '@/store/accounts';
+import { actions, constants } from '@/store/accounts';
 
 export default function AccountTypeDisplay({ account }) {
   const [type, setType] = useState(account.type);
   const dispatch = useDispatch();
 
   const handleChange = (event) => {
-    const accountType = event.target.value;
-    setType(accountType);
-    dispatch(actions.editAccountType(account.id, accountType));
+    const { value } = event.target;
+    setType(value);
+    dispatch(
+      actions.updateAccountProperty(
+        account,
+        constants.AccountFields.TYPE,
+        value
+      )
+    );
   };
 
   return (

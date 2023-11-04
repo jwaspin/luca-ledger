@@ -10,7 +10,7 @@ export const updateAccountReducer = (state, action) => {
     (account) => account.id === updatedAccount.id
   );
   if (accountIndex !== -1) {
-    state[accountIndex] = { ...state[accountIndex], ...updatedAccount };
+    state[accountIndex] = updatedAccount;
   }
 };
 

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 import config from '@/config';
 import { TransactionStatusEnum } from './constants';
@@ -9,7 +9,7 @@ import { addTransaction, removeTransaction, updateTransaction } from './slice';
 
 export const createNewTransaction = (accountId) => (dispatch) => {
   const newTransaction = generateTransaction(
-    uuidv4(),
+    uuid(),
     TransactionStatusEnum.PLANNED,
     dayjs().format(config.dateFormatString),
     0.0,

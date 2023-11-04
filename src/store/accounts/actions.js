@@ -32,7 +32,7 @@ export const loadAccountAsync = () => async (dispatch) => {
     data.id,
     data.name,
     data.type || AccountType.CHECKING,
-    data.statementDay || data.type === AccountType.CREDIT_CARD ? 1 : null,
+    data.statementDay || (data.type === AccountType.CREDIT_CARD ? 1 : null),
     data.transactions.map((t) => ({ ...t, amount: parseFloat(t.amount) }))
   );
   dispatch(addAccount(account));
@@ -53,14 +53,11 @@ export const removeAccountById = (id) => (dispatch) => {
   dispatch(removeAccount(id));
 };
 
-export const editAccountName = (id, name) => (dispatch) => {
-  dispatch(updateAccount({ id, name }));
-};
-
-export const editAccountType = (id, type) => (dispatch) => {
-  dispatch(updateAccount({ id, type }));
-};
-
-export const editStatementDay = (id, statementDay) => (dispatch) => {
-  dispatch(updateAccount({ id, statementDay }));
-};
+export const updateAccountProperty =
+  (account, property, value) => (dispatch) => {
+    const updatedAccount = {
+      ...account,
+      [property]: value,
+    };
+    dispatch(updateAccount(updatedAccount));
+  };
