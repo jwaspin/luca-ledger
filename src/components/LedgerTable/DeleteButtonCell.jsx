@@ -12,7 +12,7 @@ export default function DeleteButtonCell({ transaction }) {
   const { accountId } = useParams();
 
   const handleDelete = () => {
-    dispatch(actions.removeTransaction(accountId, transaction));
+    dispatch(actions.removeTransactionById(accountId, transaction));
   };
 
   return (

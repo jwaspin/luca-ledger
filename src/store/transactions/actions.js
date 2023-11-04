@@ -3,19 +3,20 @@ import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 
 import config from '@/config';
-import { reducers, constants } from '@/store/transactions';
+import { TransactionStatusEnum } from './constants';
 import { generateTransaction } from './generators';
+import { addTransaction, removeTransaction, updateTransaction } from './slice';
 
 export const createNewTransaction = (accountId) => (dispatch) => {
   const newTransaction = generateTransaction(
     uuidv4(),
-    constants.TransactionStatusEnum.PLANNED,
+    TransactionStatusEnum.PLANNED,
     dayjs().format(config.dateFormatString),
     0.0,
-    ''
+    'Enter transaction description'
   );
   const actionPayload = { accountId, transaction: newTransaction };
-  dispatch(reducers.addTransaction(actionPayload));
+  dispatch(addTransaction(actionPayload));
 };
 
 export const createRepeatTransaction = createAsyncThunk(
@@ -46,7 +47,7 @@ export const createRepeatTransaction = createAsyncThunk(
         firstTransaction.description = description;
 
         let firstActionPayload = { accountId, transaction: firstTransaction };
-        dispatch(reducers.addTransaction(firstActionPayload));
+        dispatch(addTransaction(firstActionPayload));
 
         // Create transaction for the 15th of the month
         let secondTransactionDate = nextDate.date(15);
@@ -57,7 +58,7 @@ export const createRepeatTransaction = createAsyncThunk(
         secondTransaction.description = description;
 
         let secondActionPayload = { accountId, transaction: secondTransaction };
-        dispatch(reducers.addTransaction(secondActionPayload));
+        dispatch(addTransaction(secondActionPayload));
 
         // Advance to the next month
         nextDate = nextDate.add(1, 'month');
@@ -69,7 +70,7 @@ export const createRepeatTransaction = createAsyncThunk(
         newTransaction.description = description;
 
         const actionPayload = { accountId, transaction: newTransaction };
-        dispatch(reducers.addTransaction(actionPayload));
+        dispatch(addTransaction(actionPayload));
 
         if (frequency === 'Days') {
           nextDate = nextDate.add(frequencyCount, 'day');
@@ -98,10 +99,10 @@ export const updateTransactionProperty =
       [property]: value,
     };
     const actionPayload = { accountId, updatedTransaction };
-    dispatch(reducers.updateTransaction(actionPayload)); // Assuming you have an updateTransaction action
+    dispatch(updateTransaction(actionPayload)); // Assuming you have an updateTransaction action
   };
 
-export const removeTransaction = (accountId, transaction) => (dispatch) => {
+export const removeTransactionById = (accountId, transaction) => (dispatch) => {
   const actionPayload = { accountId, transactionId: transaction.id };
-  dispatch(reducers.removeTransaction(actionPayload));
+  dispatch(removeTransaction(actionPayload));
 };
