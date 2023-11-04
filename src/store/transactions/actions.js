@@ -5,6 +5,7 @@ import { v4 as uuid } from 'uuid';
 import config from '@/config';
 import { TransactionStatusEnum } from './constants';
 import { generateTransaction } from './generators';
+import schemas from './schemas';
 import { addTransaction, removeTransaction, updateTransaction } from './slice';
 
 export const createNewTransaction = (accountId) => (dispatch) => {
@@ -15,8 +16,7 @@ export const createNewTransaction = (accountId) => (dispatch) => {
     0.0,
     'Enter transaction description'
   );
-  const actionPayload = { accountId, transaction: newTransaction };
-  dispatch(addTransaction(actionPayload));
+  dispatch(addTransaction({ accountId, transaction: newTransaction }));
 };
 
 export const createRepeatTransaction = createAsyncThunk(
@@ -63,14 +63,15 @@ export const createRepeatTransaction = createAsyncThunk(
         // Advance to the next month
         nextDate = nextDate.add(1, 'month');
       } else {
-        const newTransaction = createNewTransaction(
-          nextDate.format(config.dateFormatString)
+        const newTransaction = generateTransaction(
+          uuid(),
+          TransactionStatusEnum.PLANNED,
+          nextDate.format(config.dateFormatString),
+          amount,
+          description
         );
-        newTransaction.amount = amount;
-        newTransaction.description = description;
-
-        const actionPayload = { accountId, transaction: newTransaction };
-        dispatch(addTransaction(actionPayload));
+        schemas.transaction.validateSync(newTransaction);
+        dispatch(addTransaction({ accountId, transaction: newTransaction }));
 
         if (frequency === 'Days') {
           nextDate = nextDate.add(frequencyCount, 'day');
