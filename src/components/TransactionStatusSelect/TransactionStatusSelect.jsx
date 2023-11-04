@@ -4,10 +4,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import {
-  TransactionStatusEnum,
-  updateTransaction,
-} from '@/store/transactionsSlice';
+import { actions, constants } from '@/store/transactions';
 
 export default function TransactionStatusSelect({ transaction }) {
   const dispatch = useDispatch();
@@ -15,12 +12,16 @@ export default function TransactionStatusSelect({ transaction }) {
   const [status, setStatus] = useState(transaction.status);
 
   const handleChange = (event) => {
-    const newStatus = event.target.value;
-    const newTransaction = { ...transaction };
-    newTransaction.status = newStatus;
-    const actionPayload = { accountId, transaction: newTransaction };
-    dispatch(updateTransaction(actionPayload));
-    setStatus(newStatus);
+    const { value } = event.target;
+    dispatch(
+      actions.updateTransactionProperty(
+        accountId,
+        transaction,
+        constants.TransactionFields.STATUS,
+        value
+      )
+    );
+    setStatus(value);
   };
 
   return (
@@ -37,13 +38,13 @@ export default function TransactionStatusSelect({ transaction }) {
         label='Status'
         onChange={handleChange}
       >
-        {Object.keys(TransactionStatusEnum).map((key) => {
+        {Object.keys(constants.TransactionStatusEnum).map((key) => {
           return (
             <MenuItem
               key={key}
-              value={TransactionStatusEnum[key]}
+              value={constants.TransactionStatusEnum[key]}
             >
-              {TransactionStatusEnum[key]}
+              {constants.TransactionStatusEnum[key]}
             </MenuItem>
           );
         })}

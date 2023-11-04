@@ -1,59 +1,23 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 import config from '@/config';
+import { TransactionStatusEnum } from './constants';
+import { generateTransaction } from './generators';
+import schemas from './schemas';
+import { addTransaction, removeTransaction, updateTransaction } from './slice';
 
-export const TransactionStatusEnum = Object.freeze({
-  PENDING: 'pending ',
-  COMPLETE: 'complete ',
-  SCHEDULED: 'scheduled ',
-  PLANNED: 'planned ',
-});
-
-export const transactionsSlice = createSlice({
-  name: 'transactions',
-  reducers: {
-    addTransaction: (state, action) => {
-      state.transactions.push(action.payload);
-    },
-    updateTransaction: (state, action) => {
-      const updatedTransaction = action.payload.transaction;
-      const updatedTransactions = state.transactions.map((transaction) =>
-        transaction.id === updatedTransaction.id
-          ? { ...transaction, ...updatedTransaction }
-          : transaction
-      );
-      state.transactions = updatedTransactions;
-    },
-    removeTransaction: (state, action) => {
-      const { transactionId } = action.payload;
-      return state.transactions.filter(
-        (transaction) => transaction.id !== transactionId
-      );
-    },
-  },
-});
-
-export const { addTransaction, updateTransaction, removeTransaction } =
-  transactionsSlice.actions;
-
-const generateTransactionObject = (id, status, date, amount, description) => ({
-  id,
-  status,
-  date,
-  amount,
-  description,
-});
-
-export const createNewTransaction = (date = null) =>
-  generateTransactionObject(
-    uuidv4(),
+export const createNewTransaction = (accountId) => (dispatch) => {
+  const newTransaction = generateTransaction(
+    uuid(),
     TransactionStatusEnum.PLANNED,
-    date || dayjs().format(config.dateFormatString),
+    dayjs().format(config.dateFormatString),
     0.0,
-    ''
+    'Enter transaction description'
   );
+  dispatch(addTransaction({ accountId, transaction: newTransaction }));
+};
 
 export const createRepeatTransaction = createAsyncThunk(
   'transactions/createRepeat',
@@ -99,14 +63,15 @@ export const createRepeatTransaction = createAsyncThunk(
         // Advance to the next month
         nextDate = nextDate.add(1, 'month');
       } else {
-        const newTransaction = createNewTransaction(
-          nextDate.format(config.dateFormatString)
+        const newTransaction = generateTransaction(
+          uuid(),
+          TransactionStatusEnum.PLANNED,
+          nextDate.format(config.dateFormatString),
+          amount,
+          description
         );
-        newTransaction.amount = amount;
-        newTransaction.description = description;
-
-        const actionPayload = { accountId, transaction: newTransaction };
-        dispatch(addTransaction(actionPayload));
+        schemas.transaction.validateSync(newTransaction);
+        dispatch(addTransaction({ accountId, transaction: newTransaction }));
 
         if (frequency === 'Days') {
           nextDate = nextDate.add(frequencyCount, 'day');
@@ -127,3 +92,18 @@ export const createRepeatTransaction = createAsyncThunk(
     }
   }
 );
+
+export const updateTransactionProperty =
+  (accountId, transaction, property, value) => (dispatch) => {
+    const updatedTransaction = {
+      ...transaction,
+      [property]: value,
+    };
+    const actionPayload = { accountId, transaction: updatedTransaction };
+    dispatch(updateTransaction(actionPayload)); // Assuming you have an updateTransaction action
+  };
+
+export const removeTransactionById = (accountId, transaction) => (dispatch) => {
+  const actionPayload = { accountId, transactionId: transaction.id };
+  dispatch(removeTransaction(actionPayload));
+};

@@ -10,16 +10,22 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { AccountType, editAccountType } from '@/store/accountsSlice';
+import { actions, constants } from '@/store/accounts';
 
 export default function AccountTypeDisplay({ account }) {
   const [type, setType] = useState(account.type);
   const dispatch = useDispatch();
 
   const handleChange = (event) => {
-    const accountType = event.target.value;
-    setType(accountType);
-    dispatch(editAccountType(account.id, accountType));
+    const { value } = event.target;
+    setType(value);
+    dispatch(
+      actions.updateAccountProperty(
+        account,
+        constants.AccountFields.TYPE,
+        value
+      )
+    );
   };
 
   return (
@@ -34,12 +40,12 @@ export default function AccountTypeDisplay({ account }) {
           label='Account Type'
           onChange={handleChange}
         >
-          {Object.keys(AccountType).map((key) => (
+          {Object.keys(constants.AccountType).map((key) => (
             <MenuItem
               key={key}
-              value={AccountType[key]}
+              value={constants.AccountType[key]}
             >
-              {AccountType[key]}
+              {constants.AccountType[key]}
             </MenuItem>
           ))}
         </Select>

@@ -1,12 +1,12 @@
 import { Button } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
-import { createNewAccount } from '@/store/accountsSlice';
+import { actions } from '@/store/accounts';
 
 export default function CreateNewButton() {
   const dispatch = useDispatch();
   const handleCreateAccount = () => {
-    dispatch(createNewAccount());
+    dispatch(actions.createNewAccount());
   };
 
   return (
