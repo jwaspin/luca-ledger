@@ -98,7 +98,7 @@ export const updateTransactionProperty =
       ...transaction,
       [property]: value,
     };
-    const actionPayload = { accountId, updatedTransaction };
+    const actionPayload = { accountId, transaction: updatedTransaction };
     dispatch(updateTransaction(actionPayload)); // Assuming you have an updateTransaction action
   };
 
