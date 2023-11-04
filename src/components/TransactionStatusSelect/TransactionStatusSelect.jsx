@@ -14,7 +14,12 @@ export default function TransactionStatusSelect({ transaction }) {
   const handleChange = (event) => {
     const { value } = event.target;
     dispatch(
-      actions.updateTransactionProperty(accountId, transaction, 'status', value)
+      actions.updateTransactionProperty(
+        accountId,
+        transaction,
+        constants.TransactionFields.STATUS,
+        value
+      )
     );
     setStatus(value);
   };
