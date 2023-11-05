@@ -15,6 +15,7 @@ export default function DateCell({ transaction }) {
   const { accountId } = useParams();
   const [edit, setEdit] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [typingTimeout, setTypingTimeout] = useState(null);
   const [dateValue, setDateValue] = useState(
     dayjs(transaction.date, config.dateFormatString)
   );
@@ -43,8 +44,26 @@ export default function DateCell({ transaction }) {
   };
 
   const handleChange = (value) => {
-    setDateValue(value);
-    handleSave(value);
+    clearTimeout(typingTimeout);
+    setTypingTimeout(null);
+    if (value.isValid()) {
+      setDateValue(value);
+      handleSave(value);
+    }
+  };
+
+  const handleTypingChange = (value) => {
+    clearTimeout(typingTimeout);
+    setTypingTimeout(
+      setTimeout(() => {
+        handleChange(value);
+      }, 2000)
+    );
+  };
+
+  const handleAccept = (value) => {
+    clearTimeout(typingTimeout);
+    handleChange(value);
   };
 
   const buttonStyle = {
@@ -55,9 +74,10 @@ export default function DateCell({ transaction }) {
   const editComponent = (
     <Box style={{ display: 'flex', flexDirection: 'column' }}>
       <DatePicker
-        value={dateValue}
-        onChange={handleChange}
         open={isOpen}
+        value={dateValue}
+        onAccept={handleAccept}
+        onChange={handleTypingChange}
       />
       <Box style={{ display: 'flex', flexDirection: 'row' }}>
         <Button
