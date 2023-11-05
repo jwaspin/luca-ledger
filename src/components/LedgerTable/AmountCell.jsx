@@ -27,22 +27,41 @@ export default function AmountCell({ transaction }) {
     parseFloatDoublePrecision(transaction.amount)
   );
 
+  const validNumberRegex = /^-?\d+(\.\d{1,2})?$|^-?\.\d{1,2}$|^-?\d+\.$|^-?$/;
+
   const handleChange = (event) => {
     const { value } = event.target;
-    setValue(parseFloatDoublePrecision(value));
+    if (value === '-') {
+      setValue(value);
+    } else if (value === '') {
+      setValue(value);
+    } else if (validNumberRegex.test(value)) {
+      console.log('valid input');
+      setValue(value);
+    } else {
+      console.log('invalid input', value);
+    }
   };
 
   const handleSave = () => {
-    console.log('handleSave');
-    dispatch(
-      actions.updateTransactionProperty(
-        accountId,
-        transaction,
-        constants.TransactionFields.AMOUNT,
-        value
-      )
-    );
-    setEdit(false);
+    let newValue = value;
+    if (newValue === '') {
+      newValue = 0;
+    } else if (newValue === '-') {
+      newValue = 0;
+    }
+    if (validNumberRegex.test(newValue)) {
+      newValue = parseFloatDoublePrecision(newValue);
+      dispatch(
+        actions.updateTransactionProperty(
+          accountId,
+          transaction,
+          constants.TransactionFields.AMOUNT,
+          newValue
+        )
+      );
+      setEdit(false);
+    }
   };
 
   const handleCancel = () => {
@@ -72,7 +91,7 @@ export default function AmountCell({ transaction }) {
         <>
           <TextField
             variant='filled'
-            type='number'
+            type='text'
             value={value}
             inputRef={inputRef}
             onChange={handleChange}
