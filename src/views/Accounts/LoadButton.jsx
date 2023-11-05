@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
-import { loadAccountAsync } from '@/store/accountsSlice';
+import { actions } from '@/store/accounts';
 
 export default function LoadButton() {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ export default function LoadButton() {
     <Button
       variant='contained'
       color='primary'
-      onClick={() => dispatch(loadAccountAsync())}
+      onClick={() => dispatch(actions.loadAccountAsync())}
     >
       Load Account
     </Button>

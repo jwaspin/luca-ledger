@@ -1,4 +1,4 @@
-import { Button, TableCell } from '@mui/material';
+import { Box, Button, TableCell, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
@@ -7,21 +7,29 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import config from '@/config';
-import { updateTransaction } from '@/store/transactionsSlice';
+import { actions, constants } from '@/store/transactions';
+import { Cancel, Check } from '@mui/icons-material';
 
 export default function DateCell({ transaction }) {
   const dispatch = useDispatch();
   const { accountId } = useParams();
   const [edit, setEdit] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [typingTimeout, setTypingTimeout] = useState(null);
   const [dateValue, setDateValue] = useState(
     dayjs(transaction.date, config.dateFormatString)
   );
 
-  const handleSave = () => {
-    const newTransaction = { ...transaction };
-    newTransaction.date = dateValue.format(config.dateFormatString);
-    const actionPayload = { accountId, transaction: newTransaction };
-    dispatch(updateTransaction(actionPayload));
+  const handleSave = (value) => {
+    dispatch(
+      actions.updateTransactionProperty(
+        accountId,
+        transaction,
+        constants.TransactionFields.DATE,
+        value.format(config.dateFormatString)
+      )
+    );
+    setIsOpen(false);
     setEdit(false);
   };
 
@@ -30,38 +38,75 @@ export default function DateCell({ transaction }) {
     setEdit(false);
   };
 
-  if (edit) {
-    return (
-      <TableCell>
-        <DatePicker
-          value={dateValue}
-          onChange={(newValue) => setDateValue(newValue)}
-        />
+  const handleEdit = () => {
+    setEdit(true);
+    setIsOpen(true);
+  };
+
+  const handleChange = (value) => {
+    clearTimeout(typingTimeout);
+    setTypingTimeout(null);
+    if (value.isValid()) {
+      setDateValue(value);
+      handleSave(value);
+    }
+  };
+
+  const handleTypingChange = (value) => {
+    clearTimeout(typingTimeout);
+    setTypingTimeout(
+      setTimeout(() => {
+        handleChange(value);
+      }, 2000)
+    );
+  };
+
+  const handleAccept = (value) => {
+    clearTimeout(typingTimeout);
+    handleChange(value);
+  };
+
+  const buttonStyle = {
+    height: '30px',
+    width: '75px',
+  };
+
+  const editComponent = (
+    <Box style={{ display: 'flex', flexDirection: 'column' }}>
+      <DatePicker
+        open={isOpen}
+        value={dateValue}
+        onAccept={handleAccept}
+        onChange={handleTypingChange}
+      />
+      <Box style={{ display: 'flex', flexDirection: 'row' }}>
         <Button
           variant='contained'
-          onClick={handleSave}
+          style={buttonStyle}
+          onClick={() => handleSave(dateValue)}
         >
-          Save
+          <Check />
         </Button>
         <Button
           variant='outlined'
+          style={buttonStyle}
           onClick={handleCancel}
         >
-          Cancel
+          <Cancel />
         </Button>
-      </TableCell>
-    );
-  }
+      </Box>
+    </Box>
+  );
 
   return (
-    <TableCell
-      style={{
-        cursor: 'pointer',
-        width: '150px',
-      }}
-      onClick={() => setEdit(true)}
-    >
-      {dateValue.format('MMM DD YYYY')}
+    <TableCell style={{ cursor: 'pointer', width: '160px' }}>
+      {edit ? (
+        editComponent
+      ) : (
+        <Typography onClick={handleEdit}>
+          {dateValue.format('MMM DD YYYY')}
+        </Typography>
+      )}
     </TableCell>
   );
 }

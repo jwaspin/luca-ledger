@@ -1,7 +1,7 @@
 import { TableRow } from '@mui/material';
 import PropTypes from 'prop-types';
 
-import { TransactionStatusEnum } from '@/store/transactionsSlice';
+import { constants } from '@/store/transactions';
 import AmountCell from './AmountCell';
 import BalanceCell from './BalanceCell';
 import DateCell from './DateCell';
@@ -11,13 +11,13 @@ import StatusCell from './StatusCell';
 
 const setBgColor = (status) => {
   switch (status) {
-    case TransactionStatusEnum.COMPLETE:
+    case constants.TransactionStatusEnum.COMPLETE:
       return 'lightgray';
-    case TransactionStatusEnum.PENDING:
+    case constants.TransactionStatusEnum.PENDING:
       return 'yellow';
-    case TransactionStatusEnum.PLANNED:
+    case constants.TransactionStatusEnum.PLANNED:
       return 'lightgreen';
-    case TransactionStatusEnum.SCHEDULED:
+    case constants.TransactionStatusEnum.SCHEDULED:
       return 'lightblue';
     default:
       return 'white';

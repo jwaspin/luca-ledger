@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import config from '@/config';
-import { selectAccountById } from '@/store/accountsSlice';
+import { selectors } from '@/store/accounts';
 import LedgerHeader from './LedgerHeader';
 import LedgerRow from './LedgerRow';
 import MonthSeparatorRow from './MonthSeparatorRow';
@@ -31,7 +31,7 @@ const dateCompareFn = (a, b) => {
 
 export default function LedgerTable() {
   const { accountId } = useParams();
-  const account = useSelector(selectAccountById(accountId));
+  const account = useSelector(selectors.selectAccountById(accountId));
   const { transactions } = account;
 
   let currentBalance = 0.0;

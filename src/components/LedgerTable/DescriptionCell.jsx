@@ -1,22 +1,28 @@
 import { Box, Button, TableCell, TextField, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { updateTransaction } from '@/store/transactionsSlice';
+import { actions, constants } from '@/store/transactions';
+import { Cancel, Check } from '@mui/icons-material';
 
 export default function DescriptionCell({ transaction }) {
   const dispatch = useDispatch();
   const { accountId } = useParams();
+  const inputRef = useRef(null);
   const [edit, setEdit] = useState(false);
   const [description, setDescription] = useState(transaction.description);
 
   const handleSave = () => {
-    const newTransaction = { ...transaction };
-    newTransaction.description = description;
-    const actionPayload = { accountId, transaction: newTransaction };
-    dispatch(updateTransaction(actionPayload));
+    dispatch(
+      actions.updateTransactionProperty(
+        accountId,
+        transaction,
+        constants.TransactionFields.DESCRIPTION,
+        description
+      )
+    );
     setEdit(false);
   };
 
@@ -25,33 +31,57 @@ export default function DescriptionCell({ transaction }) {
     setEdit(false);
   };
 
+  const handleEdit = () => {
+    if (description === 'Enter transaction description') {
+      setDescription('');
+    }
+    setEdit(true);
+    setTimeout(() => {
+      inputRef.current.focus();
+    }, 0);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSave();
+    } else if (event.key === 'Escape') {
+      handleCancel();
+    }
+  };
+
+  const buttonStyle = { height: '40px', width: '75px' };
+
   return (
     <TableCell style={{ width: '500px' }}>
       {edit ? (
-        <Box>
+        <Box style={{ display: 'flex', alignItems: 'center' }}>
           <TextField
             variant='filled'
             value={description}
             onChange={(event) => setDescription(event.target.value)}
+            onKeyDown={handleKeyPress}
+            inputRef={inputRef}
           />
           <Button
             variant='contained'
+            style={buttonStyle}
             onClick={handleSave}
           >
-            Save
+            <Check />
           </Button>
           <Button
             variant='outlined'
+            style={buttonStyle}
             onClick={handleCancel}
           >
-            Cancel
+            <Cancel />
           </Button>
         </Box>
       ) : (
         <Typography
           variant='body1'
           style={{ cursor: 'pointer' }}
-          onClick={() => setEdit(true)}
+          onClick={handleEdit}
         >
           {transaction.description === ''
             ? 'Enter description here'
