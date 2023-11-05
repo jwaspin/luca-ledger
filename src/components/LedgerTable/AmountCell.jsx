@@ -36,10 +36,7 @@ export default function AmountCell({ transaction }) {
     } else if (value === '') {
       setValue(value);
     } else if (validNumberRegex.test(value)) {
-      console.log('valid input');
       setValue(value);
-    } else {
-      console.log('invalid input', value);
     }
   };
 
