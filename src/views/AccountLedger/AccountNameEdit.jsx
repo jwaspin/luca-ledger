@@ -15,16 +15,24 @@ export default function AccountNameEdit({ account, setIsEditing }) {
     setName(e.target.value);
   };
 
-  const handleCancelClick = () => {
+  const handleCancel = () => {
     setName(account.name);
     setIsEditing(false);
   };
 
-  const handleSaveClick = () => {
+  const handleSave = () => {
     dispatch(
       actions.updateAccountProperty(account, constants.AccountFields.NAME, name)
     );
     setIsEditing(false);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSave();
+    } else if (event.key === 'Escape') {
+      handleCancel();
+    }
   };
 
   return (
@@ -38,11 +46,12 @@ export default function AccountNameEdit({ account, setIsEditing }) {
       <TextField
         value={name}
         onChange={handleNameChange}
+        onKeyDown={handleKeyPress}
       />
-      <Button onClick={handleSaveClick}>
+      <Button onClick={handleSave}>
         <SaveIcon />
       </Button>
-      <Button onClick={handleCancelClick}>
+      <Button onClick={handleCancel}>
         <CancelIcon />
       </Button>
     </Box>
