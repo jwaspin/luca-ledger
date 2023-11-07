@@ -32,6 +32,20 @@ export default function AppHeader() {
               }}
             />
           </Link>
+          <StyledLink to='/dashboard'>
+            <Typography
+              variant='body2'
+              style={{
+                display: 'block',
+                marginLeft: '50px',
+                fontSize: '1.5rem',
+                fontWeight: 'bold',
+                color: 'white',
+              }}
+            >
+              Dashboard
+            </Typography>
+          </StyledLink>
           <StyledLink to='/accounts'>
             <Typography
               variant='body2'
