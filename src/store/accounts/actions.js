@@ -19,6 +19,10 @@ export const createNewAccount = () => (dispatch) => {
   );
 };
 
+export const loadAccount = (account) => (dispatch) => {
+  dispatch(addAccount(account));
+};
+
 const loadAccountFromFile = async () => {
   const [fileHandle] = await window.showOpenFilePicker();
   const file = await fileHandle.getFile();
