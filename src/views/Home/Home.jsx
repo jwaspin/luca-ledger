@@ -21,9 +21,15 @@ export default function Home() {
       </Typography>
       <Typography
         variant='body1'
-        style={{ width: '75%', textAlign: 'justify' }}
+        style={{ width: '75%', textAlign: 'justify', marginBottom: '50px' }}
       >
         {config.homeText}
+      </Typography>
+      <Typography
+        variant='body1'
+        style={{ width: '75%', textAlign: 'justify' }}
+      >
+        {config.lucaBio}
       </Typography>
     </Box>
   );
