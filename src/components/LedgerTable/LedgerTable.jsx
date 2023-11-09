@@ -6,6 +6,7 @@ import {
   TableHead,
 } from '@mui/material';
 import dayjs from 'dayjs';
+import PropTypes from 'prop-types';
 import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -29,7 +30,7 @@ const dateCompareFn = (a, b) => {
   return 0;
 };
 
-export default function LedgerTable() {
+export default function LedgerTable({ filterValue }) {
   const { accountId } = useParams();
   const account = useSelector(selectors.selectAccountById(accountId));
   const { transactions } = account;
@@ -47,6 +48,12 @@ export default function LedgerTable() {
         <TableBody>
           {[...transactions].sort(dateCompareFn).map((row) => {
             currentBalance += parseFloat(row.amount);
+            if (
+              filterValue &&
+              !row.description.toLowerCase().includes(filterValue.toLowerCase())
+            ) {
+              return null;
+            }
             const transactionDate = dayjs(row.date);
             const transactionMonth = transactionDate.format('MMMM YYYY');
             const statementMonth =
@@ -91,3 +98,7 @@ export default function LedgerTable() {
     </TableContainer>
   );
 }
+
+LedgerTable.propTypes = {
+  filterValue: PropTypes.string,
+};
