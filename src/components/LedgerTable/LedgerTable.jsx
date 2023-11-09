@@ -11,10 +11,10 @@ import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
+import LedgerRow from '@/components/LedgerRow';
 import config from '@/config';
 import { selectors } from '@/store/accounts';
 import LedgerHeader from './LedgerHeader';
-import LedgerRow from './LedgerRow';
 import MonthSeparatorRow from './MonthSeparatorRow';
 import StatementSeparatorRow from './StatementSeparatorRow';
 
