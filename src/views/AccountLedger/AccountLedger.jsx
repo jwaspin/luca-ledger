@@ -1,5 +1,5 @@
-import { Box } from '@mui/material';
-import { useEffect } from 'react';
+import { Box, TextField } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -15,6 +15,7 @@ import NewTransactionButton from './NewTransactionButton';
 export default function AccountLedger() {
   const { accountId } = useParams();
   const navigate = useNavigate();
+  const [filterValue, setFilterValue] = useState('');
   const account = useSelector(selectors.selectAccountById(accountId));
 
   useEffect(() => {
@@ -101,13 +102,24 @@ export default function AccountLedger() {
             balance={futureBalance}
           />
         </Box>
+        <Box>
+          <TextField
+            id='filter'
+            label='Filter'
+            value={filterValue}
+            onChange={(e) => setFilterValue(e.target.value)}
+            variant='outlined'
+            size='small'
+            sx={{ width: '100%' }}
+          />
+        </Box>
         <Box
           sx={{
             height: 'calc(100vh - 330px)',
             overflowY: 'scroll',
           }}
         >
-          <LedgerTable />
+          <LedgerTable filterValue={filterValue} />
         </Box>
         <NewTransactionButton />
         <RepeatedTransactionsModal />
