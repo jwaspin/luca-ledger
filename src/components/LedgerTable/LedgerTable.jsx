@@ -7,37 +7,46 @@ import {
 } from '@mui/material';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
-import { Fragment } from 'react';
+import { Fragment, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import LedgerRow from '@/components/LedgerRow';
-import config from '@/config';
 import { selectors } from '@/store/accounts';
 import LedgerHeader from './LedgerHeader';
 import MonthSeparatorRow from './MonthSeparatorRow';
 import StatementSeparatorRow from './StatementSeparatorRow';
-
-const dateCompareFn = (a, b) => {
-  const aDate = dayjs(a.date).format(config.compareDateFormatString);
-  const bDate = dayjs(b.date).format(config.compareDateFormatString);
-  if (aDate < bDate) {
-    return -1;
-  }
-  if (aDate > bDate) {
-    return 1;
-  }
-  return 0;
-};
+import { dateCompareFn, computeStatementMonth } from './utils';
 
 export default function LedgerTable({ filterValue }) {
   const { accountId } = useParams();
   const account = useSelector(selectors.selectAccountById(accountId));
   const { transactions } = account;
 
-  let currentBalance = 0.0;
   let previousMonth = null;
   let previousStatementMonth = null;
+
+  const sortedTransactions = useMemo(
+    () => [...transactions].sort(dateCompareFn),
+    [transactions]
+  );
+
+  const transactionsWithBalance = useMemo(() => {
+    let currentBalance = 0.0;
+    return sortedTransactions.map((transaction) => {
+      currentBalance += transaction.amount;
+      return { ...transaction, balance: currentBalance };
+    });
+  }, [sortedTransactions]);
+
+  const filteredTransactions = useMemo(() => {
+    if (!filterValue) {
+      return transactionsWithBalance;
+    }
+    return transactionsWithBalance.filter((transaction) =>
+      transaction.description.toLowerCase().includes(filterValue.toLowerCase())
+    );
+  }, [filterValue, transactionsWithBalance]);
 
   return (
     <TableContainer component={Paper}>
@@ -46,20 +55,10 @@ export default function LedgerTable({ filterValue }) {
           <LedgerHeader />
         </TableHead>
         <TableBody>
-          {[...transactions].sort(dateCompareFn).map((row) => {
-            currentBalance += parseFloat(row.amount);
-            if (
-              filterValue &&
-              !row.description.toLowerCase().includes(filterValue.toLowerCase())
-            ) {
-              return null;
-            }
+          {filteredTransactions.map((row) => {
             const transactionDate = dayjs(row.date);
             const transactionMonth = transactionDate.format('MMMM YYYY');
-            const statementMonth =
-              transactionDate.date() >= account.statementDay
-                ? transactionDate.add(1, 'month').format('MMMM YYYY')
-                : transactionDate.format('MMMM YYYY');
+            const statementMonth = computeStatementMonth(row.date);
 
             let monthSeparator = null;
             if (transactionMonth !== previousMonth) {
@@ -88,7 +87,7 @@ export default function LedgerTable({ filterValue }) {
                 <LedgerRow
                   key={row.id}
                   row={row}
-                  balance={currentBalance}
+                  balance={row.balance}
                 />
               </Fragment>
             );
