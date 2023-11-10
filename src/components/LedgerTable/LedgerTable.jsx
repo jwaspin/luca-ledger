@@ -85,14 +85,6 @@ export default function LedgerTable({ filterValue }) {
         <TableBody>
           {filteredTransactions.map((transaction, index) => (
             <Fragment key={transaction.id}>
-              {index > 0 &&
-                account.type === constants.AccountType.CREDIT_CARD && (
-                  <StatementSeparatorRow
-                    statementDay={account.statementDay}
-                    transaction={transaction}
-                    previousTransaction={getPreviousTransaction(index)}
-                  />
-                )}
               <MonthSeparatorRow
                 transaction={transaction}
                 previousTransaction={getPreviousTransaction(index)}
@@ -103,6 +95,14 @@ export default function LedgerTable({ filterValue }) {
                   toggleGroupCollapse(getMonthIdentifier(transaction.date))
                 }
               />
+              {index > 0 &&
+                account.type === constants.AccountType.CREDIT_CARD && (
+                  <StatementSeparatorRow
+                    statementDay={account.statementDay}
+                    transaction={transaction}
+                    previousTransaction={getPreviousTransaction(index)}
+                  />
+                )}
               {!collapsedGroups.includes(
                 getMonthIdentifier(transaction.date)
               ) && (
