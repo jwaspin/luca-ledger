@@ -1,54 +1,85 @@
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
-import { actions, constants } from '@/store/accounts';
 import AccountTypePicker from '@/components/AccountTypePicker';
+import StatementDayInput from '@/components/StatementDayInput';
+import BalanceDisplay from '@/components/BalanceDisplay';
+import { SettingsPanelItem } from './SettingsPanelItem';
 
 export default function SettingsPanel({ account }) {
-  const dispatch = useDispatch();
-  const [statementDay, setStatementDay] = useState(account.statementDay || 1);
+  const { transactions } = account;
 
-  const updateStatementDay = (value) => {
-    let newValue = null;
-    if (value === '') {
-      newValue = 1;
-    } else {
-      newValue = parseInt(value);
-    }
-    if (newValue < 1) {
-      newValue = 1;
-    } else if (newValue > 28) {
-      newValue = 28;
-    }
-    setStatementDay(newValue);
-    dispatch(
-      actions.updateAccountProperty(
-        account,
-        constants.AccountFields.STATEMENT_DAY,
-        newValue
-      )
-    );
-  };
+  const completedBalance = transactions
+    .filter((transaction) => transaction.status === 'complete ')
+    .reduce((acc, transaction) => acc + Number(transaction.amount), 0);
+
+  const pendingBalance = transactions
+    .filter((transaction) =>
+      ['complete ', 'pending '].includes(transaction.status)
+    )
+    .reduce((acc, transaction) => acc + Number(transaction.amount), 0);
+
+  const scheduledBalance = transactions
+    .filter((transaction) =>
+      ['complete ', 'pending ', 'scheduled '].includes(transaction.status)
+    )
+    .reduce((acc, transaction) => acc + Number(transaction.amount), 0);
+
+  const futureBalance = transactions.reduce(
+    (acc, transaction) => acc + Number(transaction.amount),
+    0
+  );
 
   return (
-    <Box sx={{ width: '20%', padding: '5px', borderRight: '1px solid black' }}>
+    <Box
+      sx={{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       <Typography
         variant='h6'
-        sx={{ textAlign: 'center', borderBottom: '1px solid black' }}
+        sx={{
+          textAlign: 'center',
+          borderBottom: '1px solid black',
+          width: '100%',
+        }}
       >
         Ledger Settings
       </Typography>
-      <Box sx={{ marginTop: '10px' }}>
-        <AccountTypePicker account={account} />
-        <TextField
-          label='Statement Day'
-          type='number'
-          value={statementDay}
-          onChange={(e) => updateStatementDay(e.target.value)}
-          style={{ width: '125px' }}
-        />
+      <Box>
+        <SettingsPanelItem>
+          <AccountTypePicker account={account} />
+        </SettingsPanelItem>
+        <SettingsPanelItem>
+          <StatementDayInput account={account} />
+        </SettingsPanelItem>
+        <SettingsPanelItem>
+          <BalanceDisplay
+            label='Current Balance'
+            balance={completedBalance}
+          />
+        </SettingsPanelItem>
+        <SettingsPanelItem>
+          <BalanceDisplay
+            label='Pending Balance'
+            balance={pendingBalance}
+          />
+        </SettingsPanelItem>
+        <SettingsPanelItem>
+          <BalanceDisplay
+            label='Scheduled Balance'
+            balance={scheduledBalance}
+          />
+        </SettingsPanelItem>
+        <SettingsPanelItem>
+          <BalanceDisplay
+            label='Future Balance'
+            balance={futureBalance}
+          />
+        </SettingsPanelItem>
       </Box>
     </Box>
   );

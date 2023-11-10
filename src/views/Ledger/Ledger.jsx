@@ -3,12 +3,11 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import SettingsPanel from '@/components/SettingsPanel';
 import LedgerTable from '@/components/LedgerTable';
 import RepeatedTransactionsModal from '@/components/RepeatedTransactionsModal';
-import { constants, selectors } from '@/store/accounts';
+import SettingsPanel from '@/components/SettingsPanel';
+import { selectors } from '@/store/accounts';
 import AccountName from './AccountName';
-import BalanceDisplay from './BalanceDisplay';
 import NewTransactionButton from './NewTransactionButton';
 
 export default function Ledger() {
@@ -27,29 +26,6 @@ export default function Ledger() {
     return null;
   }
 
-  const { transactions } = account;
-
-  const completedBalance = transactions
-    .filter((transaction) => transaction.status === 'complete ')
-    .reduce((acc, transaction) => acc + Number(transaction.amount), 0);
-
-  const pendingBalance = transactions
-    .filter((transaction) =>
-      ['complete ', 'pending '].includes(transaction.status)
-    )
-    .reduce((acc, transaction) => acc + Number(transaction.amount), 0);
-
-  const scheduledBalance = transactions
-    .filter((transaction) =>
-      ['complete ', 'pending ', 'scheduled '].includes(transaction.status)
-    )
-    .reduce((acc, transaction) => acc + Number(transaction.amount), 0);
-
-  const futureBalance = transactions.reduce(
-    (acc, transaction) => acc + Number(transaction.amount),
-    0
-  );
-
   return (
     <Box
       sx={{
@@ -60,10 +36,17 @@ export default function Ledger() {
         justifyContent: 'space-around',
       }}
     >
-      {account.type === constants.AccountType.CREDIT_CARD && (
+      <Box
+        sx={{
+          width: '18%',
+          padding: '5px',
+          height: '100%',
+          borderRight: '1px solid black',
+        }}
+      >
         <SettingsPanel account={account} />
-      )}
-      <Box sx={{ width: '70%', padding: '5px' }}>
+      </Box>
+      <Box sx={{ width: '82%', padding: '5px' }}>
         <Box
           style={{
             display: 'flex',
@@ -82,24 +65,7 @@ export default function Ledger() {
             paddingLeft: '50px',
             paddingRight: '50px',
           }}
-        >
-          <BalanceDisplay
-            label='Current Balance'
-            balance={completedBalance}
-          />
-          <BalanceDisplay
-            label='Pending Balance'
-            balance={pendingBalance}
-          />
-          <BalanceDisplay
-            label='Scheduled Balance'
-            balance={scheduledBalance}
-          />
-          <BalanceDisplay
-            label='Future Balance'
-            balance={futureBalance}
-          />
-        </Box>
+        ></Box>
         <Box>
           <TextField
             id='filter'
