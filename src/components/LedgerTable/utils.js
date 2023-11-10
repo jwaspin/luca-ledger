@@ -14,9 +14,9 @@ export const dateCompareFn = (a, b) => {
   return 0;
 };
 
-export const computeStatementMonth = (row, account) => {
-  const transactionDate = dayjs(row.date);
-  return transactionDate.date() >= account.statementDay
+export const computeStatementMonth = (transaction, statementDay) => {
+  const transactionDate = dayjs(transaction.date);
+  return transactionDate.date() >= statementDay
     ? transactionDate.add(1, 'month').format('MMMM YYYY')
     : transactionDate.format('MMMM YYYY');
 };

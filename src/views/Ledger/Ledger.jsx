@@ -7,12 +7,12 @@ import CreditCardSettings from '@/components/CreditCardSettings';
 import LedgerTable from '@/components/LedgerTable';
 import RepeatedTransactionsModal from '@/components/RepeatedTransactionsModal';
 import { constants, selectors } from '@/store/accounts';
-import AccountNameDisplay from './AccountNameDisplay';
-import AccountTypeDisplay from './AccountTypeDisplay';
+import AccountName from './AccountName';
+import AccountType from './AccountType';
 import BalanceDisplay from './BalanceDisplay';
 import NewTransactionButton from './NewTransactionButton';
 
-export default function AccountLedger() {
+export default function Ledger() {
   const { accountId } = useParams();
   const navigate = useNavigate();
   const [filterValue, setFilterValue] = useState('');
@@ -73,8 +73,8 @@ export default function AccountLedger() {
             justifyContent: 'space-between',
           }}
         >
-          <AccountNameDisplay account={account} />
-          <AccountTypeDisplay account={account} />
+          <AccountName account={account} />
+          <AccountType account={account} />
         </Box>
         <Box
           sx={{
@@ -113,14 +113,7 @@ export default function AccountLedger() {
             sx={{ width: '100%' }}
           />
         </Box>
-        <Box
-          sx={{
-            height: 'calc(100vh - 330px)',
-            overflowY: 'scroll',
-          }}
-        >
-          <LedgerTable filterValue={filterValue} />
-        </Box>
+        <LedgerTable filterValue={filterValue} />
         <NewTransactionButton />
         <RepeatedTransactionsModal />
       </Box>

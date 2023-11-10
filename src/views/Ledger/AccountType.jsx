@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 
 import { actions, constants } from '@/store/accounts';
 
-export default function AccountTypeDisplay({ account }) {
+export default function AccountType({ account }) {
   const [type, setType] = useState(account.type);
   const dispatch = useDispatch();
 
@@ -54,7 +54,7 @@ export default function AccountTypeDisplay({ account }) {
   );
 }
 
-AccountTypeDisplay.propTypes = {
+AccountType.propTypes = {
   account: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

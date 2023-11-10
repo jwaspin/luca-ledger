@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import AccountNameEdit from './AccountNameEdit';
 
-export default function AccountNameDisplay({ account }) {
+export default function AccountName({ account }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const handleNameClick = () => {
@@ -33,7 +33,7 @@ export default function AccountNameDisplay({ account }) {
   );
 }
 
-AccountNameDisplay.propTypes = {
+AccountName.propTypes = {
   account: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
