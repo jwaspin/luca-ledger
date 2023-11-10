@@ -1,10 +1,12 @@
 import { Paper, Table, TableBody, TableContainer } from '@mui/material';
+import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
-import { Fragment, useMemo } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import LedgerRow from '@/components/LedgerRow';
+import config from '@/config';
 import { constants, selectors } from '@/store/accounts';
 import LedgerHeader from './LedgerHeader';
 import MonthSeparatorRow from './MonthSeparatorRow';
@@ -15,6 +17,7 @@ export default function LedgerTable({ filterValue }) {
   const { accountId } = useParams();
   const account = useSelector(selectors.selectAccountById(accountId));
   const { transactions } = account;
+  const [collapsedGroups, setCollapsedGroups] = useState([]);
 
   const sortedTransactions = useMemo(
     () => [...transactions].sort(dateCompareFn),
@@ -38,12 +41,39 @@ export default function LedgerTable({ filterValue }) {
     );
   }, [filterValue, transactionsWithBalance]);
 
+  const toggleGroupCollapse = (groupId) => {
+    setCollapsedGroups((prevCollapsedGroups) =>
+      prevCollapsedGroups.includes(groupId)
+        ? prevCollapsedGroups.filter((id) => id !== groupId)
+        : [...prevCollapsedGroups, groupId]
+    );
+  };
+
+  const getMonthIdentifier = (date) => {
+    return dayjs(date).format(config.monthFormatString);
+  };
+
   const getPreviousTransaction = (index) => {
     if (index === 0) {
       return null;
     }
     return filteredTransactions[index - 1];
   };
+
+  useEffect(() => {
+    const initialCollapsedGroups = filteredTransactions
+      .map((transaction) => getMonthIdentifier(transaction.date))
+      .filter(
+        (month, index, self) =>
+          self.indexOf(month) === index &&
+          ![
+            getMonthIdentifier(dayjs()),
+            getMonthIdentifier(dayjs().add(1, 'month')),
+          ].includes(month)
+      );
+
+    setCollapsedGroups(initialCollapsedGroups);
+  }, [filteredTransactions]);
 
   return (
     <TableContainer
@@ -66,12 +96,22 @@ export default function LedgerTable({ filterValue }) {
               <MonthSeparatorRow
                 transaction={transaction}
                 previousTransaction={getPreviousTransaction(index)}
+                isCollapsed={collapsedGroups.includes(
+                  getMonthIdentifier(transaction.date)
+                )}
+                onToggleCollapse={() =>
+                  toggleGroupCollapse(getMonthIdentifier(transaction.date))
+                }
               />
-              <LedgerRow
-                key={transaction.id}
-                row={transaction}
-                balance={transaction.balance}
-              />
+              {!collapsedGroups.includes(
+                getMonthIdentifier(transaction.date)
+              ) && (
+                <LedgerRow
+                  key={transaction.id}
+                  row={transaction}
+                  balance={transaction.balance}
+                />
+              )}
             </Fragment>
           ))}
         </TableBody>
