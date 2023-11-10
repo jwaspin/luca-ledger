@@ -5,8 +5,11 @@ import { selectors } from '@/store/accounts';
 import AccountCard from './AccountCard';
 import ButtonGroup from './ButtonGroup';
 
+const accountSortByName = (a, b) => a.name.localeCompare(b.name);
+
 export default function Accounts() {
   const accounts = useSelector(selectors.selectAccounts);
+  const sortedAccounts = [...accounts].sort(accountSortByName);
 
   return (
     <Box
@@ -30,7 +33,7 @@ export default function Accounts() {
           width: '60%',
         }}
       >
-        {accounts.map((account) => (
+        {sortedAccounts.map((account) => (
           <Grid
             item
             key={account.id}

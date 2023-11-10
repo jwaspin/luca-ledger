@@ -4,15 +4,15 @@ import PropTypes from 'prop-types';
 export default function BalanceDisplay({ label, balance }) {
   const textStyle = {
     color: balance < 0 ? 'red' : 'inherit',
-    fontSize: '1.5em',
   };
 
   return (
     <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+      style={{
+        width: '100%',
+        border: '1px solid lightgray',
+        padding: '8px',
+        borderRadius: '4px',
       }}
     >
       <Typography
