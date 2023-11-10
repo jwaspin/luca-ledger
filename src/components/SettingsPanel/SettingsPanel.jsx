@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { actions, constants } from '@/store/accounts';
+import AccountTypePicker from '@/components/AccountTypePicker';
 
-export default function CreditCardSettings({ account }) {
+export default function SettingsPanel({ account }) {
   const dispatch = useDispatch();
   const [statementDay, setStatementDay] = useState(account.statementDay || 1);
 
@@ -37,9 +38,10 @@ export default function CreditCardSettings({ account }) {
         variant='h6'
         sx={{ textAlign: 'center', borderBottom: '1px solid black' }}
       >
-        Credit Card Settings
+        Ledger Settings
       </Typography>
       <Box sx={{ marginTop: '10px' }}>
+        <AccountTypePicker account={account} />
         <TextField
           label='Statement Day'
           type='number'
@@ -52,6 +54,6 @@ export default function CreditCardSettings({ account }) {
   );
 }
 
-CreditCardSettings.propTypes = {
+SettingsPanel.propTypes = {
   account: PropTypes.object.isRequired,
 };

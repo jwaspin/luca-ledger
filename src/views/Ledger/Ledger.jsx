@@ -3,12 +3,11 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import CreditCardSettings from '@/components/CreditCardSettings';
+import SettingsPanel from '@/components/SettingsPanel';
 import LedgerTable from '@/components/LedgerTable';
 import RepeatedTransactionsModal from '@/components/RepeatedTransactionsModal';
 import { constants, selectors } from '@/store/accounts';
 import AccountName from './AccountName';
-import AccountType from './AccountType';
 import BalanceDisplay from './BalanceDisplay';
 import NewTransactionButton from './NewTransactionButton';
 
@@ -62,7 +61,7 @@ export default function Ledger() {
       }}
     >
       {account.type === constants.AccountType.CREDIT_CARD && (
-        <CreditCardSettings account={account} />
+        <SettingsPanel account={account} />
       )}
       <Box sx={{ width: '70%', padding: '5px' }}>
         <Box
@@ -74,7 +73,6 @@ export default function Ledger() {
           }}
         >
           <AccountName account={account} />
-          <AccountType account={account} />
         </Box>
         <Box
           sx={{

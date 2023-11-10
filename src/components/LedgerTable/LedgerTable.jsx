@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import LedgerRow from '@/components/LedgerRow';
-import { selectors } from '@/store/accounts';
+import { constants, selectors } from '@/store/accounts';
 import LedgerHeader from './LedgerHeader';
 import MonthSeparatorRow from './MonthSeparatorRow';
 import StatementSeparatorRow from './StatementSeparatorRow';
@@ -55,13 +55,14 @@ export default function LedgerTable({ filterValue }) {
         <TableBody>
           {filteredTransactions.map((transaction, index) => (
             <Fragment key={transaction.id}>
-              {index > 0 && (
-                <StatementSeparatorRow
-                  statementDay={account.statementDay}
-                  transaction={transaction}
-                  previousTransaction={getPreviousTransaction(index)}
-                />
-              )}
+              {index > 0 &&
+                account.type === constants.AccountType.CREDIT_CARD && (
+                  <StatementSeparatorRow
+                    statementDay={account.statementDay}
+                    transaction={transaction}
+                    previousTransaction={getPreviousTransaction(index)}
+                  />
+                )}
               <MonthSeparatorRow
                 transaction={transaction}
                 previousTransaction={getPreviousTransaction(index)}
