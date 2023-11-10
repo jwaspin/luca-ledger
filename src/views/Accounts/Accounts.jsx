@@ -5,19 +5,6 @@ import { selectors } from '@/store/accounts';
 import AccountCard from './AccountCard';
 import ButtonGroup from './ButtonGroup';
 
-// const accountSortByType = (a, b) => {
-//   if (a.type === 'credit' && b.type === 'credit') {
-//     return a.name.localeCompare(b.name);
-//   }
-//   if (a.type === 'credit') {
-//     return 1;
-//   }
-//   if (b.type === 'credit') {
-//     return -1;
-//   }
-//   return a.name.localeCompare(b.name);
-// };
-
 const accountSortByName = (a, b) => a.name.localeCompare(b.name);
 
 export default function Accounts() {
