@@ -8,9 +8,15 @@ export default function MonthSeparatorRow({
 }) {
   const transactionDate = dayjs(transaction.date);
   const transactionMonth = transactionDate.format('MMMM YYYY');
-  const previousTransactionDate = dayjs(previousTransaction.date);
-  const previousMonth = previousTransactionDate.format('MMMM YYYY');
-  const isMonthDifferent = transactionMonth !== previousMonth;
+
+  let isMonthDifferent = false;
+  if (!previousTransaction) {
+    isMonthDifferent = true;
+  } else {
+    const previousTransactionDate = dayjs(previousTransaction.date);
+    const previousMonth = previousTransactionDate.format('MMMM YYYY');
+    isMonthDifferent = transactionMonth !== previousMonth;
+  }
 
   return (
     isMonthDifferent && (

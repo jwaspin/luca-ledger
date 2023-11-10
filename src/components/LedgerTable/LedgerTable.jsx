@@ -1,10 +1,4 @@
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableContainer,
-  TableHead,
-} from '@mui/material';
+import { Paper, Table, TableBody, TableContainer } from '@mui/material';
 import PropTypes from 'prop-types';
 import { Fragment, useMemo } from 'react';
 import { useSelector } from 'react-redux';
@@ -52,27 +46,26 @@ export default function LedgerTable({ filterValue }) {
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <LedgerHeader />
-        </TableHead>
+    <TableContainer
+      component={Paper}
+      style={{ height: 'calc(100vh - 375px)' }}
+    >
+      <Table stickyHeader>
+        <LedgerHeader />
         <TableBody>
           {filteredTransactions.map((transaction, index) => (
             <Fragment key={transaction.id}>
               {index > 0 && (
-                <>
-                  <StatementSeparatorRow
-                    statementDay={account.statementDay}
-                    transaction={transaction}
-                    previousTransaction={getPreviousTransaction(index)}
-                  />
-                  <MonthSeparatorRow
-                    transaction={transaction}
-                    previousTransaction={getPreviousTransaction(index)}
-                  />
-                </>
+                <StatementSeparatorRow
+                  statementDay={account.statementDay}
+                  transaction={transaction}
+                  previousTransaction={getPreviousTransaction(index)}
+                />
               )}
+              <MonthSeparatorRow
+                transaction={transaction}
+                previousTransaction={getPreviousTransaction(index)}
+              />
               <LedgerRow
                 key={transaction.id}
                 row={transaction}
