@@ -5,8 +5,24 @@ import { selectors } from '@/store/accounts';
 import AccountCard from './AccountCard';
 import ButtonGroup from './ButtonGroup';
 
+// const accountSortByType = (a, b) => {
+//   if (a.type === 'credit' && b.type === 'credit') {
+//     return a.name.localeCompare(b.name);
+//   }
+//   if (a.type === 'credit') {
+//     return 1;
+//   }
+//   if (b.type === 'credit') {
+//     return -1;
+//   }
+//   return a.name.localeCompare(b.name);
+// };
+
+const accountSortByName = (a, b) => a.name.localeCompare(b.name);
+
 export default function Accounts() {
   const accounts = useSelector(selectors.selectAccounts);
+  const sortedAccounts = [...accounts].sort(accountSortByName);
 
   return (
     <Box
@@ -30,7 +46,7 @@ export default function Accounts() {
           width: '60%',
         }}
       >
-        {accounts.map((account) => (
+        {sortedAccounts.map((account) => (
           <Grid
             item
             key={account.id}
