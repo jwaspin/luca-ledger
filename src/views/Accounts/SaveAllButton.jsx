@@ -6,17 +6,11 @@ import { actions, selectors } from '@/store/accounts';
 export default function SaveAllButton() {
   const accounts = useSelector(selectors.selectAccounts);
 
-  const handleSaveAllAccounts = () => {
-    accounts.forEach((account) => {
-      actions.saveAccount(account, `${account.name}.json`);
-    });
-  };
-
   return (
     <Button
       variant='contained'
       color='primary'
-      onClick={handleSaveAllAccounts}
+      onClick={() => actions.saveAllAccounts(accounts)}
     >
       Save All Accounts
     </Button>
