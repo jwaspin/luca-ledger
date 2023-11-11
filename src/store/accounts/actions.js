@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import JSZip from 'jszip';
 
 import { AccountType } from './constants';
 import { generateAccountObject } from './generators';
@@ -58,6 +59,22 @@ export const saveAccount = (account, filename) => {
   link.href = url;
   link.click();
   URL.revokeObjectURL(url);
+};
+
+export const saveAllAccounts = (accounts) => {
+  const zip = new JSZip();
+  accounts.forEach((account) => {
+    const saveString = JSON.stringify(account, null, 2);
+    zip.file(`${account.name}.json`, saveString);
+  });
+  zip.generateAsync({ type: 'blob' }).then((blob) => {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.download = 'accounts.zip';
+    link.href = url;
+    link.click();
+    URL.revokeObjectURL(url);
+  });
 };
 
 export const removeAccountById = (id) => (dispatch) => {
