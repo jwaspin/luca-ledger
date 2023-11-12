@@ -11,12 +11,12 @@ const categories = createSlice({
   initialState: [],
   reducers: {
     addCategory: addCategoryReducer,
-    updateCategory: removeCategoryReducer,
     removeCategory: updateCategoryReducer,
+    updateCategory: removeCategoryReducer,
   },
 });
 
 export default categories.reducer;
 
-export const { addCategory, updateCategory, removeCategory } =
+export const { addCategory, removeCategory, updateCategory } =
   categories.actions;
