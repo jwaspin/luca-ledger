@@ -8,7 +8,6 @@ export const generateAccount = (initialData = {}) => {
   const account = {
     id: uuid(),
     type: accountType,
-    balance: 0,
     transactions: [],
     ...initialData,
   };
