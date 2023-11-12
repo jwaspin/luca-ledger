@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import CreateNewCategory from '@/components/CreateNewCategory';
 import { actions, constants, selectors } from '@/store/categories';
+import CategoryRow from './CategoryRow';
 
 export default function Categories() {
   const dispatch = useDispatch();
@@ -27,19 +28,10 @@ export default function Categories() {
       <Button onClick={loadDefaultCategories}>Load Default Categories</Button>
       <CreateNewCategory />
       {categories.map((category) => (
-        <Box
+        <CategoryRow
           key={category.id}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            padding: '5px',
-            width: '250px',
-            border: '1px solid black',
-          }}
-        >
-          {category.name}
-        </Box>
+          category={category}
+        />
       ))}
     </Box>
   );
