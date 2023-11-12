@@ -11,8 +11,8 @@ const categories = createSlice({
   initialState: [],
   reducers: {
     addCategory: addCategoryReducer,
-    removeCategory: updateCategoryReducer,
-    updateCategory: removeCategoryReducer,
+    removeCategory: removeCategoryReducer,
+    updateCategory: updateCategoryReducer,
   },
 });
 
