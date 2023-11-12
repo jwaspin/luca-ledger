@@ -67,8 +67,8 @@ export const saveAccountAsync = createAsyncThunk(
   async ({ account, filename }) => {
     return new Promise((resolve) => {
       try {
-        saveAccount(account, filename); // Call the existing synchronous saveAccount function
-        resolve(); // Resolve the promise
+        saveAccount(account, filename);
+        resolve();
       } catch (error) {
         console.error('Error saving account:', error);
       }
