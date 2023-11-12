@@ -15,10 +15,11 @@ export const removeCategoryReducer = (state, action) => {
 
 export const updateCategoryReducer = (state, action) => {
   const updatedCategory = action.payload;
-  const updatedCategories = state.map((category) =>
-    category.id === updatedCategory.id
-      ? { ...category, ...updatedCategory }
-      : category
-  );
-  state = updatedCategories;
+  const categoryIndex = state.findIndex((category) => {
+    return category.id === updatedCategory.id;
+  });
+  if (categoryIndex === -1) {
+    return;
+  }
+  state[categoryIndex] = { ...state[categoryIndex], ...updatedCategory };
 };
