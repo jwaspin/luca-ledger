@@ -3,11 +3,11 @@ import { v4 as uuid } from 'uuid';
 import { AccountType } from './constants';
 import schemas from './schemas';
 
-export const generateAccount = (accountType, initialData = {}) => {
+export const generateAccount = (initialData = {}) => {
+  const accountType = initialData.type || AccountType.CHECKING;
   const account = {
     id: uuid(),
     type: accountType,
-    balance: 0,
     transactions: [],
     ...initialData,
   };
@@ -16,13 +16,13 @@ export const generateAccount = (accountType, initialData = {}) => {
 };
 
 export const generateNewCheckingAccount = () =>
-  generateAccount(AccountType.CHECKING);
+  generateAccount({ type: AccountType.CHECKING });
 
 export const generateNewSavingsAccount = () =>
-  generateAccount(AccountType.SAVINGS);
+  generateAccount({ type: AccountType.SAVINGS });
 
 export const generateNewCreditCardAccount = () =>
-  generateAccount(AccountType.CREDIT_CARD, { statementDay: 1 });
+  generateAccount({ type: AccountType.CREDIT_CARD, statementDay: 1 });
 
 export const generateAccountObject = (
   id,
