@@ -10,10 +10,7 @@ export default function CreateNewCategory() {
 
   const handleCreateNewCategory = () => {
     dispatch(actions.createNewCategory({ name: newCategoryName }));
-  };
-
-  const handleChange = (event) => {
-    setNewCategoryName(event.target.value);
+    setNewCategoryName('');
   };
 
   return (
@@ -26,7 +23,7 @@ export default function CreateNewCategory() {
     >
       <TextField
         value={newCategoryName}
-        onChange={handleChange}
+        onChange={(event) => setNewCategoryName(event.target.value)}
       />
       <Button onClick={handleCreateNewCategory}>Create New Category</Button>
     </Box>
