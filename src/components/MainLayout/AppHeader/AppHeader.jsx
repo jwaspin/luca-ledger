@@ -1,21 +1,10 @@
-import styled from '@emotion/styled';
 import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import VersionDisplay from '@/components/VersionDisplay';
+import NavItem from './NavItem';
 
 import { Home as HomeIcon } from '@mui/icons-material';
-
-const StyledLink = styled(Link)`
-  color: white;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  color: white;
-  &:hover: {
-    text-decoration: underline;
-  }
-`;
 
 export default function AppHeader() {
   return (
@@ -32,34 +21,18 @@ export default function AppHeader() {
               }}
             />
           </Link>
-          <StyledLink to='/dashboard'>
-            <Typography
-              variant='body2'
-              style={{
-                display: 'block',
-                marginLeft: '50px',
-                fontSize: '1.5rem',
-                fontWeight: 'bold',
-                color: 'white',
-              }}
-            >
-              Dashboard
-            </Typography>
-          </StyledLink>
-          <StyledLink to='/accounts'>
-            <Typography
-              variant='body2'
-              style={{
-                display: 'block',
-                marginLeft: '50px',
-                fontSize: '1.5rem',
-                fontWeight: 'bold',
-                color: 'white',
-              }}
-            >
-              Accounts
-            </Typography>
-          </StyledLink>
+          <NavItem
+            linkTo='/dashboard'
+            navText='Dashboard'
+          />
+          <NavItem
+            linkTo='/accounts'
+            navText='Accounts'
+          />
+          <NavItem
+            linkTo='/categories'
+            navText='Categories'
+          />
         </Box>
         <Typography
           variant='h4'
