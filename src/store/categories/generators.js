@@ -1,8 +1,10 @@
+import { v4 as uuid } from 'uuid';
+
 import schemas from './schemas';
 
 export const generateCategory = (initialData = {}) => {
   const category = {
-    id: '',
+    id: uuid(),
     name: '',
     subCategories: [],
     ...initialData,
