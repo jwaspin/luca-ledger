@@ -98,7 +98,7 @@ export default function LedgerTable({ filterValue }) {
               {index > 0 &&
                 account.type === constants.AccountType.CREDIT_CARD && (
                   <StatementSeparatorRow
-                    statementDay={account.statementDay}
+                    statementDay={account.statementDay || 1}
                     transaction={transaction}
                     previousTransaction={getPreviousTransaction(index)}
                   />

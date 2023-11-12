@@ -12,13 +12,18 @@ export default function AccountTypePicker({ account }) {
   const handleChange = (event) => {
     const { value } = event.target;
     setType(value);
-    dispatch(
-      actions.updateAccountProperty(
-        account,
-        constants.AccountFields.TYPE,
-        value
-      )
-    );
+    if (value === constants.AccountType.CREDIT_CARD) {
+      const updatedAccount = { ...account, type: value, statementDay: 1 };
+      dispatch(actions.updateAccount(updatedAccount));
+    } else {
+      dispatch(
+        actions.updateAccountProperty(
+          account,
+          constants.AccountFields.TYPE,
+          value
+        )
+      );
+    }
   };
 
   return (

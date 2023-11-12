@@ -96,6 +96,8 @@ export const removeAccountById = (id) => (dispatch) => {
   dispatch(removeAccount(id));
 };
 
+export { updateAccount };
+
 export const updateAccountProperty =
   (account, property, value) => (dispatch) => {
     const updatedAccount = {
