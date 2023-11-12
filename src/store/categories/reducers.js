@@ -1,4 +1,10 @@
 export const addCategoryReducer = (state, action) => {
+  const categoryExists = state.some(
+    (category) => category.id === action.payload.id
+  );
+  if (categoryExists) {
+    return;
+  }
   state.push(action.payload);
 };
 
