@@ -2,14 +2,24 @@ import { Card, CardContent, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
+import { constants } from '@/store/transactions';
+import BalanceRow from './BalanceRow';
+
+import ActionsMenu from '@/components/ActionsMenu/ActionsMenu';
+
 export default function AccountCard({ account }) {
   const navigate = useNavigate();
 
   const cardLength = '320px';
 
+  const handleClick = () => {
+    navigate(`/accounts/${account.id}`);
+  };
+
   return (
     <Card
-      onClick={() => navigate(`/accounts/${account.id}`)}
+      id='AccountCard'
+      onClick={handleClick}
       sx={{
         width: cardLength,
         height: cardLength,
@@ -19,98 +29,42 @@ export default function AccountCard({ account }) {
         },
       }}
     >
-      <CardContent>
+      <CardContent style={{ position: 'relative' }}>
         <Typography variant='h4'>{account.name}</Typography>
         <Typography variant='subtitle1'>{account.type}</Typography>
-        <Typography
-          variant='body1'
-          color='text.secondary'
-          style={{
-            marginTop: '10px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-          }}
-        >
-          <span>{'Current: '}</span>
-          <span>
-            {'$ '}
-            {account.transactions
-              .filter((t) => ['complete '].includes(t.status))
-              .reduce((acc, t) => acc + Number(t.amount), 0)
-              .toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-          </span>
-        </Typography>
-        <Typography
-          variant='body1'
-          color='text.secondary'
-          style={{
-            marginTop: '5px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-          }}
-        >
-          <span>{'Pending: '}</span>
-          <span>
-            {'$ '}
-            {account.transactions
-              .filter((t) => ['complete ', 'pending '].includes(t.status))
-              .reduce((acc, t) => acc + Number(t.amount), 0)
-              .toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-          </span>
-        </Typography>
-        <Typography
-          variant='body1'
-          color='text.secondary'
-          style={{
-            marginTop: '5px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-          }}
-        >
-          <span>{'Scheduled: '}</span>
-          <span>
-            {'$ '}
-            {account.transactions
-              .filter((t) =>
-                ['complete ', 'pending ', 'scheduled '].includes(t.status)
-              )
-              .reduce((acc, t) => acc + Number(t.amount), 0)
-              .toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-          </span>
-        </Typography>
-        <Typography
-          variant='body1'
-          color='text.secondary'
-          style={{
-            marginTop: '5px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-          }}
-        >
-          <span>{'Future: '}</span>
-          <span>
-            {'$ '}
-            {account.transactions
-              .reduce((acc, t) => acc + Number(t.amount), 0)
-              .toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-          </span>
-        </Typography>
+        <BalanceRow
+          account={account}
+          balanceType={'Current'}
+          filterArray={[constants.TransactionStatusEnum.COMPLETE]}
+        />
+        <BalanceRow
+          account={account}
+          balanceType={'Pending'}
+          filterArray={[
+            constants.TransactionStatusEnum.COMPLETE,
+            constants.TransactionStatusEnum.PENDING,
+          ]}
+        />
+        <BalanceRow
+          account={account}
+          balanceType={'Scheduled'}
+          filterArray={[
+            constants.TransactionStatusEnum.COMPLETE,
+            constants.TransactionStatusEnum.PENDING,
+            constants.TransactionStatusEnum.SCHEDULED,
+          ]}
+        />
+        <BalanceRow
+          account={account}
+          balanceType={'Future'}
+          filterArray={[
+            constants.TransactionStatusEnum.COMPLETE,
+            constants.TransactionStatusEnum.PENDING,
+            constants.TransactionStatusEnum.SCHEDULED,
+            constants.TransactionStatusEnum.FUTURE,
+          ]}
+        />
+        <ActionsMenu account={account} />
       </CardContent>
     </Card>
   );

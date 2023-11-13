@@ -1,10 +1,11 @@
-import { v4 as uuid } from 'uuid';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import JSZip from 'jszip';
+import { v4 as uuid } from 'uuid';
 
 import { AccountType } from './constants';
 import { generateAccountObject } from './generators';
 import schemas from './schemas';
-import { addAccount, updateAccount, removeAccount } from './slice';
+import { addAccount, removeAccount, updateAccount } from './slice';
 
 export const createNewAccount = () => (dispatch) => {
   dispatch(
@@ -61,6 +62,20 @@ export const saveAccount = (account, filename) => {
   URL.revokeObjectURL(url);
 };
 
+export const saveAccountAsync = createAsyncThunk(
+  'accounts/saveAccountAsync',
+  async ({ account, filename }) => {
+    return new Promise((resolve) => {
+      try {
+        saveAccount(account, filename);
+        resolve();
+      } catch (error) {
+        console.error('Error saving account:', error);
+      }
+    });
+  }
+);
+
 export const saveAllAccounts = (accounts) => {
   const zip = new JSZip();
   accounts.forEach((account) => {
@@ -80,6 +95,8 @@ export const saveAllAccounts = (accounts) => {
 export const removeAccountById = (id) => (dispatch) => {
   dispatch(removeAccount(id));
 };
+
+export { updateAccount };
 
 export const updateAccountProperty =
   (account, property, value) => (dispatch) => {

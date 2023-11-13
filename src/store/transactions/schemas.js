@@ -11,6 +11,7 @@ const commonTransactionSchema = yup.object({
   date: yup.date().required('Transaction date is required'),
   amount: yup.number().required('Transaction amount is required'),
   description: yup.string().required('Transaction description is required'),
+  categoryId: yup.string(),
 });
 
 export default {

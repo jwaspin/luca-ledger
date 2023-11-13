@@ -1,12 +1,20 @@
+import dayjs from 'dayjs';
+import { v4 as uuid } from 'uuid';
+
+import config from '@/config';
+import { constants } from '@/store/categories';
+import { TransactionStatusEnum } from './constants';
 import schemas from './schemas';
 
-export const generateTransaction = (id, status, date, amount, description) => {
+export const generateTransaction = (initialData = {}) => {
   const transaction = {
-    id,
-    status,
-    date,
-    amount,
-    description,
+    id: uuid(),
+    status: TransactionStatusEnum.PLANNED,
+    date: dayjs().format(config.dateFormatString),
+    amount: 0.0,
+    description: 'Enter transaction description',
+    categoryId: constants.DefaultCategory.id,
+    ...initialData,
   };
 
   try {
