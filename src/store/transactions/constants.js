@@ -11,4 +11,5 @@ export const TransactionFields = Object.freeze({
   DATE: 'date',
   AMOUNT: 'amount',
   DESCRIPTION: 'description',
+  CATEGORY: 'categoryId',
 });
