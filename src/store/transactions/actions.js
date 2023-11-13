@@ -9,13 +9,7 @@ import schemas from './schemas';
 import { addTransaction, removeTransaction, updateTransaction } from './slice';
 
 export const createNewTransaction = (accountId) => (dispatch) => {
-  const newTransaction = generateTransaction(
-    uuid(),
-    TransactionStatusEnum.PLANNED,
-    dayjs().format(config.dateFormatString),
-    0.0,
-    'Enter transaction description'
-  );
+  const newTransaction = generateTransaction();
   dispatch(addTransaction({ accountId, transaction: newTransaction }));
 };
 
@@ -100,7 +94,7 @@ export const updateTransactionProperty =
       [property]: value,
     };
     const actionPayload = { accountId, transaction: updatedTransaction };
-    dispatch(updateTransaction(actionPayload)); // Assuming you have an updateTransaction action
+    dispatch(updateTransaction(actionPayload));
   };
 
 export const removeTransactionById = (accountId, transaction) => (dispatch) => {

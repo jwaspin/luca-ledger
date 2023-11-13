@@ -4,6 +4,12 @@ export const CategoryFields = Object.freeze({
   SUB_CATEGORIES: 'subCategories',
 });
 
+export const DefaultCategory = Object.freeze({
+  id: '0',
+  name: 'None',
+  subCategories: [],
+});
+
 export const CategoryInitialData = [
   {
     id: '0a5bf968-0497-4b15-96f5-51ca719204fa',
