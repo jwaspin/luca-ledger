@@ -1,13 +1,18 @@
+import { InputAdornment, TextField, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import { TextField, Typography, InputAdornment } from '@mui/material';
-
-const parseFloatDoublePrecision = (value) =>
-  parseFloat(parseFloat(value).toFixed(2));
 
 export default function AmountField({ amount, setAmount }) {
-  const onAmountChange = (event) => {
-    const newValue = event.target.value;
-    setAmount(parseFloatDoublePrecision(newValue));
+  const validNumberRegex = /^-?\d+(\.\d{1,2})?$|^-?\.\d{1,2}$|^-?\d+\.$|^-?$/;
+
+  const handleChange = (event) => {
+    const { value } = event.target;
+    if (value === '-') {
+      setAmount(value);
+    } else if (value === '') {
+      setAmount(value);
+    } else if (validNumberRegex.test(value)) {
+      setAmount(value);
+    }
   };
 
   return (
@@ -15,14 +20,14 @@ export default function AmountField({ amount, setAmount }) {
       <Typography>Amount</Typography>
       <TextField
         variant='filled'
-        fullWidth
-        type='number'
+        type='text'
         value={amount}
-        onChange={onAmountChange}
+        onChange={handleChange}
         inputProps={{ step: '0.01' }}
         InputProps={{
           startAdornment: <InputAdornment position='start'>$</InputAdornment>,
         }}
+        fullWidth
       />
     </>
   );
