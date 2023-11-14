@@ -23,7 +23,7 @@ export default function ModalDialog({ open, handleClose, reset, setReset }) {
   const { accountId } = useParams();
   const [startDate, setStartDate] = useState(dayjs());
   const [description, setDescription] = useState('');
-  const [amount, setAmount] = useState(0.0);
+  const [amount, setAmount] = useState('');
   const [frequency, setFrequency] = useState(null);
   const [frequencyCount, setFrequencyCount] = useState(null);
   const [occurrences, setOccurrences] = useState(null);
@@ -65,6 +65,11 @@ export default function ModalDialog({ open, handleClose, reset, setReset }) {
     <Dialog
       open={open}
       onClose={handleClose}
+      PaperProps={{
+        style: {
+          width: '900px',
+        },
+      }}
     >
       <DialogTitle>Create Repeated Transactions</DialogTitle>
       <DialogContent>
