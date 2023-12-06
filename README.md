@@ -4,6 +4,8 @@ Luca Ledger provides a simple user interface for tracking financial transactions
 
 _If more information is desired in this README, please open an issue and provide a brief description about the type of information desired._
 
+_Considering hosting this on luca-ledger.com_
+
 ## Getting Started as a User
 
 This application is being hosted on GitHub using GitHub Pages. There is no other backend to this application and it does not send any data over the network. It is designed to be used entirely locally and it is up to the user to save and maintain their own account files.
