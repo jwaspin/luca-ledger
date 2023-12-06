@@ -4,6 +4,7 @@
   "homepage": "https://jwaspin.github.io/luca-ledger/",
   "type": "module",
   "license": "MIT",
+  "description": "A simple ledger app for tracking your expenses.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
