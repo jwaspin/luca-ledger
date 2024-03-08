@@ -1,0 +1,12 @@
+"transactionLinkingTable": {
+    "type": "object",
+    "properties": {
+      "id": {"type": "string"},
+      "transactionId": {"type": "string"},
+      "repeatedTransactionId": {"type": "string"},
+      "expectedDate": {"type": "string", "format": "date"},
+      "isDeleted": {"type": "boolean"},
+      "createdAt": {"type": "string", "format": "date-time"}
+    },
+    "required": ["id", "transactionId", "repeatedTransactionId", "createdAt"]
+  },
