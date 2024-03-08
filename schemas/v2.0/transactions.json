@@ -1,16 +1,34 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schemas/v2.0/transactions.json",
+  "title": "Transaction",
   "type": "object",
   "properties": {
-    "id": {"type": "string"},
-    "payorId": {"type": "string"},
-    "payeeId": {"type": "string"},
-    "categoryId": {"type": "string"},
-    "amount": {"type": "number"},
-    "date": {"type": "string", "format": "date"},
-    "description": {"type": "string"},
-    "state": {"type": "string", "enum": ["planned", "scheduled", "pending", "completed", "cancelled"]},
-    "createdAt": {"type": "string", "format": "date-time"},
-    "updatedAt": {"type": "string", "format": "date-time", "nullable": true}
+    "id": { "type": "string" },
+    "payorId": { "type": "string" },
+    "payeeId": { "type": "string" },
+    "categoryId": { "type": ["string", "null"] },
+    "amount": { "type": "number" },
+    "date": { "type": "string", "format": "date" },
+    "description": { "type": "string" },
+    "state": {
+      "type": "string",
+      "enum": ["planned", "scheduled", "pending", "completed", "cancelled"]
+    },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    }
   },
-  "required": ["id", "payorId", "payeeId", "categoryId", "amount", "date", "state", "createdAt"]
+  "required": [
+    "id",
+    "payorId",
+    "payeeId",
+    "amount",
+    "date",
+    "state",
+    "createdAt"
+  ],
+  "additionalProperties": false
 }

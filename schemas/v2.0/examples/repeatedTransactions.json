@@ -1,0 +1,28 @@
+[
+  {
+    "id": "uuid-placeholder-3001",
+    "payorId": "uuid-placeholder-1001",
+    "payeeId": "uuid-placeholder-1003",
+    "categoryId": "uuid-placeholder-0001",
+    "amount": 120.5,
+    "frequency": "month",
+    "interval": 1,
+    "description": "Monthly electricity bill payment to City Electric",
+    "state": "active",
+    "createdAt": "2024-06-01T08:00:00Z",
+    "updatedAt": null
+  },
+  {
+    "id": "uuid-placeholder-3002",
+    "payorId": "uuid-placeholder-1001",
+    "payeeId": "uuid-placeholder-1002",
+    "categoryId": "uuid-placeholder-0004",
+    "amount": 50.0,
+    "frequency": "week",
+    "interval": 1,
+    "description": "Weekly grocery shopping at Downtown Groceries",
+    "state": "paused",
+    "createdAt": "2024-06-02T09:00:00Z",
+    "updatedAt": "2024-07-01T10:00:00Z"
+  }
+]

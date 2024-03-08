@@ -1,17 +1,70 @@
-"repeatedTransactions": {
-    "type": "object",
-    "properties": {
-      "id": {"type": "string"},
-      "payorId": {"type": "string"},
-      "payeeId": {"type": "string"},
-      "categoryId": {"type": "string"},
-      "amount": {"type": "number"},
-      "frequency": {"type": "string", "enum": ["day", "week", "month", "occurrence"]},
-      "interval": {"type": "integer"},
-      "description": {"type": "string"},
-      "state": {"type": "string", "enum": ["active", "paused", "completed"]},
-      "createdAt": {"type": "string", "format": "date-time"},
-      "updatedAt": {"type": "string", "format": "date-time", "nullable": true}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/repeatedTransactions.schema.json",
+  "title": "Repeated Transactions",
+  "description": "Schema for defining recurring financial transactions within the application.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the transaction."
     },
-    "required": ["id", "payorId", "payeeId", "categoryId", "amount", "frequency", "interval", "state", "createdAt"]
+    "payorId": {
+      "type": "string",
+      "description": "Identifier for the payor in the transaction."
+    },
+    "payeeId": {
+      "type": "string",
+      "description": "Identifier for the payee in the transaction."
+    },
+    "categoryId": {
+      "type": "string",
+      "description": "Category identifier for organizing the transaction."
+    },
+    "amount": {
+      "type": "number",
+      "description": "The monetary value of the transaction."
+    },
+    "frequency": {
+      "type": "string",
+      "enum": ["day", "week", "month", "year", "occurrence"],
+      "description": "Defines how often the transaction repeats."
+    },
+    "interval": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "The interval at which the frequency is applied. For example, every 2 weeks."
+    },
+    "description": {
+      "type": "string",
+      "description": "A detailed description of the transaction."
+    },
+    "state": {
+      "type": "string",
+      "enum": ["active", "paused", "completed"],
+      "description": "Current status of the transaction."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of when the transaction was created."
+    },
+    "updatedAt": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Timestamp of the last update to the transaction. Nullable to accommodate transactions that have not been updated."
+    }
   },
+  "required": [
+    "id",
+    "payorId",
+    "payeeId",
+    "categoryId",
+    "amount",
+    "frequency",
+    "interval",
+    "state",
+    "createdAt"
+  ],
+  "additionalProperties": false
+}

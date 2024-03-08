@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schemas/v2.0/categories.json",
-  "title": "Categories",
+  "title": "Category",
   "description": "Defines the schema for categories used to organize transactions within a ledger application. Categories can be default, modified, or custom, providing flexibility in categorization.",
   "type": "object",
   "properties": {
@@ -46,7 +46,7 @@
   "if": {
     "properties": {
       "categoryType": {
-        "const": "CUSTOM"
+        "const": "MODIFIED"
       }
     }
   },
