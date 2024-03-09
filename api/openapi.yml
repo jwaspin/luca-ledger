@@ -1,0 +1,7 @@
+openapi: 3.0.0
+info:
+  title: Placeholder API
+  description: API specification coming soon.
+  version: 1.0.0
+paths: {}
+# Placeholder paths and definitions will be added in future versions.

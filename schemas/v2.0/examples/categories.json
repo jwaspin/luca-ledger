@@ -1,0 +1,52 @@
+[
+  {
+    "id": "uuid-placeholder-0001",
+    "name": "Utilities",
+    "description": "Monthly bills for essential services",
+    "parentId": null,
+    "defaultCategoryId": null,
+    "categoryType": "DEFAULT",
+    "createdAt": "2024-03-08T10:00:00Z",
+    "updatedAt": null
+  },
+  {
+    "id": "uuid-placeholder-0002",
+    "name": "Water Services",
+    "description": "Water supply and treatment services",
+    "parentId": "uuid-placeholder-0001",
+    "defaultCategoryId": null,
+    "categoryType": "DEFAULT",
+    "createdAt": "2024-03-15T10:00:00Z",
+    "updatedAt": null
+  },
+  {
+    "id": "uuid-placeholder-0003",
+    "name": "City Water and Trash Services",
+    "description": "Municipal water supply and trash collection services",
+    "parentId": "uuid-placeholder-0001",
+    "defaultCategoryId": "uuid-placeholder-0002",
+    "categoryType": "MODIFIED",
+    "createdAt": "2024-03-18T10:00:00Z",
+    "updatedAt": null
+  },
+  {
+    "id": "uuid-placeholder-0004",
+    "name": "Home",
+    "description": "Expenses related to the home, including supplies, maintenance, and improvements",
+    "parentId": null,
+    "defaultCategoryId": null,
+    "categoryType": "CUSTOM",
+    "createdAt": "2024-04-03T12:00:00Z",
+    "updatedAt": null
+  },
+  {
+    "id": "uuid-placeholder-0005",
+    "name": "Cleaning Supplies",
+    "description": "Expenses for purchasing cleaning supplies for the home, including detergents, soaps, and tools",
+    "parentId": "uuid-placeholder-0004",
+    "defaultCategoryId": null,
+    "categoryType": "CUSTOM",
+    "createdAt": "2024-04-04T12:00:00Z",
+    "updatedAt": null
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "uuid-placeholder-1001",
+    "name": "John Doe",
+    "description": "Personal bank account holder",
+    "entityType": "individual",
+    "createdAt": "2024-05-01T12:00:00Z",
+    "updatedAt": null
+  },
+  {
+    "id": "uuid-placeholder-1002",
+    "name": "Downtown Groceries",
+    "description": "Local grocery store",
+    "entityType": "retailer",
+    "createdAt": "2024-05-02T12:00:00Z",
+    "updatedAt": null
+  },
+  {
+    "id": "uuid-placeholder-1003",
+    "name": "City Electric",
+    "description": "Electricity service provider",
+    "entityType": "utility",
+    "createdAt": "2024-05-03T12:00:00Z",
+    "updatedAt": null
+  },
+  {
+    "id": "uuid-placeholder-1004",
+    "name": "Local Library",
+    "description": "Public library services",
+    "entityType": "government",
+    "createdAt": "2024-05-04T12:00:00Z",
+    "updatedAt": null
+  },
+  {
+    "id": "uuid-placeholder-1005",
+    "name": "My Bank Checking",
+    "description": "Personal checking account",
+    "entityType": "account",
+    "createdAt": "2024-05-05T12:00:00Z",
+    "updatedAt": null
+  },
+  {
+    "id": "uuid-placeholder-1006",
+    "name": "Quick Fix Plumbers",
+    "description": "Plumbing repair and maintenance services",
+    "entityType": "business",
+    "createdAt": "2024-05-06T12:00:00Z",
+    "updatedAt": null
+  }
+]
