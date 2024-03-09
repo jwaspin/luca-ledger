@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schemas/v2.0/repeatedTransaction.json",
+  "$id": "https://example.com/repeatedTransaction.schema.json",
   "title": "Repeated Transaction",
-  "description": "Schema for defining recurring financial transactions within the application.",
+  "description": "Defines recurring financial transactions within the application, including their scheduling, frequency, interval, and optional constraints like total occurrences or an end date.",
   "type": "object",
   "properties": {
     "id": {
@@ -18,8 +18,8 @@
       "description": "Identifier for the payee in the transaction."
     },
     "categoryId": {
-      "type": "string",
-      "description": "Category identifier for organizing the transaction."
+      "type": ["string", "null"],
+      "description": "Category identifier for organizing the transaction. Can be null if not categorized."
     },
     "amount": {
       "type": "number",
@@ -27,13 +27,23 @@
     },
     "frequency": {
       "type": "string",
-      "enum": ["day", "week", "month", "year", "occurrence"],
-      "description": "Defines how often the transaction repeats."
+      "enum": ["day", "week", "month", "year"],
+      "description": "Defines the base unit of time for the repetition."
     },
     "interval": {
       "type": "integer",
       "minimum": 1,
-      "description": "The interval at which the frequency is applied. For example, every 2 weeks."
+      "description": "Specifies the number of frequency units between each occurrence (e.g., every 2 weeks)."
+    },
+    "occurrences": {
+      "type": ["integer", "null"],
+      "minimum": 1,
+      "description": "The total number of times the transaction should occur. Can be null if not specified."
+    },
+    "endOn": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "The date on which the repeated transaction series should end. Can be null."
     },
     "description": {
       "type": "string",
@@ -41,7 +51,7 @@
     },
     "state": {
       "type": "string",
-      "enum": ["active", "paused", "completed"],
+      "enum": ["planned", "scheduled", "pending", "completed", "cancelled"],
       "description": "Current status of the transaction."
     },
     "createdAt": {
@@ -52,7 +62,7 @@
     "updatedAt": {
       "type": ["string", "null"],
       "format": "date-time",
-      "description": "Timestamp of the last update to the transaction. Nullable to accommodate transactions that have not been updated."
+      "description": "Timestamp of the last update to the transaction. Can be null if not updated."
     }
   },
   "required": [
@@ -63,8 +73,12 @@
     "amount",
     "frequency",
     "interval",
+    "occurrences",
+    "endOn",
+    "description",
     "state",
-    "createdAt"
+    "createdAt",
+    "updatedAt"
   ],
   "additionalProperties": false
 }
