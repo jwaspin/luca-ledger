@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/repeatedTransactionLink.schema.json",
+  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schemas/v2.0/repeatedTransactionLink.json",
   "title": "Repeated Transaction Link",
   "description": "Links individual transactions to their corresponding repeated transactions, managing and tracking their occurrence with a specific focus on modifications or deletions.",
   "type": "object",
