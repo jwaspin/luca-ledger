@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schemas/v2.0/entity.json",
+  "title": "Entity",
+  "description": "Defines the schema for entities within the application, categorizing them into specific, predefined types such as account, retailer, business, individual, utility, and government. This schema includes basic details and timestamps for creation and updates.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "A unique identifier for the entity."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the entity."
+    },
+    "description": {
+      "type": ["string", "null"],
+      "description": "A description of the entity. This can be null if no description is provided."
+    },
+    "entityType": {
+      "type": "string",
+      "enum": [
+        "account",
+        "retailer",
+        "business",
+        "individual",
+        "utility",
+        "government"
+      ],
+      "description": "The type of the entity, indicating its role or classification within the application. Controlled to specific predefined options for consistency and integrity."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time when the entity was created, in ISO 8601 format."
+    },
+    "updatedAt": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "The date and time when the entity was last updated, in ISO 8601 format. This can be null if the entity has not been updated since creation."
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "description",
+    "entityType",
+    "createdAt",
+    "updatedAt"
+  ],
+  "additionalProperties": false
+}

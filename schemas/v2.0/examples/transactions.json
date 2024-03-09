@@ -1,0 +1,38 @@
+[
+  {
+    "id": "uuid-placeholder-2001",
+    "payorId": "uuid-placeholder-1001",
+    "payeeId": "uuid-placeholder-1002",
+    "categoryId": "uuid-placeholder-0004",
+    "amount": 150.0,
+    "date": "2024-05-07",
+    "description": "Grocery shopping at Downtown Groceries",
+    "state": "completed",
+    "createdAt": "2024-05-06T08:00:00Z",
+    "updatedAt": null
+  },
+  {
+    "id": "uuid-placeholder-2002",
+    "payorId": "uuid-placeholder-1001",
+    "payeeId": "uuid-placeholder-1003",
+    "categoryId": "uuid-placeholder-0001",
+    "amount": 75.5,
+    "date": "2024-05-08",
+    "description": "Monthly electricity bill payment to City Electric",
+    "state": "scheduled",
+    "createdAt": "2024-05-05T07:00:00Z",
+    "updatedAt": null
+  },
+  {
+    "id": "uuid-placeholder-2003",
+    "payorId": "uuid-placeholder-1001",
+    "payeeId": "uuid-placeholder-1005",
+    "categoryId": null,
+    "amount": 500.0,
+    "date": "2024-05-09",
+    "description": "Deposit to My Bank Checking account",
+    "state": "pending",
+    "createdAt": "2024-05-07T09:00:00Z",
+    "updatedAt": "2024-05-08T10:00:00Z"
+  }
+]

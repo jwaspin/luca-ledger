@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schemas/v2.0/repeatedTransactionOccurrence.json",
+  "title": "Repeated Transaction Occurrence",
+  "description": "Manages occurrences of repeated transactions, including tracking their modifications or logical deletions. 'transactionId' is required when an occurrence is modified to link it to an actual transaction.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the occurrence record."
+    },
+    "transactionId": {
+      "type": ["string", "null"],
+      "description": "Identifier of the actual transaction, required if the occurrence is modified."
+    },
+    "repeatedTransactionId": {
+      "type": "string",
+      "description": "Identifier of the associated repeated transaction."
+    },
+    "expectedDate": {
+      "type": "string",
+      "format": "date",
+      "description": "The date when the occurrence is expected."
+    },
+    "occurrenceStatus": {
+      "type": "string",
+      "enum": ["modified", "deleted"],
+      "description": "Status of the occurrence, indicating if it has been modified or logically deleted."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of when the occurrence was created."
+    },
+    "updatedAt": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Timestamp of the last update to the occurrence. Nullable to accommodate occurrences that have not been updated."
+    }
+  },
+  "required": [
+    "id",
+    "transactionId",
+    "repeatedTransactionId",
+    "expectedDate",
+    "occurrenceStatus",
+    "createdAt",
+    "updatedAt"
+  ],
+  "additionalProperties": false,
+  "if": {
+    "properties": { "occurrenceStatus": { "const": "modified" } }
+  },
+  "then": {
+    "required": ["transactionId"]
+  }
+}
