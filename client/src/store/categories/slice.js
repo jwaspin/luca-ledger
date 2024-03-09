@@ -1,22 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import {
-  addCategoryReducer,
-  removeCategoryReducer,
-  updateCategoryReducer,
-} from './reducers';
+const initialCategoriesState = {
+  categoriesList: [],
+  loading: false,
+  error: null,
+};
 
-const categories = createSlice({
+const categoriesSlice = createSlice({
   name: 'categories',
-  initialState: [],
+  initialState: initialCategoriesState,
   reducers: {
-    addCategory: addCategoryReducer,
-    removeCategory: removeCategoryReducer,
-    updateCategory: updateCategoryReducer,
+    setLoading(state, action) {
+      state.loading = action.payload;
+    },
+    setError(state, action) {
+      state.error = action.payload;
+    },
+    updateCategoriesList(state, action) {
+      state.categoriesList = action.payload;
+    },
   },
 });
 
-export default categories.reducer;
-
-export const { addCategory, removeCategory, updateCategory } =
-  categories.actions;
+export const { setLoading, setError, updateCategoriesList } = categoriesSlice.actions;
+export const categoriesReducer = categoriesSlice.reducer;
