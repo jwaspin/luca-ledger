@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/repeatedTransactionLink.schema.json",
+  "title": "Repeated Transaction Link",
+  "description": "Links individual transactions to their corresponding repeated transactions, managing and tracking their occurrence with a specific focus on modifications or deletions.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the link record."
+    },
+    "transactionId": {
+      "type": "string",
+      "description": "Identifier of the individual transaction."
+    },
+    "repeatedTransactionId": {
+      "type": "string",
+      "description": "Identifier of the associated repeated transaction."
+    },
+    "expectedDate": {
+      "type": "string",
+      "format": "date",
+      "description": "The date when the linked transaction is expected to occur."
+    },
+    "repeatedStatus": {
+      "type": "string",
+      "enum": ["modified", "deleted"],
+      "description": "Status of the repeated transaction link, indicating if it has been modified or deleted."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of when the link was created."
+    },
+    "updatedAt": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Timestamp of the last update to the link. Nullable to accommodate links that have not been updated."
+    }
+  },
+  "required": [
+    "id",
+    "transactionId",
+    "repeatedTransactionId",
+    "repeatedStatus",
+    "createdAt"
+  ],
+  "additionalProperties": false
+}
