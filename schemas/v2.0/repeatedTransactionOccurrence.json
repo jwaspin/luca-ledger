@@ -40,10 +40,12 @@
   },
   "required": [
     "id",
+    "transactionId",
     "repeatedTransactionId",
     "expectedDate",
     "occurrenceStatus",
-    "createdAt"
+    "createdAt",
+    "updatedAt"
   ],
   "additionalProperties": false,
   "if": {

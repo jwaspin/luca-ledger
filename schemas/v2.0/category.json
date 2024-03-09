@@ -41,7 +41,16 @@
       "description": "The date and time when the category was last updated, in ISO 8601 format. Can be null if the category has never been updated."
     }
   },
-  "required": ["id", "name", "createdAt", "categoryType"],
+  "required": [
+    "id",
+    "name",
+    "description",
+    "parentId",
+    "defaultCategoryId",
+    "categoryType",
+    "createdAt",
+    "updatedAt"
+  ],
   "additionalProperties": false,
   "if": {
     "properties": {

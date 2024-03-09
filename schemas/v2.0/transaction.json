@@ -53,10 +53,13 @@
     "id",
     "payorId",
     "payeeId",
+    "categoryId",
     "amount",
     "date",
+    "description",
     "state",
-    "createdAt"
+    "createdAt",
+    "updatedAt"
   ],
   "additionalProperties": false
 }

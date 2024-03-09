@@ -40,6 +40,13 @@
       "description": "The date and time when the entity was last updated, in ISO 8601 format. This can be null if the entity has not been updated since creation."
     }
   },
-  "required": ["id", "name", "entityType", "createdAt"],
+  "required": [
+    "id",
+    "name",
+    "description",
+    "entityType",
+    "createdAt",
+    "updatedAt"
+  ],
   "additionalProperties": false
 }
