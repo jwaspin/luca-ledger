@@ -9,14 +9,36 @@ export const createListSlice = (name, validate) => {
     state.error = action.payload;
   };
 
-  const updateListReducer = (state, action) => {
-    const isValid = action.payload.list.every((item) => validate(item));
+  const addItemReducer = (state, action) => {
+    const isValid = validate(action.payload);
     if (!isValid) {
-      state.error = 'Validation failed';
+      state.error = 'Validation failed for adding item';
       return;
     }
-    state[name] = action.payload.list;
-    state.error = null;
+    state[`${name}List`].push(action.payload);
+  };
+
+  const updateItemReducer = (state, action) => {
+    const { id, ...updates } = action.payload;
+    const index = state[`${name}List`].findIndex((item) => item.id === id);
+    if (index === -1) {
+      state.error = `Item with id ${id} not found for updating`;
+      return;
+    }
+    const updatedItem = { ...state[`${name}List`][index], ...updates };
+    const isValid = validate(updatedItem);
+    if (!isValid) {
+      state.error = 'Validation failed for updating item';
+      return;
+    }
+    state[`${name}List`][index] = updatedItem;
+  };
+
+  const removeItemReducer = (state, action) => {
+    const id = action.payload;
+    state[`${name}List`] = state[`${name}List`].filter(
+      (item) => item.id !== id
+    );
   };
 
   const initialState = {
@@ -31,7 +53,9 @@ export const createListSlice = (name, validate) => {
     reducers: {
       setLoading: setLoadingReducer,
       setError: setErrorReducer,
-      updateList: updateListReducer,
+      addItem: addItemReducer,
+      updateItem: updateItemReducer,
+      removeItem: removeItemReducer,
     },
   });
 };

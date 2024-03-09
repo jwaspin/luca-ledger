@@ -8,7 +8,9 @@ const repeatedTransactionOccurrencesSlice = createListSlice(
 export const {
   setLoading: setRepeatedTransactionOccurrencesLoading,
   setError: setRepeatedTransactionOccurrencesError,
-  updateList: updateRepeatedTransactionOccurrencesList,
+  addItem: addRepeatedTransactionOccurrence,
+  updateItem: updateRepeatedTransactionOccurrence,
+  removeItem: removeRepeatedTransactionOccurrence,
 } = repeatedTransactionOccurrencesSlice.actions;
 export const repeatedTransactionOccurrencesReducer =
   repeatedTransactionOccurrencesSlice.reducer;

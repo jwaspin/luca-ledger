@@ -5,6 +5,8 @@ const entitiesSlice = createListSlice('entities', validateEntity);
 export const {
   setLoading: setEntitiesLoading,
   setError: setEntitiesError,
-  updateList: updateEntitiesList,
+  addItem: addEntity,
+  updateItem: updateEntity,
+  removeItem: removeEntity,
 } = entitiesSlice.actions;
 export const entitiesReducer = entitiesSlice.reducer;

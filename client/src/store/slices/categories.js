@@ -5,6 +5,8 @@ const categoriesSlice = createListSlice('categories', validateCategory);
 export const {
   setLoading: setCategoriesLoading,
   setError: setCategoriesError,
-  updateList: updateCategoriesList,
+  addItem: addCategory,
+  updateItem: updateCategory,
+  removeItem: removeCategory,
 } = categoriesSlice.actions;
 export const categoriesReducer = categoriesSlice.reducer;
