@@ -33,9 +33,20 @@
       "type": "string",
       "description": "A textual description of the transaction."
     },
-    "state": {
+    "transactionState": {
       "type": "string",
-      "enum": ["planned", "scheduled", "pending", "completed", "cancelled"],
+      "enum": [
+        "PLANNED",
+        "SCHEDULED",
+        "PENDING",
+        "COMPLETED",
+        "CANCELLED",
+        "FAILED",
+        "DISPUTED",
+        "REFUNDED",
+        "TENTATIVE",
+        "UPCOMING"
+      ],
       "description": "The current state of the transaction."
     },
     "createdAt": {

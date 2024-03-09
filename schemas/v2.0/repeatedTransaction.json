@@ -27,7 +27,7 @@
     },
     "frequency": {
       "type": "string",
-      "enum": ["day", "week", "month", "year"],
+      "enum": ["DAY", "WEEK", "MONTH", "YEAR"],
       "description": "Defines the base unit of time for the repetition."
     },
     "interval": {
@@ -49,9 +49,9 @@
       "type": "string",
       "description": "A detailed description of the transaction."
     },
-    "state": {
+    "repeatedTransactionState": {
       "type": "string",
-      "enum": ["planned", "scheduled", "pending", "completed", "cancelled"],
+      "enum": ["ACTIVE", "PAUSED", "COMPLETED", "CANCELLED"],
       "description": "Current status of the transaction."
     },
     "createdAt": {

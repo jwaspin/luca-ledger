@@ -20,12 +20,12 @@
     "entityType": {
       "type": "string",
       "enum": [
-        "account",
-        "retailer",
-        "business",
-        "individual",
-        "utility",
-        "government"
+        "ACCOUNT",
+        "RETAILER",
+        "BUSINESS",
+        "INDIVIDUAL",
+        "UTILITY",
+        "GOVERNMENT"
       ],
       "description": "The type of the entity, indicating its role or classification within the application. Controlled to specific predefined options for consistency and integrity."
     },

@@ -24,7 +24,7 @@
     },
     "occurrenceStatus": {
       "type": "string",
-      "enum": ["modified", "deleted"],
+      "enum": ["MODIFIED", "DELETED"],
       "description": "Status of the occurrence, indicating if it has been modified or logically deleted."
     },
     "createdAt": {
