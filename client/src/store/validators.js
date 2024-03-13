@@ -3,8 +3,8 @@ import addFormats from 'ajv-formats';
 
 import categorySchema from '../../../schemas/v2.0/category.json';
 import entitySchema from '../../../schemas/v2.0/entity.json';
-import repeatedTransactionSchema from '../../../schemas/v2.0/repeatedTransaction.json';
-import repeatedTransactionOccurrenceSchema from '../../../schemas/v2.0/repeatedTransactionOccurrence.json';
+import repeatedTransactionSchema from '../../../schemas/v2.0/recurringTransaction.json';
+import repeatedTransactionOccurrenceSchema from '../../../schemas/v2.0/recurringTransactionEvent.json';
 import transactionSchema from '../../../schemas/v2.0/transaction.json';
 
 const ajv = new Ajv({ allErrors: true });
