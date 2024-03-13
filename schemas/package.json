@@ -1,0 +1,9 @@
+{
+  "name": "luca-ledger-schemas",
+  "version": "2.0.0",
+  "description": "Schemas for the Luca Ledger application",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
+}
