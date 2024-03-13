@@ -1,22 +1,22 @@
 import { Box, Button } from '@mui/material';
 import { useRef } from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
-import { actions } from '@/store/accounts';
+// import { actions } from '@/store/accounts';
 
 export default function LoadButton() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const fileInputRef = useRef(null);
 
-  const handleChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      const json = JSON.parse(reader.result);
-      dispatch(actions.loadAccount(json));
-    };
-    reader.readAsText(file);
-  };
+  // const handleChange = (event) => {
+  //   const file = event.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.onload = () => {
+  //     const json = JSON.parse(reader.result);
+  //     dispatch(actions.loadAccount(json));
+  //   };
+  //   reader.readAsText(file);
+  // };
 
   const handleLoadAccountsClick = () => {
     fileInputRef.current.click();
@@ -35,7 +35,7 @@ export default function LoadButton() {
         type='file'
         id='fileInput'
         ref={fileInputRef}
-        onChange={handleChange}
+        // onChange={handleChange}
         style={{ display: 'none' }}
         multiple
       />
