@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schemas/v2.0/repeatedTransaction.json",
-  "title": "Repeated Transaction",
+  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schemas/v2.0/recurringTransaction.json",
+  "title": "Recurring Transaction",
   "description": "Defines recurring financial transactions within the application, including their scheduling, frequency, interval, and optional constraints like total occurrences or an end date.",
   "type": "object",
   "properties": {
@@ -43,16 +43,16 @@
     "endOn": {
       "type": ["string", "null"],
       "format": "date",
-      "description": "The date on which the repeated transaction series should end. Can be null."
+      "description": "The date on which the recurring transaction series should end. Can be null."
     },
     "description": {
       "type": "string",
       "description": "A detailed description of the transaction."
     },
-    "repeatedTransactionState": {
+    "recurringTransactionState": {
       "type": "string",
       "enum": ["ACTIVE", "PAUSED", "COMPLETED", "CANCELLED"],
-      "description": "Current status of the transaction."
+      "description": "Current state of the recurring transaction series."
     },
     "createdAt": {
       "type": "string",
