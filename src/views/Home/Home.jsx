@@ -20,6 +20,9 @@ export default function Home() {
         >
           Welcome to Luca Ledger
         </Typography>
+        <Typography>
+          COMING SOON!!! Version 2.0! Stay tuned for updates!
+        </Typography>
         <Typography
           variant='body1'
           style={{ width: '75%', textAlign: 'justify', marginBottom: '50px' }}
