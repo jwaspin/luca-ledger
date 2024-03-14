@@ -1,5 +1,7 @@
 # Luca Ledger
 
+**NOTICE** Version 2.0 is in the process of being designed and the application refactored to support those changes. Version 2 is based on a major change to the schema with a significant focus on the future of this project. Version 1 has been enlightening, as well as personally useful, but it hit a wall in development that required more focus on the schema. Look at the release branch for a preview of what's coming!
+
 Luca Ledger provides a simple user interface for tracking financial transactions through a basic ledger. The goal is to provide an easy to use interface for financial planning and budgeting through the point of view of accounts and transactions.
 
 _If more information is desired in this README, please open an issue and provide a brief description about the type of information desired._
