@@ -22,7 +22,7 @@
       "enum": [
         "ACCOUNT",
         "RETAILER",
-        "BUSINESS",
+        "SERVICE",
         "INDIVIDUAL",
         "UTILITY",
         "GOVERNMENT"
