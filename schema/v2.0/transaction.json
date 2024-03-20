@@ -68,7 +68,7 @@
     "amount",
     "date",
     "description",
-    "state",
+    "transactionState",
     "createdAt",
     "updatedAt"
   ],

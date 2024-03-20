@@ -82,7 +82,7 @@
     "startOn",
     "endOn",
     "description",
-    "state",
+    "recurringTransactionState",
     "createdAt",
     "updatedAt"
   ],

@@ -10,7 +10,7 @@ const validate = ajv.compile(schema);
 test('examples are valid categories', () => {
     exampleData.forEach((example) => {
         const valid = validate(example);
-        expect(valid).toBe(true);
         if (!valid) console.log(validate.errors);
+        expect(valid).toBe(true);
     });
 });
