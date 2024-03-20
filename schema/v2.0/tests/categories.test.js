@@ -1,17 +1,16 @@
-import Ajv from "ajv/dist/2019";
-import addFormats from "ajv-formats";
+const Ajv2020 = require("ajv/dist/2020");
+const addFormats = require("ajv-formats");
+const schema = require("../category.json");
+const exampleData = require("../examples/categories.json");
 
-import categorySchema from "../category.json";
-import exampleCategories from "../examples/categories.json";
-
-const ajv = new Ajv({ allErrors: true });
-addFormats(ajv); 
-const validate = ajv.compile(categorySchema);
+const ajv = new Ajv2020();
+addFormats(ajv);
+const validate = ajv.compile(schema);
 
 test('examples are valid categories', () => {
-  exampleCategories.forEach((example) => {
-    const valid = validate(example);
-    expect(valid).toBe(true);
-    if (!valid) console.log(validate.errors);
-  });
+    exampleData.forEach((example) => {
+        const valid = validate(example);
+        expect(valid).toBe(true);
+        if (!valid) console.log(validate.errors);
+    });
 });
