@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Test Luca Schema Examples
 
 on: [push, pull_request]
 
