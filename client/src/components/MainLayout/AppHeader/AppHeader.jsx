@@ -14,10 +14,9 @@ export default function AppHeader() {
           <Link to='/'>
             <HomeIcon
               sx={{
-                fontSize: '3rem',
+                fontSize: '2rem',
                 color: 'white',
                 textDecoration: 'none',
-                '&:hover': { textDecoration: 'underline' },
               }}
             />
           </Link>
@@ -30,16 +29,20 @@ export default function AppHeader() {
             navText='Accounts'
           />
           <NavItem
+            linkTo='/entities'
+            navText='Entities'
+          />
+          <NavItem
             linkTo='/categories'
             navText='Categories'
           />
           <NavItem
-            linkTo='/entities'
-            navText='Entities'
+            linkTo='/recurring'
+            navText='Recurring'
           />
         </Box>
         <Typography
-          variant='h4'
+          variant='h5'
           sx={{ flexGrow: 1, textAlign: 'center' }}
         >
           Luca Ledger

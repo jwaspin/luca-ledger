@@ -6,6 +6,7 @@ import Dashboard from '@/views/Dashboard';
 import Entities from '@/views/Entities';
 import Home from '@/views/Home';
 import Ledger from '@/views/Ledger';
+import Recurring from '@/views/Recurring';
 
 export default function AppContent() {
   return (
@@ -27,12 +28,16 @@ export default function AppContent() {
         element={<Ledger />}
       />
       <Route
+        path='/entities'
+        element={<Entities />}
+      />
+      <Route
         path='/categories'
         element={<Categories />}
       />
       <Route
-        path='/entities'
-        element={<Entities />}
+        path='/recurring'
+        element={<Recurring />}
       />
       <Route
         path='*'
