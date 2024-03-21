@@ -33,6 +33,10 @@ export default function AppHeader() {
             linkTo='/categories'
             navText='Categories'
           />
+          <NavItem
+            linkTo='/entities'
+            navText='Entities'
+          />
         </Box>
         <Typography
           variant='h4'

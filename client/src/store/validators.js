@@ -1,0 +1,29 @@
+import Ajv2020 from 'ajv/dist/2020';
+import addFormats from 'ajv-formats';
+
+import {
+  categorySchema,
+  entitySchema,
+  recurringTransactionSchema,
+  recurringTransactionEventSchema,
+  transactionSchema,
+} from 'LucaSchema';
+
+const ajv = new Ajv2020();
+addFormats(ajv);
+
+const validateCategory = ajv.compile(categorySchema);
+const validateEntity = ajv.compile(entitySchema);
+const validateRecurringTransaction = ajv.compile(recurringTransactionSchema);
+const validateRecurringTransactionEvent = ajv.compile(
+  recurringTransactionEventSchema
+);
+const validateTransaction = ajv.compile(transactionSchema);
+
+export {
+  validateCategory,
+  validateEntity,
+  validateRecurringTransaction,
+  validateRecurringTransactionEvent,
+  validateTransaction,
+};

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schemas/v2.0/repeatedTransaction.json",
-  "title": "Repeated Transaction",
+  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/recurringTransaction.json",
+  "title": "Recurring Transaction",
   "description": "Defines recurring financial transactions within the application, including their scheduling, frequency, interval, and optional constraints like total occurrences or an end date.",
   "type": "object",
   "properties": {
@@ -27,7 +27,7 @@
     },
     "frequency": {
       "type": "string",
-      "enum": ["day", "week", "month", "year"],
+      "enum": ["DAY", "WEEK", "MONTH", "YEAR"],
       "description": "Defines the base unit of time for the repetition."
     },
     "interval": {
@@ -40,19 +40,24 @@
       "minimum": 1,
       "description": "The total number of times the transaction should occur. Can be null if not specified."
     },
+    "startOn": {
+      "type": "string",
+      "format": "date",
+      "description": "The date on which the recurring transaction series should begin."
+    },
     "endOn": {
       "type": ["string", "null"],
       "format": "date",
-      "description": "The date on which the repeated transaction series should end. Can be null."
+      "description": "The date on which the recurring transaction series should end. Can be null."
     },
     "description": {
       "type": "string",
       "description": "A detailed description of the transaction."
     },
-    "state": {
+    "recurringTransactionState": {
       "type": "string",
-      "enum": ["planned", "scheduled", "pending", "completed", "cancelled"],
-      "description": "Current status of the transaction."
+      "enum": ["ACTIVE", "PAUSED", "COMPLETED", "CANCELLED"],
+      "description": "Current state of the recurring transaction series."
     },
     "createdAt": {
       "type": "string",
@@ -74,9 +79,10 @@
     "frequency",
     "interval",
     "occurrences",
+    "startOn",
     "endOn",
     "description",
-    "state",
+    "recurringTransactionState",
     "createdAt",
     "updatedAt"
   ],

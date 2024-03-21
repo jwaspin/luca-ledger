@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schemas/v2.0/transaction.json",
+  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/transaction.json",
   "title": "Transaction",
   "type": "object",
   "properties": {
@@ -33,9 +33,20 @@
       "type": "string",
       "description": "A textual description of the transaction."
     },
-    "state": {
+    "transactionState": {
       "type": "string",
-      "enum": ["planned", "scheduled", "pending", "completed", "cancelled"],
+      "enum": [
+        "PLANNED",
+        "SCHEDULED",
+        "PENDING",
+        "COMPLETED",
+        "CANCELLED",
+        "FAILED",
+        "DISPUTED",
+        "REFUNDED",
+        "TENTATIVE",
+        "UPCOMING"
+      ],
       "description": "The current state of the transaction."
     },
     "createdAt": {
@@ -57,7 +68,7 @@
     "amount",
     "date",
     "description",
-    "state",
+    "transactionState",
     "createdAt",
     "updatedAt"
   ],

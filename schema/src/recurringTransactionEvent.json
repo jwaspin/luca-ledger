@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schemas/v2.0/repeatedTransactionOccurrence.json",
-  "title": "Repeated Transaction Occurrence",
-  "description": "Manages occurrences of repeated transactions, including tracking their modifications or logical deletions. 'transactionId' is required when an occurrence is modified to link it to an actual transaction.",
+  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/recurringTransactionEvent.json",
+  "title": "Recurring Transaction Event",
+  "description": "Manages occurrences of recurring transactions, including tracking their modifications or logical deletions. 'transactionId' is required when an occurrence is modified to link it to an actual transaction.",
   "type": "object",
   "properties": {
     "id": {
@@ -13,18 +13,18 @@
       "type": ["string", "null"],
       "description": "Identifier of the actual transaction, required if the occurrence is modified."
     },
-    "repeatedTransactionId": {
+    "recurringTransactionId": {
       "type": "string",
-      "description": "Identifier of the associated repeated transaction."
+      "description": "Identifier of the associated recurring transaction."
     },
     "expectedDate": {
       "type": "string",
       "format": "date",
       "description": "The date when the occurrence is expected."
     },
-    "occurrenceStatus": {
+    "status": {
       "type": "string",
-      "enum": ["modified", "deleted"],
+      "enum": ["MODIFIED", "DELETED"],
       "description": "Status of the occurrence, indicating if it has been modified or logically deleted."
     },
     "createdAt": {
@@ -41,15 +41,15 @@
   "required": [
     "id",
     "transactionId",
-    "repeatedTransactionId",
+    "recurringTransactionId",
     "expectedDate",
-    "occurrenceStatus",
+    "status",
     "createdAt",
     "updatedAt"
   ],
   "additionalProperties": false,
   "if": {
-    "properties": { "occurrenceStatus": { "const": "modified" } }
+    "properties": { "status": { "const": "modified" } }
   },
   "then": {
     "required": ["transactionId"]

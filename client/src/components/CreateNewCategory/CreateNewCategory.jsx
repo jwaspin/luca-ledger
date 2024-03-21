@@ -1,17 +1,17 @@
-import { Box, Button, TextField } from '@mui/material';
+import { Box, /*Button,*/ TextField } from '@mui/material';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
-import { actions } from '@/store/categories';
+// import { actions } from '@/store/categories';
 
 export default function CreateNewCategory() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [newCategoryName, setNewCategoryName] = useState('');
 
-  const handleCreateNewCategory = () => {
-    dispatch(actions.createNewCategory({ name: newCategoryName }));
-    setNewCategoryName('');
-  };
+  // const handleCreateNewCategory = () => {
+  //   dispatch(actions.createNewCategory({ name: newCategoryName }));
+  //   setNewCategoryName('');
+  // };
 
   return (
     <Box
@@ -25,7 +25,7 @@ export default function CreateNewCategory() {
         value={newCategoryName}
         onChange={(event) => setNewCategoryName(event.target.value)}
       />
-      <Button onClick={handleCreateNewCategory}>Create New Category</Button>
+      {/* <Button onClick={handleCreateNewCategory}>Create New Category</Button> */}
     </Box>
   );
 }

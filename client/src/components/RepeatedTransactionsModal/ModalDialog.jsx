@@ -8,10 +8,10 @@ import {
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+// import { useDispatch } from 'react-redux';
+// import { useParams } from 'react-router-dom';
 
-import { actions } from '@/store/transactions';
+// import { actions } from '@/store/transactions';
 import AmountField from './AmountField';
 import DescriptionField from './DescriptionField';
 import FrequencyField from './FrequencyField';
@@ -19,8 +19,8 @@ import OccurrencesField from './OccurrencesField';
 import StartDatePicker from './StartDatePicker';
 
 export default function ModalDialog({ open, handleClose, reset, setReset }) {
-  const dispatch = useDispatch();
-  const { accountId } = useParams();
+  // const dispatch = useDispatch();
+  // const { accountId } = useParams();
   const [startDate, setStartDate] = useState(dayjs());
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
@@ -28,20 +28,20 @@ export default function ModalDialog({ open, handleClose, reset, setReset }) {
   const [frequencyCount, setFrequencyCount] = useState(null);
   const [occurrences, setOccurrences] = useState(null);
 
-  const handleCreate = () => {
-    dispatch(
-      actions.createRepeatTransaction({
-        startDate,
-        amount: Number(amount),
-        description,
-        frequency,
-        frequencyCount,
-        occurrences,
-        accountId,
-      })
-    );
-    handleClose();
-  };
+  // const handleCreate = () => {
+  //   dispatch(
+  //     actions.createRepeatTransaction({
+  //       startDate,
+  //       amount: Number(amount),
+  //       description,
+  //       frequency,
+  //       frequencyCount,
+  //       occurrences,
+  //       accountId,
+  //     })
+  //   );
+  //   handleClose();
+  // };
 
   const handleCancel = () => {
     handleClose();
@@ -104,7 +104,7 @@ export default function ModalDialog({ open, handleClose, reset, setReset }) {
           Cancel
         </Button>
         <Button
-          onClick={handleCreate}
+          // onClick={handleCreate}
           color='primary'
         >
           Create

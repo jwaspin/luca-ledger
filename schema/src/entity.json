@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schemas/v2.0/entity.json",
+  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/entity.json",
   "title": "Entity",
   "description": "Defines the schema for entities within the application, categorizing them into specific, predefined types such as account, retailer, business, individual, utility, and government. This schema includes basic details and timestamps for creation and updates.",
   "type": "object",
@@ -20,12 +20,12 @@
     "entityType": {
       "type": "string",
       "enum": [
-        "account",
-        "retailer",
-        "business",
-        "individual",
-        "utility",
-        "government"
+        "ACCOUNT",
+        "RETAILER",
+        "SERVICE",
+        "INDIVIDUAL",
+        "UTILITY",
+        "GOVERNMENT"
       ],
       "description": "The type of the entity, indicating its role or classification within the application. Controlled to specific predefined options for consistency and integrity."
     },
