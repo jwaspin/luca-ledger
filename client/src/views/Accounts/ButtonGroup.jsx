@@ -1,7 +1,5 @@
 import { Box, Grid } from '@mui/material';
 
-import LoadButton from './LoadButton';
-import SaveAllButton from './SaveAllButton';
 import CreateNewButton from './CreateNewButton';
 
 export default function ButtonGroup() {
@@ -24,21 +22,9 @@ export default function ButtonGroup() {
       >
         <Grid
           item
-          key={0}
-        >
-          <LoadButton />
-        </Grid>
-        <Grid
-          item
           key={1}
         >
           <CreateNewButton />
-        </Grid>
-        <Grid
-          item
-          key={2}
-        >
-          <SaveAllButton />
         </Grid>
       </Grid>
     </Box>
