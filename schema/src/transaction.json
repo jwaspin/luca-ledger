@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/v2.0/transaction.json",
+  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/transaction.json",
   "title": "Transaction",
   "type": "object",
   "properties": {
