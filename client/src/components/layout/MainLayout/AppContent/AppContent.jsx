@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import Accounts from '@/pages/Accounts';
+import AccountsPage from '@/features/accounts/AccountsPage';
 import Categories from '@/pages/Categories';
 import Dashboard from '@/pages/Dashboard';
 import Entities from '@/pages/Entities';
@@ -21,7 +21,7 @@ export default function AppContent() {
       />
       <Route
         path='/accounts'
-        element={<Accounts />}
+        element={<AccountsPage />}
       />
       <Route
         path='/accounts/:accountId'
