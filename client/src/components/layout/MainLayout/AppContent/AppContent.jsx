@@ -1,12 +1,12 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import Accounts from '@/views/Accounts';
-import Categories from '@/views/Categories';
-import Dashboard from '@/views/Dashboard';
-import Entities from '@/views/Entities';
-import Home from '@/views/Home';
-import Ledger from '@/views/Ledger';
-import Recurring from '@/views/Recurring';
+import Accounts from '@/pages/Accounts';
+import Categories from '@/pages/Categories';
+import Dashboard from '@/pages/Dashboard';
+import Entities from '@/pages/Entities';
+import Home from '@/pages/Home';
+import Ledger from '@/pages/Ledger';
+import Recurring from '@/pages/Recurring';
 
 export default function AppContent() {
   return (

@@ -4,7 +4,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Provider } from 'react-redux';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
-import MainLayout from '@/components/MainLayout/MainLayout';
+import MainLayout from '@/components/layout/MainLayout/MainLayout';
 import VersionProvider from '@/components/VersionProvider';
 import store from '@/store';
 
