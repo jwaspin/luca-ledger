@@ -1,5 +1,5 @@
 {
-  "name": "luca-ledger-schemas",
+  "name": "LucaSchema",
   "version": "2.0.0",
   "description": "Schemas for the Luca Ledger application",
   "license": "MIT",

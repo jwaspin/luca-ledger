@@ -26,6 +26,7 @@
     "dayjs": "^1.11.10",
     "immer": "^10.0.3",
     "jszip": "^3.10.1",
+    "LucaSchema": "file:../schema",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.3",

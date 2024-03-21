@@ -1,27 +1,29 @@
-import Ajv from 'ajv';
+import Ajv2020 from 'ajv/dist/2020';
 import addFormats from 'ajv-formats';
 
-import categorySchema from '../../../schemas/v2.0/category.json';
-import entitySchema from '../../../schemas/v2.0/entity.json';
-import repeatedTransactionSchema from '../../../schemas/v2.0/recurringTransaction.json';
-import repeatedTransactionOccurrenceSchema from '../../../schemas/v2.0/recurringTransactionEvent.json';
-import transactionSchema from '../../../schemas/v2.0/transaction.json';
+import {
+  categorySchema,
+  entitySchema,
+  recurringTransactionSchema,
+  recurringTransactionEventSchema,
+  transactionSchema,
+} from 'LucaSchema';
 
-const ajv = new Ajv({ allErrors: true });
+const ajv = new Ajv2020();
 addFormats(ajv);
 
 const validateCategory = ajv.compile(categorySchema);
 const validateEntity = ajv.compile(entitySchema);
-const validateRepeatedTransaction = ajv.compile(repeatedTransactionSchema);
-const validateRepeatedTransactionOccurrence = ajv.compile(
-  repeatedTransactionOccurrenceSchema
+const validateRecurringTransaction = ajv.compile(recurringTransactionSchema);
+const validateRecurringTransactionEvent = ajv.compile(
+  recurringTransactionEventSchema
 );
 const validateTransaction = ajv.compile(transactionSchema);
 
 export {
   validateCategory,
   validateEntity,
-  validateRepeatedTransaction,
-  validateRepeatedTransactionOccurrence,
+  validateRecurringTransaction,
+  validateRecurringTransactionEvent,
   validateTransaction,
 };
