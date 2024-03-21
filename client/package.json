@@ -1,6 +1,6 @@
 {
   "name": "luca-ledger",
-  "version": "2.0.0",
+  "version": "2.0.0-beta.2",
   "homepage": "https://jwaspin.app",
   "type": "module",
   "license": "MIT",
@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "vite --port 8080",
     "start": "vite --port 8080",
-    "build": "vite build",
+    "build": "vite build && cp CNAME dist/CNAME && cp dist/index.html dist/404.html",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "deploy": "gh-pages -d dist"
