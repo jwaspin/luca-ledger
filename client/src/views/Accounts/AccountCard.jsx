@@ -26,6 +26,7 @@ export default function AccountCard({ account }) {
     >
       <CardContent style={{ position: 'relative' }}>
         <Typography variant='h4'>{account.name}</Typography>
+        <Typography variant='body1'>{account.description}</Typography>
       </CardContent>
     </Card>
   );
@@ -35,5 +36,6 @@ AccountCard.propTypes = {
   account: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    description: PropTypes.string,
   }).isRequired,
 };
