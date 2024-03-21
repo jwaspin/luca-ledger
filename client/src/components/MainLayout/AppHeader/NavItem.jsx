@@ -21,8 +21,8 @@ export default function NavItem({ linkTo, navText }) {
         variant='body2'
         style={{
           display: 'block',
-          marginLeft: '50px',
-          fontSize: '1.5rem',
+          marginLeft: '30px',
+          fontSize: '1.2rem',
           fontWeight: 'bold',
           color: 'white',
         }}
