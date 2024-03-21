@@ -1,15 +1,17 @@
 import { Box, Grid, Typography } from '@mui/material';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-// import { selectors } from '@/store/accounts';
-// import AccountCard from './AccountCard';
+import { selectAllAccounts } from '@/store/accounts/selectors';
+import AccountCard from './AccountCard';
 import ButtonGroup from './ButtonGroup';
 
-// const accountSortByName = (a, b) => a.name.localeCompare(b.name);
+const accountSortByName = (a, b) => a.name.localeCompare(b.name);
 
 export default function Accounts() {
-  // const accounts = useSelector(selectors.selectAccounts);
-  // const sortedAccounts = [...accounts].sort(accountSortByName);
+  const accounts = useSelector(selectAllAccounts);
+  const sortedAccounts = [...accounts].sort(accountSortByName);
+
+  console.log('Accounts:', accounts);
 
   return (
     <Box
@@ -33,14 +35,14 @@ export default function Accounts() {
           width: '60%',
         }}
       >
-        {/* {sortedAccounts.map((account) => (
+        {sortedAccounts.map((account) => (
           <Grid
             item
             key={account.id}
           >
             <AccountCard account={account} />
           </Grid>
-        ))} */}
+        ))}
       </Grid>
       <ButtonGroup />
     </Box>

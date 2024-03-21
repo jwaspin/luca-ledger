@@ -2,11 +2,6 @@ import { Card, CardContent, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
-import { constants } from '@/store/transactions';
-import BalanceRow from './BalanceRow';
-
-import ActionsMenu from '@/components/ActionsMenu/ActionsMenu';
-
 export default function AccountCard({ account }) {
   const navigate = useNavigate();
 
@@ -31,40 +26,6 @@ export default function AccountCard({ account }) {
     >
       <CardContent style={{ position: 'relative' }}>
         <Typography variant='h4'>{account.name}</Typography>
-        <Typography variant='subtitle1'>{account.type}</Typography>
-        <BalanceRow
-          account={account}
-          balanceType={'Current'}
-          filterArray={[constants.TransactionStatusEnum.COMPLETE]}
-        />
-        <BalanceRow
-          account={account}
-          balanceType={'Pending'}
-          filterArray={[
-            constants.TransactionStatusEnum.COMPLETE,
-            constants.TransactionStatusEnum.PENDING,
-          ]}
-        />
-        <BalanceRow
-          account={account}
-          balanceType={'Scheduled'}
-          filterArray={[
-            constants.TransactionStatusEnum.COMPLETE,
-            constants.TransactionStatusEnum.PENDING,
-            constants.TransactionStatusEnum.SCHEDULED,
-          ]}
-        />
-        <BalanceRow
-          account={account}
-          balanceType={'Future'}
-          filterArray={[
-            constants.TransactionStatusEnum.COMPLETE,
-            constants.TransactionStatusEnum.PENDING,
-            constants.TransactionStatusEnum.SCHEDULED,
-            constants.TransactionStatusEnum.FUTURE,
-          ]}
-        />
-        <ActionsMenu account={account} />
       </CardContent>
     </Card>
   );
@@ -74,12 +35,5 @@ AccountCard.propTypes = {
   account: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    transactions: PropTypes.arrayOf(
-      PropTypes.shape({
-        status: PropTypes.string.isRequired,
-        amount: PropTypes.number.isRequired,
-      })
-    ).isRequired,
   }).isRequired,
 };

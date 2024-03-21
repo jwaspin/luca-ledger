@@ -1,19 +1,20 @@
 import { Button } from '@mui/material';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-// import { actions } from '@/store/accounts';
+import { createNewAccount } from '@/store/accounts/actions';
 
 export default function CreateNewButton() {
-  // const dispatch = useDispatch();
-  // const handleCreateAccount = () => {
-  //   dispatch(actions.createNewAccount());
-  // };
+  const dispatch = useDispatch();
+  const handleCreateAccount = () => {
+    console.log('Creating new account...');
+    dispatch(createNewAccount('test', 'test account description'));
+  };
 
   return (
     <Button
       variant='contained'
       color='primary'
-      // onClick={handleCreateAccount}
+      onClick={handleCreateAccount}
     >
       Create New Account
     </Button>
