@@ -1,5 +1,5 @@
-import AppContent from './AppContent';
-import AppHeader from './AppHeader';
+import AppContent from './components/AppContent';
+import AppHeader from './components/AppHeader';
 
 export default function MainLayout() {
   return (
