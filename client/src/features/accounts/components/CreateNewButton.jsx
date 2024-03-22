@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
-import { createNewAccount } from './actions';
+import { createNewAccount } from '../store/actions';
 
 export default function CreateNewButton() {
   const dispatch = useDispatch();

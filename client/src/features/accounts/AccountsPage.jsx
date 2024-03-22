@@ -1,9 +1,9 @@
 import { Box, Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { selectAllAccounts } from './selectors';
-import AccountCard from './AccountCard';
-import ButtonGroup from './ButtonGroup';
+import { selectAllAccounts } from './store/selectors';
+import AccountCard from './components/AccountCard';
+import ButtonGroup from './components/ButtonGroup';
 
 const accountSortByName = (a, b) => a.name.localeCompare(b.name);
 
