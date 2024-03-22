@@ -1,30 +1,11 @@
 import { Box, TextField } from '@mui/material';
-import { /*useEffect,*/ useState } from 'react';
-// import { useSelector } from 'react-redux';
-// import { useNavigate, useParams } from 'react-router-dom';
+import { useState } from 'react';
 
-import LedgerTable from '@/components/LedgerTable';
-import RepeatedTransactionsModal from '@/components/RepeatedTransactionsModal';
-// import SettingsPanel from '@/components/SettingsPanel';
-// import { selectors } from '@/store/accounts';
-// import AccountName from './AccountName';
+import LedgerTable from './LedgerTable';
 import NewTransactionButton from './NewTransactionButton';
 
 export default function Ledger() {
-  // const { accountId } = useParams();
-  // const navigate = useNavigate();
   const [filterValue, setFilterValue] = useState('');
-  // const account = useSelector(selectors.selectAccountById(accountId));
-
-  // useEffect(() => {
-  //   if (!account) {
-  //     navigate('/accounts');
-  //   }
-  // }, [account, navigate]);
-
-  // if (!account) {
-  //   return null;
-  // }
 
   return (
     <Box
@@ -36,16 +17,6 @@ export default function Ledger() {
         justifyContent: 'space-around',
       }}
     >
-      <Box
-        sx={{
-          width: '18%',
-          padding: '5px',
-          height: '100%',
-          borderRight: '1px solid black',
-        }}
-      >
-        {/* <SettingsPanel account={account} /> */}
-      </Box>
       <Box sx={{ width: '82%', padding: '5px' }}>
         <Box
           style={{
@@ -54,9 +25,7 @@ export default function Ledger() {
             alignItems: 'center',
             justifyContent: 'space-between',
           }}
-        >
-          {/* <AccountName account={account} /> */}
-        </Box>
+        ></Box>
         <Box
           sx={{
             display: 'flex',
@@ -79,7 +48,6 @@ export default function Ledger() {
         </Box>
         <LedgerTable filterValue={filterValue} />
         <NewTransactionButton />
-        <RepeatedTransactionsModal />
       </Box>
     </Box>
   );

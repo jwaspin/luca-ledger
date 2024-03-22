@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { version as currentVersion } from '../../../package.json';
+import { version as currentVersion } from '../../../../package.json';
 
 export default function VersionProvider() {
   useEffect(() => {

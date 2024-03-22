@@ -1,8 +1,10 @@
 import { Typography } from '@mui/material';
 
-import { version } from '../../../package.json';
+import useVersion from '@/hooks/useVersion';
 
 export default function VersionDisplay() {
+  const version = useVersion();
+
   return (
     <Typography
       variant='subtitle1'

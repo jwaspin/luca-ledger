@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 
-import config from '@/config';
+import { homeText, lucaBio, legalDisclaimer } from './homePageContent.json';
 
 export default function Home() {
   return (
@@ -24,13 +24,13 @@ export default function Home() {
           variant='body1'
           style={{ width: '75%', textAlign: 'justify', marginBottom: '50px' }}
         >
-          {config.homeText}
+          {homeText}
         </Typography>
         <Typography
           variant='body1'
           style={{ width: '75%', textAlign: 'justify' }}
         >
-          {config.lucaBio}
+          {lucaBio}
         </Typography>
       </Box>
       <Box
@@ -44,7 +44,7 @@ export default function Home() {
           variant='subtitle2'
           width='50%'
         >
-          {config.legalDisclaimer}
+          {legalDisclaimer}
         </Typography>
       </Box>
     </Box>
