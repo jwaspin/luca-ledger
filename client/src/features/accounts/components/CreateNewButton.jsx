@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 
 import { createNewAccount } from '../store/actions';
 
-export default function CreateNewButton() {
+export default function CreateNewAccountButton() {
   const dispatch = useDispatch();
+
   const handleCreateAccount = () => {
-    console.log('Creating new account...');
     dispatch(createNewAccount('test', 'test account description'));
   };
 

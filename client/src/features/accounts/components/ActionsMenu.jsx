@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { actions } from '@/store/accounts';
+import { closeAccountById } from '../store/actions';
 
 import {
   Delete as DeleteIcon,
@@ -34,17 +34,18 @@ export default function ActionsMenu({ account }) {
     setOpen(false);
   };
 
-  const handleDelete = (event) => {
+  const handleCloseAccount = (event) => {
     event.stopPropagation();
-    dispatch(actions.removeAccountById(account.id));
+    dispatch(closeAccountById(account.id));
     handleClose();
   };
 
-  const handleSave = async (event) => {
+  const handleExportAccount = async (event) => {
     event.stopPropagation();
-    await dispatch(
-      actions.saveAccountAsync({ account, filename: `${account.name}.json` })
-    );
+    // await dispatch(
+    //   actions.saveAccountAsync({ account, filename: `${account.name}.json` })
+    // );
+    console.log('ToDo: Export account data');
     handleClose();
   };
 
@@ -77,17 +78,17 @@ export default function ActionsMenu({ account }) {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleSave}>
+        <MenuItem onClick={handleExportAccount}>
           <ListItemIcon>
             <SaveIcon fontSize='small' />
           </ListItemIcon>
-          <Typography variant='inherit'>Save</Typography>
+          <Typography variant='inherit'>Export Account</Typography>
         </MenuItem>
-        <MenuItem onClick={handleDelete}>
+        <MenuItem onClick={handleCloseAccount}>
           <ListItemIcon>
             <DeleteIcon fontSize='small' />
           </ListItemIcon>
-          <Typography variant='inherit'>Delete</Typography>
+          <Typography variant='inherit'>Close Account</Typography>
         </MenuItem>
       </Menu>
     </>

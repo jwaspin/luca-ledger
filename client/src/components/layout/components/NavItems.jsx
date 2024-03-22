@@ -3,9 +3,9 @@ import NavItem from './NavItem';
 import navItemList from '../navItems.json';
 
 export default function NavItems() {
-  return navItemList.map((navItem) => (
+  return navItemList.map((navItem, i) => (
     <NavItem
-      key={navItem.id}
+      key={i}
       linkTo={navItem.linkTo}
       navText={navItem.navText}
     />

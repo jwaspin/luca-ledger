@@ -2,6 +2,8 @@ import { Card, CardContent, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
+import ActionsMenu from './ActionsMenu';
+
 export default function AccountCard({ account }) {
   const navigate = useNavigate();
 
@@ -16,6 +18,7 @@ export default function AccountCard({ account }) {
       id='AccountCard'
       onClick={handleClick}
       sx={{
+        position: 'relative',
         width: cardLength,
         height: cardLength,
         '&:hover': {
@@ -28,6 +31,10 @@ export default function AccountCard({ account }) {
         <Typography variant='h4'>{account.name}</Typography>
         <Typography variant='body1'>{account.description}</Typography>
       </CardContent>
+      {account.entityStatus === 'CLOSED' && (
+        <Typography variant='h6'>CLOSED</Typography>
+      )}
+      <ActionsMenu account={account} />
     </Card>
   );
 }
@@ -36,6 +43,7 @@ AccountCard.propTypes = {
   account: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    entityStatus: PropTypes.string.isRequired,
     description: PropTypes.string,
   }).isRequired,
 };
