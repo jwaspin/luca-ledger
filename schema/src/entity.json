@@ -29,6 +29,17 @@
       ],
       "description": "The type of the entity, indicating its role or classification within the application. Controlled to specific predefined options for consistency and integrity."
     },
+    "entityStatus": {
+      "type": "string",
+      "enum": [
+        "ACTIVE",
+        "INACTIVE",
+        "SUSPENDED",
+        "DELETED",
+        "CLOSED"
+      ],
+      "description": "The status of the entity, indicating whether it is active, inactive, suspended, or deleted. Controlled to specific predefined options for consistency and integrity."
+    },
     "createdAt": {
       "type": "string",
       "format": "date-time",
@@ -45,6 +56,7 @@
     "name",
     "description",
     "entityType",
+    "entityStatus",
     "createdAt",
     "updatedAt"
   ],

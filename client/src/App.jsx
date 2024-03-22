@@ -4,11 +4,13 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Provider } from 'react-redux';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
-import MainLayout from '@/components/MainLayout/MainLayout';
-import VersionProvider from '@/components/VersionProvider';
+import MainLayout from '@/components/layout/MainLayout';
+import useVersion from '@/hooks/useVersion';
 import store from '@/store';
 
 export default function App() {
+  useVersion();
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Provider store={store}>
@@ -22,7 +24,6 @@ export default function App() {
           </Routes>
         </Router>
       </Provider>
-      <VersionProvider />
     </LocalizationProvider>
   );
 }
