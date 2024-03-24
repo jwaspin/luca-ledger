@@ -7,7 +7,7 @@ import {
   recurringTransactionSchema,
   recurringTransactionEventSchema,
   transactionSchema,
-} from 'LucaSchema';
+} from 'luca-schema';
 
 const ajv = new Ajv2020();
 addFormats(ajv);
