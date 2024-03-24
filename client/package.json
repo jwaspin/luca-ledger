@@ -5,6 +5,7 @@
   "type": "module",
   "license": "MIT",
   "description": "A simple ledger app for tracking your expenses.",
+  "entry": "src/main.jsx",
   "scripts": {
     "dev": "vite --port 8080",
     "start": "vite --port 8080",
