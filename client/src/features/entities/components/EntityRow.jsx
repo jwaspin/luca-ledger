@@ -1,4 +1,3 @@
-import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -11,9 +10,9 @@ export default function EntityRow({ entity }) {
   const [editableEntity, setEditableEntity] = useState({ ...entity });
   const dispatch = useDispatch();
 
-  const handleChange = debounce((field, value) => {
+  const handleChange = (field, value) => {
     setEditableEntity((prev) => ({ ...prev, [field]: value }));
-  }, 500);
+  };
 
   const saveChanges = () => {
     dispatch(updateEntityById(editableEntity.id, editableEntity));
