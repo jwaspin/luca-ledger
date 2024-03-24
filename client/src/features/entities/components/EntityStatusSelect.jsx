@@ -1,13 +1,13 @@
 import { Select, MenuItem } from '@mui/material';
 import PropTypes from 'prop-types';
 
-const EntityStatusSelect = ({ entityStatus, onEntityStatusChange }) => {
+const EntityStatusSelect = ({ entityStatus, onChange }) => {
   const statuses = ['ACTIVE', 'INACTIVE', 'SUSPENDED', 'CLOSED'];
 
   return (
     <Select
       value={entityStatus}
-      onChange={(e) => onEntityStatusChange(e.target.value)}
+      onChange={(e) => onChange(e.target.value)}
     >
       {statuses.map((status) => (
         <MenuItem
@@ -23,7 +23,7 @@ const EntityStatusSelect = ({ entityStatus, onEntityStatusChange }) => {
 
 EntityStatusSelect.propTypes = {
   entityStatus: PropTypes.string.isRequired,
-  onEntityStatusChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default EntityStatusSelect;

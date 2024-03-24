@@ -1,7 +1,7 @@
 import { Select, MenuItem } from '@mui/material';
 import PropTypes from 'prop-types';
 
-const EntityTypeSelect = ({ entityType, onEntityTypeChange }) => {
+const EntityTypeSelect = ({ entityType, onChange }) => {
   const entityTypes = [
     'ACCOUNT',
     'RETAILER',
@@ -14,7 +14,7 @@ const EntityTypeSelect = ({ entityType, onEntityTypeChange }) => {
   return (
     <Select
       value={entityType}
-      onChange={(e) => onEntityTypeChange(e.target.value)}
+      onChange={(e) => onChange(e.target.value)}
     >
       {entityTypes.map((type) => (
         <MenuItem
@@ -30,7 +30,7 @@ const EntityTypeSelect = ({ entityType, onEntityTypeChange }) => {
 
 EntityTypeSelect.propTypes = {
   entityType: PropTypes.string.isRequired,
-  onEntityTypeChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default EntityTypeSelect;
