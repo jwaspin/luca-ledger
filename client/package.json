@@ -21,7 +21,7 @@
     "@mui/system": "^5.14.15",
     "@mui/x-date-pickers": "^6.17.0",
     "@reduxjs/toolkit": "^1.9.7",
-    "LucaSchema": "file:../schema",
+    "luca-schema": "file:../schema",
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
     "dayjs": "^1.11.10",
