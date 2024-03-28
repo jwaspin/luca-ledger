@@ -1,8 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-const selectEntities = (state) => state.entities;
+const selectEntitiesSlice = (state) => state.entities;
 
 export const selectAllEntities = createSelector(
-  selectEntities,
+  selectEntitiesSlice,
   (entities) => entities.entitiesList
 );

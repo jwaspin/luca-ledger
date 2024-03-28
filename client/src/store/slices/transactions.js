@@ -1,5 +1,5 @@
 import { validateTransaction } from '../validators';
-import { createListSlice } from './sliceUtils';
+import { createListSlice } from './utils/createListSlice';
 
 const transactionsSlice = createListSlice('transactions', validateTransaction);
 export const {

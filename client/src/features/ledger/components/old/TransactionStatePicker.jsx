@@ -2,26 +2,22 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
-import { actions, constants } from '@/store/transactions';
+import { TransactionStateEnum } from '@/store/constants';
+import { updateTransactionById } from '../../store/actions';
 
-export default function TransactionStatusSelect({ transaction }) {
+export default function TransactionStatePicker({ transaction }) {
   const dispatch = useDispatch();
-  const { accountId } = useParams();
   const [status, setStatus] = useState(transaction.status);
 
   const handleChange = (event) => {
+    const newTransaction = {
+      ...transaction,
+      transactionState: event.target.value,
+    };
     const { value } = event.target;
-    dispatch(
-      actions.updateTransactionProperty(
-        accountId,
-        transaction,
-        constants.TransactionFields.STATUS,
-        value
-      )
-    );
     setStatus(value);
+    dispatch(updateTransactionById(transaction.id, newTransaction));
   };
 
   return (
@@ -38,13 +34,13 @@ export default function TransactionStatusSelect({ transaction }) {
         label='Status'
         onChange={handleChange}
       >
-        {Object.keys(constants.TransactionStatusEnum).map((key) => {
+        {Object.keys(TransactionStateEnum).map((key) => {
           return (
             <MenuItem
               key={key}
-              value={constants.TransactionStatusEnum[key]}
+              value={TransactionStateEnum[key]}
             >
-              {constants.TransactionStatusEnum[key]}
+              {TransactionStateEnum[key]}
             </MenuItem>
           );
         })}
@@ -53,6 +49,6 @@ export default function TransactionStatusSelect({ transaction }) {
   );
 }
 
-TransactionStatusSelect.propTypes = {
+TransactionStatePicker.propTypes = {
   transaction: PropTypes.object.isRequired,
 };

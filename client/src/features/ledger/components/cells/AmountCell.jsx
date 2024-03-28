@@ -8,19 +8,18 @@ import {
 import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
-import { actions, constants } from '@/store/transactions';
 import {
   doublePrecisionFormatString,
   parseFloatDoublePrecision,
 } from '@/utils';
 
+import { updateTransactionById } from '../../store/actions';
+
 import { Cancel, Check } from '@mui/icons-material';
 
 export default function AmountCell({ transaction }) {
   const dispatch = useDispatch();
-  const { accountId } = useParams();
   const inputRef = useRef(null);
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState(
@@ -49,14 +48,8 @@ export default function AmountCell({ transaction }) {
     }
     if (validNumberRegex.test(newValue)) {
       newValue = parseFloatDoublePrecision(newValue);
-      dispatch(
-        actions.updateTransactionProperty(
-          accountId,
-          transaction,
-          constants.TransactionFields.AMOUNT,
-          newValue
-        )
-      );
+      const newTransaction = { ...transaction, amount: newValue };
+      dispatch(updateTransactionById(transaction.id, newTransaction));
       setEdit(false);
     }
   };

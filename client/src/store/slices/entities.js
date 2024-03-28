@@ -1,5 +1,7 @@
+import { createSelector } from '@reduxjs/toolkit';
+
 import { validateEntity } from '../validators';
-import { createListSlice } from './sliceUtils';
+import { createListSlice } from './utils/createListSlice';
 
 const entitiesSlice = createListSlice('entities', validateEntity);
 export const {
@@ -10,3 +12,10 @@ export const {
   removeItem: removeEntity,
 } = entitiesSlice.actions;
 export const entitiesReducer = entitiesSlice.reducer;
+
+export const selectEntities = (state) => state.entities;
+
+export const selectAllEntities = createSelector(
+  selectEntities,
+  (entities) => entities.entitiesList
+);

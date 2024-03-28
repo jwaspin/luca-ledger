@@ -12,6 +12,7 @@ export const createListSlice = (name, validate) => {
   const addItemReducer = (state, action) => {
     const isValid = validate(action.payload);
     if (!isValid) {
+      console.log('Validation failed for adding item', validate.errors);
       state.error = 'Validation failed for adding item';
       return;
     }
@@ -22,12 +23,14 @@ export const createListSlice = (name, validate) => {
     const { id, ...updates } = action.payload;
     const index = state[`${name}List`].findIndex((item) => item.id === id);
     if (index === -1) {
+      console.log(`Item with id ${id} not found for updating`);
       state.error = `Item with id ${id} not found for updating`;
       return;
     }
     const updatedItem = { ...state[`${name}List`][index], ...updates };
     const isValid = validate(updatedItem);
     if (!isValid) {
+      console.log('Validation failed for updating item', validate.errors);
       state.error = 'Validation failed for updating item';
       return;
     }

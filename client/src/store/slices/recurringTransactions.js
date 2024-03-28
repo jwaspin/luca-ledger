@@ -1,5 +1,5 @@
 import { validateRecurringTransaction } from '../validators';
-import { createListSlice } from './sliceUtils';
+import { createListSlice } from './utils/createListSlice';
 
 const recurringTransactionsSlice = createListSlice(
   'recurringtransactions',

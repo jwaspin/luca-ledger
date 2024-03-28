@@ -1,7 +1,7 @@
-import { TableCell } from '@mui/material';
+import { TableCell, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 
-import TransactionStatusSelect from '@/components/TransactionStatusSelect';
+// import TransactionStatusSelect from '@/components/TransactionStatusSelect';
 
 export default function StatusCell({ transaction }) {
   return (
@@ -11,7 +11,8 @@ export default function StatusCell({ transaction }) {
         padding: '0px 0px 0px 10px',
       }}
     >
-      <TransactionStatusSelect transaction={transaction} />
+      {/* <TransactionStatusSelect transaction={transaction} /> */}
+      <Typography variant='body1'>{transaction.transactionState}</Typography>
     </TableCell>
   );
 }

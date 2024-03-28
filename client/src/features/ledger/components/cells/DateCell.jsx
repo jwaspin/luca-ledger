@@ -4,15 +4,14 @@ import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
 import config from '@/config';
-import { actions, constants } from '@/store/transactions';
+import { updateTransactionById } from '../../store/actions';
+
 import { Cancel, Check } from '@mui/icons-material';
 
 export default function DateCell({ transaction }) {
   const dispatch = useDispatch();
-  const { accountId } = useParams();
   const [edit, setEdit] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState(null);
@@ -21,14 +20,12 @@ export default function DateCell({ transaction }) {
   );
 
   const handleSave = (value) => {
-    dispatch(
-      actions.updateTransactionProperty(
-        accountId,
-        transaction,
-        constants.TransactionFields.DATE,
-        value.format(config.dateFormatString)
-      )
-    );
+    const newTransaction = {
+      ...transaction,
+      date: value.format(config.dateFormatString),
+    };
+
+    dispatch(updateTransactionById(transaction.id, newTransaction));
     setIsOpen(false);
     setEdit(false);
   };

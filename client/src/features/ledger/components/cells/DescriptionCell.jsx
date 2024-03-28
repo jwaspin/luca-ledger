@@ -2,27 +2,20 @@ import { Box, Button, TableCell, TextField, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
-import { actions, constants } from '@/store/transactions';
+import { updateTransactionById } from '../../store/actions';
+
 import { Cancel, Check } from '@mui/icons-material';
 
 export default function DescriptionCell({ transaction }) {
   const dispatch = useDispatch();
-  const { accountId } = useParams();
   const inputRef = useRef(null);
   const [edit, setEdit] = useState(false);
   const [description, setDescription] = useState(transaction.description);
 
   const handleSave = () => {
-    dispatch(
-      actions.updateTransactionProperty(
-        accountId,
-        transaction,
-        constants.TransactionFields.DESCRIPTION,
-        description
-      )
-    );
+    const newTransaction = { ...transaction, description };
+    dispatch(updateTransactionById(transaction.id, newTransaction));
     setEdit(false);
   };
 
