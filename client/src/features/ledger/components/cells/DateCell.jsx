@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import config from '@/config';
-import { updateTransactionById } from '../../store/actions';
+import { actions } from '@/store/transactions';
 
 import { Cancel, Check } from '@mui/icons-material';
 
@@ -25,7 +25,7 @@ export default function DateCell({ transaction }) {
       date: value.format(config.dateFormatString),
     };
 
-    dispatch(updateTransactionById(transaction.id, newTransaction));
+    dispatch(actions.updateTransactionById(transaction.id, newTransaction));
     setIsOpen(false);
     setEdit(false);
   };

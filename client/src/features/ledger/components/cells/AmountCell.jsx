@@ -14,7 +14,7 @@ import {
   parseFloatDoublePrecision,
 } from '@/utils';
 
-import { updateTransactionById } from '../../store/actions';
+import { actions } from '@/store/transactions';
 
 import { Cancel, Check } from '@mui/icons-material';
 
@@ -49,7 +49,7 @@ export default function AmountCell({ transaction }) {
     if (validNumberRegex.test(newValue)) {
       newValue = parseFloatDoublePrecision(newValue);
       const newTransaction = { ...transaction, amount: newValue };
-      dispatch(updateTransactionById(transaction.id, newTransaction));
+      dispatch(actions.updateTransactionById(transaction.id, newTransaction));
       setEdit(false);
     }
   };

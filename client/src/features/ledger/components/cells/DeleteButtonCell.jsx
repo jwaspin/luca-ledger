@@ -2,7 +2,7 @@ import { TableCell } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
-import { removeTransactionById } from '../../store/actions';
+import { actions } from '@/store/transactions';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -10,7 +10,7 @@ export default function DeleteButtonCell({ transaction }) {
   const dispatch = useDispatch();
 
   const handleDelete = () => {
-    dispatch(removeTransactionById(transaction.id));
+    dispatch(actions.removeTransactionById(transaction.id));
   };
 
   return (

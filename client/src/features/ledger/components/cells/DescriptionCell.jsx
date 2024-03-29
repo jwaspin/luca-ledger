@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { updateTransactionById } from '../../store/actions';
+import { actions } from '@/store/transactions';
 
 import { Cancel, Check } from '@mui/icons-material';
 
@@ -15,7 +15,7 @@ export default function DescriptionCell({ transaction }) {
 
   const handleSave = () => {
     const newTransaction = { ...transaction, description };
-    dispatch(updateTransactionById(transaction.id, newTransaction));
+    dispatch(actions.updateTransactionById(transaction.id, newTransaction));
     setEdit(false);
   };
 

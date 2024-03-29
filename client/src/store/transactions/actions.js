@@ -31,6 +31,10 @@ export const updateTransactionById = (id, updatedTransaction) => (dispatch) => {
 
 export const removeTransactionById = (id) => (dispatch) => {
   dispatch(
-    updateTransaction({ id, transactionState: TransactionStateEnum.DELETED })
+    updateTransaction({
+      id,
+      transactionState: TransactionStateEnum.DELETED,
+      updatedAt: new Date().toISOString(),
+    })
   );
 };
