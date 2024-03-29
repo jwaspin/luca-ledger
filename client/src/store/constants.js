@@ -27,6 +27,14 @@ const EntityTypeEnum = Object.freeze({
   GOVERNMENT: 'GOVERNMENT',
 });
 
+const EntityStatusEnum = Object.freeze({
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  SUSPENDED: 'SUSPENDED',
+  DELETED: 'DELETED',
+  CLOSED: 'CLOSED',
+});
+
 const RepeatedTransactionFrequencyEnum = Object.freeze({
   DAY: 'DAY',
   WEEK: 'WEEK',
@@ -50,6 +58,7 @@ export {
   TransactionStateEnum,
   CategoryTypeEnum,
   EntityTypeEnum,
+  EntityStatusEnum,
   RepeatedTransactionFrequencyEnum,
   RepeatedTransactionStateEnum,
   RepeatedTransactionOccurrenceStatusEnum,

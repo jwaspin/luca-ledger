@@ -1,7 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-const selectTransactionsSlice = (state) => state.transactions;
-const selectEntitiesSlice = (state) => state.entities;
+export const selectTransactionsSlice = (state) => state.transactions;
 
 export const selectAllTransactions = createSelector(
   selectTransactionsSlice,
@@ -14,14 +13,4 @@ export const selectTransactionsByAccountId = (accountId) =>
       (transaction) =>
         transaction.payorId === accountId || transaction.payeeId === accountId
     )
-  );
-
-export const selectAllEntities = createSelector(
-  selectEntitiesSlice,
-  (entities) => entities.entitiesList
-);
-
-export const selectEntityById = (entityId) =>
-  createSelector(selectEntitiesSlice, (entities) =>
-    entities.entitiesList.find((entity) => entity.id === entityId)
   );

@@ -1,20 +1,20 @@
 import { Select, MenuItem } from '@mui/material';
 import PropTypes from 'prop-types';
 
-const EntityStatusSelect = ({ entityStatus, onChange }) => {
-  const statuses = ['ACTIVE', 'INACTIVE', 'SUSPENDED', 'CLOSED'];
+import { EntityStatusEnum } from '@/store/constants';
 
+const EntityStatusSelect = ({ entityStatus, onChange }) => {
   return (
     <Select
       value={entityStatus}
       onChange={(e) => onChange(e.target.value)}
     >
-      {statuses.map((status) => (
+      {Object.keys(EntityStatusEnum).map((statusKey) => (
         <MenuItem
-          key={status}
-          value={status}
+          key={EntityStatusEnum[statusKey]}
+          value={EntityStatusEnum[statusKey]}
         >
-          {status}
+          {EntityStatusEnum[statusKey]}
         </MenuItem>
       ))}
     </Select>

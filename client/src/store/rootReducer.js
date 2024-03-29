@@ -1,15 +1,15 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-import { categoriesReducer } from './slices/categories';
-import { entitiesReducer } from './slices/entities';
-import { recurringTransactionsReducer } from './slices/recurringTransactions';
-import { recurringTransactionEventsReducer } from './slices/recurringTransactionEvents';
-import { transactionsReducer } from './slices/transactions';
+import categories from './categories';
+import entities from './entities';
+import recurringTransactions from './recurringTransactions';
+import recurringTransactionEvents from './recurringTransactionEvents';
+import transactions from './transactions';
 
 export default combineReducers({
-  categories: categoriesReducer,
-  entities: entitiesReducer,
-  recurringTransactions: recurringTransactionsReducer,
-  recurringTransactionEvents: recurringTransactionEventsReducer,
-  transactions: transactionsReducer,
+  categories,
+  entities,
+  recurringTransactions,
+  recurringTransactionEvents,
+  transactions,
 });

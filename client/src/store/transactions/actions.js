@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { addTransaction, updateTransaction } from '@/store/slices/transactions';
+import { addTransaction, updateTransaction } from './slice';
 import { TransactionStateEnum } from '@/store/constants';
 
 export const createNewTransaction = (accountId) => (dispatch) => {

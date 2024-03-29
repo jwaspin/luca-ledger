@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { updateEntityById } from '../store/actions';
+import { actions } from '@/store/entities';
 import EntityStatusSelect from './EntityStatusSelect';
 import EntityTypeSelect from './EntityTypeSelect';
 
@@ -15,7 +15,7 @@ export default function EntityRow({ entity }) {
   };
 
   const saveChanges = () => {
-    dispatch(updateEntityById(editableEntity.id, editableEntity));
+    dispatch(actions.updateEntityById(editableEntity.id, editableEntity));
   };
 
   const revertChanges = () => {

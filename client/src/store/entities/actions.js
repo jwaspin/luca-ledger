@@ -1,16 +1,17 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { addEntity, updateEntity } from '@/store/slices/entities.js';
+import { EntityStatusEnum } from '@/store/constants';
+import { addEntity, updateEntity } from './slice';
 
-export const createNewEntity = (name, description) => (dispatch) => {
+export const createNewEntity = (type, name, description) => (dispatch) => {
   const newEntity = {
     id: uuidv4(),
     name,
     description,
-    entityType: 'ACCOUNT',
-    entityStatus: 'ACTIVE',
+    entityType: type,
+    entityStatus: EntityStatusEnum.ACTIVE,
     createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    updatedAt: null,
   };
   dispatch(addEntity(newEntity));
 };

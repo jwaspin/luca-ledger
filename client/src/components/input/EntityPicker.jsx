@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { selectAllEntities } from '@/store/slices/entities';
+import { selectors } from '@/store/entities';
 
 export default function EntityPicker({ selectedEntity, onChange }) {
   const [currentValue, setCurrentValue] = useState(selectedEntity.id);
-  const entities = useSelector(selectAllEntities);
+  const entities = useSelector(selectors.selectAllEntities);
 
   const handleChange = (event) => {
     const { value } = event.target;

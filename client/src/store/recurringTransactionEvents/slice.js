@@ -1,5 +1,5 @@
 import { validateRecurringTransactionEvent } from '../validators';
-import { createListSlice } from './utils/createListSlice';
+import { createListSlice } from '../utils/createListSlice';
 
 const recurringTransactionEventsSlice = createListSlice(
   'recurringtransactionevents',

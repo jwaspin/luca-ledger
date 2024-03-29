@@ -1,5 +1,5 @@
 import { validateCategory } from '../validators';
-import { createListSlice } from './utils/createListSlice';
+import { createListSlice } from '../utils/createListSlice';
 
 const categoriesSlice = createListSlice('categories', validateCategory);
 export const {
