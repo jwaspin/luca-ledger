@@ -1,23 +1,23 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 
+import { actions } from '@/store/transactions';
 import { TransactionStateEnum } from '@/store/constants';
-import { updateTransactionById } from '../../store/actions';
 
 export default function TransactionStatePicker({ transaction }) {
   const dispatch = useDispatch();
-  const [status, setStatus] = useState(transaction.status);
+  const [status, setStatus] = useState(transaction.transactionState);
 
-  const handleChange = (event) => {
-    const newTransaction = {
-      ...transaction,
-      transactionState: event.target.value,
-    };
-    const { value } = event.target;
-    setStatus(value);
-    dispatch(updateTransactionById(transaction.id, newTransaction));
+  const handleChange = (newStatus) => {
+    setStatus(newStatus);
+    dispatch(
+      actions.updateTransactionById(transaction.id, {
+        ...transaction,
+        transactionState: newStatus,
+      })
+    );
   };
 
   return (
@@ -28,11 +28,11 @@ export default function TransactionStatePicker({ transaction }) {
     >
       <InputLabel id='demo-simple-select-label'>Status</InputLabel>
       <Select
-        labelId='demo-simple-select-label'
-        id='demo-simple-select'
+        labelId='transaction-state-picker-label'
+        id='transaction-state-picker'
         value={status}
         label='Status'
-        onChange={handleChange}
+        onChange={(event) => handleChange(event.target.value)}
       >
         {Object.keys(TransactionStateEnum).map((key) => {
           return (
@@ -50,5 +50,8 @@ export default function TransactionStatePicker({ transaction }) {
 }
 
 TransactionStatePicker.propTypes = {
-  transaction: PropTypes.object.isRequired,
+  transaction: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    transactionState: PropTypes.string.isRequired,
+  }).isRequired,
 };
