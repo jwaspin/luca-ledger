@@ -1,10 +1,10 @@
 import { Box, TextField } from '@mui/material';
 import { useState } from 'react';
 
-import LedgerTable from './LedgerTable';
-import NewTransactionButton from './NewTransactionButton';
+import LedgerTable from './components/LedgerTable';
+import NewTransactionButton from './components/NewTransactionButton';
 
-export default function Ledger() {
+export default function LedgerPage() {
   const [filterValue, setFilterValue] = useState('');
 
   return (

@@ -1,9 +1,10 @@
 import { useSelector } from 'react-redux';
-import { selectAllEntities } from '../store/selectors';
+
+import { selectors } from '@/store/entities';
 import EntityRow from './EntityRow';
 
 export default function EntityTable() {
-  const entities = useSelector(selectAllEntities);
+  const entities = useSelector(selectors.selectAllEntities);
 
   return (
     <table>

@@ -45,7 +45,8 @@
         "DISPUTED",
         "REFUNDED",
         "TENTATIVE",
-        "UPCOMING"
+        "UPCOMING",
+        "DELETED"
       ],
       "description": "The current state of the transaction."
     },

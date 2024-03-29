@@ -1,7 +1,9 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-const selectEntities = (state) => state.entities;
+import { selectors } from '@/store/entities';
 
-export const selectAllAccounts = createSelector(selectEntities, (entities) =>
-  entities.entitiesList.filter((entity) => entity.entityType === 'ACCOUNT')
+export const selectAllAccounts = createSelector(
+  selectors.selectEntitiesSlice,
+  (entities) =>
+    entities.entitiesList.filter((entity) => entity.entityType === 'ACCOUNT')
 );
