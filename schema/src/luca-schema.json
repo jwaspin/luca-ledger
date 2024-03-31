@@ -6,14 +6,14 @@
   "type": "object",
   "properties": {
     "schema": {
-      "$ref": "./schemas/schema.json"
+      "$ref": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/schemas/schema.json"
     },
     "categories": {
       "type": "array",
       "description": "List of categories",
       "uniqueItems": true,
       "items": {
-        "$ref": "./schemas/category.json"
+        "$ref": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/schemas/category.json"
       }
     },
     "entities": {
@@ -21,7 +21,7 @@
       "description": "List of entities",
       "uniqueItems": true,
       "items": {
-        "$ref": "./schemas/entity.json"
+        "$ref": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/schemas/entity.json"
       }
     },
     "recurringTransactions": {
@@ -29,7 +29,7 @@
       "description": "List of recurring transactions",
       "uniqueItems": true,
       "items": {
-        "$ref": "./schemas/recurringTransaction.json"
+        "$ref": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/schemas/recurringTransaction.json"
       }
     },
     "recurringTransactionEvents": {
@@ -37,7 +37,7 @@
       "description": "List of recurring transaction events",
       "uniqueItems": true,
       "items": {
-        "$ref": "./schemas/recurringTransactionEvent.json"
+        "$ref": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/schemas/recurringTransactionEvent.json"
       }
     },
     "transactions": {
@@ -45,7 +45,7 @@
       "description": "List of transactions",
       "uniqueItems": true,
       "items": {
-        "$ref": "./schemas/transaction.json"
+        "$ref": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/schemas/transaction.json"
       }
     }
   },

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/recurringTransactionEvent.json",
+  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/schemas/recurringTransactionEvent.json",
   "title": "Recurring Transaction Event",
   "description": "Manages occurrences of recurring transactions, including tracking their modifications or logical deletions. 'transactionId' is required when an occurrence is modified to link it to an actual transaction.",
   "type": "object",
