@@ -16,9 +16,9 @@ async function loadSchema(uri) {
 
 const ajv = new Ajv2020({ loadSchema });
 addFormats(ajv);
-const validate = ajv.compile(schema);
 
-test('full luca schema object is valid', () => {
+test('full luca schema object is valid', async () => {
+  const validate = await ajv.compileAsync(schema);
   const valid = validate(exampleData);
   if (!valid) console.log(validate.errors);
   expect(valid).toBe(true);
