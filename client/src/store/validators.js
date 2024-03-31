@@ -1,16 +1,26 @@
 import Ajv2020 from 'ajv/dist/2020';
 import addFormats from 'ajv-formats';
+import axios from 'axios';
 
 import {
   categorySchema,
   entitySchema,
   recurringTransactionSchema,
   recurringTransactionEventSchema,
-  schema,
+  schemaSchema,
   transactionSchema,
 } from 'luca-schema';
 
-const ajv = new Ajv2020();
+async function loadSchema(uri) {
+  try {
+    const response = await axios.get(uri);
+    return response.data;
+  } catch (error) {
+    console.error(`Could not load schema from ${uri}:`, error);
+  }
+}
+
+const ajv = new Ajv2020({ loadSchema });
 addFormats(ajv);
 
 const validateCategory = ajv.compile(categorySchema);
@@ -19,7 +29,7 @@ const validateRecurringTransaction = ajv.compile(recurringTransactionSchema);
 const validateRecurringTransactionEvent = ajv.compile(
   recurringTransactionEventSchema
 );
-const validateSchema = ajv.compile(schema);
+const validateSchema = ajv.compile(schemaSchema);
 const validateTransaction = ajv.compile(transactionSchema);
 
 export {
