@@ -26,5 +26,9 @@
   {
     "linkTo": "/settings",
     "navText": "Settings"
+  },
+  {
+    "linkTo": "/export",
+    "navText": "Export"
   }
 ]
