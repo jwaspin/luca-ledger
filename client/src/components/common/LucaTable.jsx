@@ -50,7 +50,7 @@ LucaTable.propTypes = {
   ).isRequired,
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
     })
   ).isRequired,
 };
