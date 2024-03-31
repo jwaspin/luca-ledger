@@ -1,8 +1,8 @@
 import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-import VersionDisplay from './VersionDisplay';
 import NavItems from './NavItems';
+import VersionDisplay from './VersionDisplay';
 
 import { Home as HomeIcon } from '@mui/icons-material';
 

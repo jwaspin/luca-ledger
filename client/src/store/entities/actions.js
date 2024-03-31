@@ -17,7 +17,9 @@ export const createNewEntity = (type, name, description) => (dispatch) => {
 };
 
 export const updateEntityById = (id, updatedEntity) => (dispatch) => {
-  dispatch(updateEntity({ id, ...updatedEntity }));
+  dispatch(
+    updateEntity({ id, ...updatedEntity, updatedAt: new Date().toISOString() })
+  );
 };
 
 export const disableEntityById = (id) => (dispatch) => {

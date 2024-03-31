@@ -1,6 +1,6 @@
 const Ajv2020 = require("ajv/dist/2020");
 const addFormats = require("ajv-formats");
-const schema = require("../entity.json");
+const schema = require("../schemas/entity.json");
 const exampleData = require("../examples/entities.json");
 
 const ajv = new Ajv2020();

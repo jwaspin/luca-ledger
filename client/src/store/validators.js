@@ -6,6 +6,7 @@ import {
   entitySchema,
   recurringTransactionSchema,
   recurringTransactionEventSchema,
+  schema,
   transactionSchema,
 } from 'luca-schema';
 
@@ -18,6 +19,7 @@ const validateRecurringTransaction = ajv.compile(recurringTransactionSchema);
 const validateRecurringTransactionEvent = ajv.compile(
   recurringTransactionEventSchema
 );
+const validateSchema = ajv.compile(schema);
 const validateTransaction = ajv.compile(transactionSchema);
 
 export {
@@ -25,5 +27,6 @@ export {
   validateEntity,
   validateRecurringTransaction,
   validateRecurringTransactionEvent,
+  validateSchema,
   validateTransaction,
 };
