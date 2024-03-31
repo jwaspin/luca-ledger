@@ -6,6 +6,21 @@ export default function TransactionsTable() {
 
   const columns = [
     {
+      field: 'date',
+      title: 'Date',
+      component: ({ row }) => <div>{row.date}</div>,
+    },
+    {
+      field: 'payorId',
+      title: 'Payor ID',
+      component: ({ row }) => <div>{row.payorId}</div>,
+    },
+    {
+      field: 'payeeId',
+      title: 'Payee ID',
+      component: ({ row }) => <div>{row.payeeId}</div>,
+    },
+    {
       field: 'description',
       title: 'Description',
       component: ({ row }) => <div>{row.description}</div>,
@@ -13,12 +28,17 @@ export default function TransactionsTable() {
     {
       field: 'amount',
       title: 'Amount',
-      component: ({ row }) => <div>{row.amount}</div>,
+      component: ({ row }) => <div>$ {row.amount}</div>,
     },
     {
-      field: 'date',
-      title: 'Date',
-      component: ({ row }) => <div>{row.date}</div>,
+      field: 'createdAt',
+      title: 'Created At',
+      component: ({ row }) => <div>{row.createdAt}</div>,
+    },
+    {
+      field: 'updatedAt',
+      title: 'Updated At',
+      component: ({ row }) => <div>{row.updatedAt}</div>,
     },
   ];
 
