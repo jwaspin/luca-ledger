@@ -3,6 +3,7 @@ import addFormats from 'ajv-formats';
 import axios from 'axios';
 
 import {
+  lucaSchema,
   categorySchema,
   entitySchema,
   recurringTransactionSchema,
@@ -23,6 +24,7 @@ async function loadSchema(uri) {
 const ajv = new Ajv2020({ loadSchema });
 addFormats(ajv);
 
+const validateLucaSchema = ajv.compile(lucaSchema);
 const validateCategory = ajv.compile(categorySchema);
 const validateEntity = ajv.compile(entitySchema);
 const validateRecurringTransaction = ajv.compile(recurringTransactionSchema);
@@ -33,6 +35,7 @@ const validateSchema = ajv.compile(schemaSchema);
 const validateTransaction = ajv.compile(transactionSchema);
 
 export {
+  validateLucaSchema,
   validateCategory,
   validateEntity,
   validateRecurringTransaction,

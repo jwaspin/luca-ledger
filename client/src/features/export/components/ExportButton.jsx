@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 
 import { useEntities, useTransactions } from '@/hooks';
-import { validateSchema } from '@/store/validators';
+import { validateLucaSchema, validateSchema } from '@/store/validators';
 
 export default function ExportButton() {
   const { transactions } = useTransactions();
@@ -22,11 +22,17 @@ export default function ExportButton() {
     }
 
     const data = {
+      schema,
       transactions,
       entities,
     };
 
-    console.log(data);
+    const validData = validateLucaSchema(data);
+
+    if (!validData) {
+      console.error(validateLucaSchema.errors);
+      return;
+    }
 
     const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -35,6 +41,7 @@ export default function ExportButton() {
     a.href = url;
     a.download = 'export.json';
     a.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
