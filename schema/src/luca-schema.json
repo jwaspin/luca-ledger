@@ -5,12 +5,15 @@
   "description": "Schema for the luca ledger",
   "type": "object",
   "properties": {
+    "schema": {
+      "$ref": "./schemas/schema.json"
+    },
     "categories": {
       "type": "array",
       "description": "List of categories",
       "uniqueItems": true,
       "items": {
-        "$ref": "https://raw.githubusercontent.com/jwaspin/luca-ledger/feature/168-schema-translation-process-v1-to-v2/schema/src/schemas/category.json"
+        "$ref": "./schemas/category.json"
       }
     },
     "entities": {
