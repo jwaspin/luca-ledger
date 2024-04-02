@@ -1,16 +1,12 @@
-const Ajv2020 = require("ajv/dist/2020");
-const addFormats = require("ajv-formats");
-const schema = require("../schemas/recurringTransaction.json");
 const exampleData = require("../examples/recurringTransactions.json");
+const { validators } = require("../validators");
 
-const ajv = new Ajv2020();
-addFormats(ajv);
-const validate = ajv.compile(schema);
+const { validateRecurringTransaction } = validators;
 
 test('examples are valid recurringTransactions', () => {
     exampleData.forEach((example) => {
-        const valid = validate(example);
-        if (!valid) console.log(validate.errors);
+        const valid = validateRecurringTransaction(example);
+        if (!valid) console.log(validateRecurringTransaction.errors);
         expect(valid).toBe(true);
     });
 });

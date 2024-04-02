@@ -1,4 +1,4 @@
-const lucaSchema = require('./src/luca-schema.json');
+const lucaSchema = require('./src/schemas/luca-schema.json');
 const categorySchema = require('./src/schemas/category.json');
 const entitySchema = require('./src/schemas/entity.json');
 const recurringTransactionSchema = require('./src/schemas/recurringTransaction.json');

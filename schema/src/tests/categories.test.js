@@ -1,16 +1,12 @@
-const Ajv2020 = require("ajv/dist/2020");
-const addFormats = require("ajv-formats");
-const schema = require("../schemas/category.json");
 const exampleData = require("../examples/categories.json");
+const { validators } = require("../validators");
 
-const ajv = new Ajv2020();
-addFormats(ajv);
-const validate = ajv.compile(schema);
+const { validateCategory } = validators;
 
 test('examples are valid categories', () => {
     exampleData.forEach((example) => {
-        const valid = validate(example);
-        if (!valid) console.log(validate.errors);
+        const valid = validateCategory(example);
+        if (!valid) console.log(validateCategory.errors);
         expect(valid).toBe(true);
     });
 });
