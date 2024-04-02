@@ -1,19 +1,19 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/luca-schema.json",
+  "$id": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/schemas/luca-schema.json",
   "title": "Luca Schema",
   "description": "Schema for the luca ledger",
   "type": "object",
   "properties": {
     "schema": {
-      "$ref": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/schemas/schema.json"
+      "$ref": "./schema.json"
     },
     "categories": {
       "type": "array",
       "description": "List of categories",
       "uniqueItems": true,
       "items": {
-        "$ref": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/schemas/category.json"
+        "$ref": "./category.json"
       }
     },
     "entities": {
@@ -21,7 +21,7 @@
       "description": "List of entities",
       "uniqueItems": true,
       "items": {
-        "$ref": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/schemas/entity.json"
+        "$ref": "./entity.json"
       }
     },
     "recurringTransactions": {
@@ -29,7 +29,7 @@
       "description": "List of recurring transactions",
       "uniqueItems": true,
       "items": {
-        "$ref": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/schemas/recurringTransaction.json"
+        "$ref": "./recurringTransaction.json"
       }
     },
     "recurringTransactionEvents": {
@@ -37,7 +37,7 @@
       "description": "List of recurring transaction events",
       "uniqueItems": true,
       "items": {
-        "$ref": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/schemas/recurringTransactionEvent.json"
+        "$ref": "./recurringTransactionEvent.json"
       }
     },
     "transactions": {
@@ -45,7 +45,7 @@
       "description": "List of transactions",
       "uniqueItems": true,
       "items": {
-        "$ref": "https://raw.githubusercontent.com/jwaspin/luca-ledger/main/schema/src/schemas/transaction.json"
+        "$ref": "./transaction.json"
       }
     }
   },
