@@ -1,4 +1,5 @@
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
+import packageInfo from 'luca-schema/package.json';
 
 import { useEntities, useTransactions } from '@/hooks';
 import { validateLucaSchema, validateSchema } from '@/store/validators';
@@ -6,12 +7,13 @@ import { validateLucaSchema, validateSchema } from '@/store/validators';
 export default function ExportButton() {
   const { transactions } = useTransactions();
   const { entities } = useEntities();
+  const schemaVersion = packageInfo.version;
 
   const handleExport = () => {
     const schema = {
       id: 'luca-schema',
       name: 'Luca Schema',
-      version: '1.0.0',
+      version: schemaVersion,
     };
 
     const valid = validateSchema(schema);
@@ -46,6 +48,7 @@ export default function ExportButton() {
 
   return (
     <div style={{ position: 'absolute', right: '50px' }}>
+      <Typography variant='subtitle2'>{schemaVersion}</Typography>
       <Button
         variant='contained'
         color='primary'
