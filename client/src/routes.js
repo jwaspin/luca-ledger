@@ -8,6 +8,7 @@ import RecurringTransactionsPage from '@/features/recurringTransactions/Recurrin
 import BusinessesPage from '@/features/businesses/BusinessesPage';
 import SettingsPage from '@/features/settings/SettingsPage';
 import ExportPage from '@/features/export/ExportPage';
+import ImportPage from '@/features/import/ImportPage';
 import NotFoundPage from '@/features/errors/NotFoundPage';
 
 export const routes = [
@@ -50,6 +51,10 @@ export const routes = [
   {
     path: '/export',
     component: ExportPage,
+  },
+  {
+    path: '/import',
+    component: ImportPage,
   },
   {
     path: '*',
