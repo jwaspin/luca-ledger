@@ -2,7 +2,7 @@ import { Box, Button } from '@mui/material';
 import { useRef } from 'react';
 // import { useDispatch } from 'react-redux';
 
-export default function LoadButton() {
+export default function ImportButton() {
   //   const dispatch = useDispatch();
   const fileInputRef = useRef(null);
 
