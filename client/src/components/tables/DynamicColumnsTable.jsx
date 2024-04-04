@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
-export default function LucaTable({ columns, data }) {
+export default function DynamicColumnsTable({ columns, data }) {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -40,7 +40,7 @@ export default function LucaTable({ columns, data }) {
   );
 }
 
-LucaTable.propTypes = {
+DynamicColumnsTable.propTypes = {
   columns: PropTypes.arrayOf(
     PropTypes.shape({
       field: PropTypes.string.isRequired,
