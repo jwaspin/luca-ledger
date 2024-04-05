@@ -69,7 +69,7 @@ export const createListSlice = (name, validate) => {
   };
 
   const updateMainItemsReducer = (state, action) => {
-    const updates = action.payload; // Assuming this is an array of objects with { id, changes }
+    const updates = action.payload;
     const errorMessages = [];
     updates.forEach((update) => {
       const item = state.mainList.entities[update.id];
@@ -174,7 +174,6 @@ export const createListSlice = (name, validate) => {
   const importLoadedItemReducer = (state, action) => {
     const id = action.payload;
     const item = state.loadedList.entities[id];
-
     if (item && item.isValid && item.isSelected) {
       mainListAdapter.addOne(state.mainList, item);
       loadedListAdapter.removeOne(state.loadedList, id);
@@ -185,7 +184,6 @@ export const createListSlice = (name, validate) => {
     const itemsToImport = Object.values(state.loadedList.entities).filter(
       (item) => item.isSelected && item.isValid
     );
-
     itemsToImport.forEach((item) => {
       mainListAdapter.addOne(state.mainList, item);
       loadedListAdapter.removeOne(state.loadedList, item.id);
