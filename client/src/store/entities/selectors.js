@@ -11,3 +11,8 @@ export const selectEntityById = (entityId) =>
   createSelector(selectEntitiesSlice, (entities) =>
     entities.entitiesList.find((entity) => entity.id === entityId)
   );
+
+export const selectLoadedEntities = createSelector(
+  selectEntitiesSlice,
+  (entities) => entities.loadedList
+);

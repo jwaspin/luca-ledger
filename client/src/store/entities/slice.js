@@ -8,5 +8,9 @@ export const {
   addItem: addEntity,
   updateItem: updateEntity,
   removeItem: removeEntity,
+  addLoadedItems: addLoadedEntities,
+  updateLoadedItem: updateLoadedEntity,
+  removeLoadedItems: removeLoadedEntities,
+  importLoadedItems: importEntities,
 } = entitiesSlice.actions;
 export const entitiesReducer = entitiesSlice.reducer;

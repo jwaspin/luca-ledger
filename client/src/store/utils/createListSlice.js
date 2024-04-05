@@ -1,6 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
 export const createListSlice = (name, validate) => {
+  const mainListAdapter = createEntityAdapter();
+  const loadedListAdapter = createEntityAdapter();
+
+  const initialState = {
+    mainList: mainListAdapter.getInitialState(),
+    loadedList: loadedListAdapter.getInitialState(),
+    loading: false,
+    error: null,
+  };
+
   const setLoadingReducer = (state, action) => {
     state.loading = action.payload;
   };
@@ -60,7 +70,6 @@ export const createListSlice = (name, validate) => {
         ...validFieldsItem,
         isValid: isValid,
         isSelected: false,
-        conflictResolution: null,
       };
       const existingIndex = state.loadedList.findIndex(
         (existingItem) => existingItem.id === item.id
@@ -116,13 +125,6 @@ export const createListSlice = (name, validate) => {
         state.error = 'Validation failed for importing item';
       }
     });
-  };
-
-  const initialState = {
-    [`${name}List`]: [],
-    loadedList: [],
-    loading: false,
-    error: null,
   };
 
   return createSlice({

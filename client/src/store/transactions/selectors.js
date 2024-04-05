@@ -14,3 +14,8 @@ export const selectTransactionsByAccountId = (accountId) =>
         transaction.payorId === accountId || transaction.payeeId === accountId
     )
   );
+
+export const selectLoadedTransactions = createSelector(
+  selectTransactionsSlice,
+  (transactions) => transactions.loadedList
+);

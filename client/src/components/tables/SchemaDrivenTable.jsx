@@ -1,20 +1,36 @@
 import { Paper, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 
-import DynamicColumnsTable from '@/components/tables/DynamicColumnsTable';
-import { generateColumnsFromSchema } from '@/utils';
+import TableRowCheckbox from '@c/input/TableRowCheckbox';
+import DynamicColumnsTable from '@c/tables/DynamicColumnsTable';
+import { generateColumnsFromSchema } from '@u';
 
-export default function SchemaDrivenTable({
-  title,
-  data,
-  schema,
-  validator,
-  displayIsValid = false,
-  readOnly = false,
-}) {
-  // actually, the todo is the edit mode
-  console.log('ToDo: read only mode', readOnly);
+export default function SchemaDrivenTable(props) {
+  const {
+    title,
+    data,
+    schema,
+    validator,
+    actions,
+    displayIsValid = false,
+    readOnly = false,
+  } = props;
+
   let columns = [];
+
+  if (!readOnly) {
+    columns.push({
+      field: 'isSelected',
+      title: 'Selected',
+      component: ({ row }) => (
+        <TableRowCheckbox
+          row={row}
+          toggleIsSelected={actions.toggleIsSelected}
+        />
+      ),
+    });
+  }
+
   if (displayIsValid) {
     columns.push({
       field: 'isValid',
@@ -22,6 +38,7 @@ export default function SchemaDrivenTable({
       component: ({ row }) => <div>{String(row['isValid'])}</div>,
     });
   }
+
   columns = columns.concat(generateColumnsFromSchema(schema));
 
   const dataWithIsValid = data.map((row) => ({
@@ -49,6 +66,7 @@ SchemaDrivenTable.propTypes = {
   data: PropTypes.array.isRequired,
   schema: PropTypes.object.isRequired,
   validator: PropTypes.func.isRequired,
+  actions: PropTypes.object,
   displayIsValid: PropTypes.bool,
   readOnly: PropTypes.bool,
 };

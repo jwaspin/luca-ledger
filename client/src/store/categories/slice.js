@@ -8,5 +8,9 @@ export const {
   addItem: addCategory,
   updateItem: updateCategory,
   removeItem: removeCategory,
+  addLoadedItems: addLoadedCategories,
+  updateLoadedItem: updateLoadedCategory,
+  removeLoadedItems: removeLoadedCategories,
+  importLoadedItems: importCategories,
 } = categoriesSlice.actions;
 export const categoriesReducer = categoriesSlice.reducer;

@@ -1,7 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { EntityStatusEnum } from '@/store/constants';
-import { addEntity, updateEntity } from './slice';
+import {
+  addEntity,
+  updateEntity,
+  addLoadedEntities,
+  updateLoadedEntity,
+} from './slice';
 
 export const createNewEntity = (type, name, description) => (dispatch) => {
   const newEntity = {
@@ -24,4 +29,26 @@ export const updateEntityById = (id, updatedEntity) => (dispatch) => {
 
 export const disableEntityById = (id) => (dispatch) => {
   dispatch(updateEntity({ id, entityStatus: 'INACTIVE' }));
+};
+
+export const loadEntities = (entities) => (dispatch) => {
+  dispatch(addLoadedEntities(entities));
+};
+
+export const updateLoadedEntityById = (id, updatedEntity) => (dispatch) => {
+  dispatch(updateLoadedEntity({ id, ...updatedEntity }));
+};
+
+export const toggleEntitySelected = (id) => (dispatch, getState) => {
+  const { loadedList } = getState().entities; // assuming the slice is named 'entities'
+  const entity = loadedList.find((e) => e.id === id);
+
+  if (entity) {
+    dispatch(
+      updateLoadedEntity({
+        id,
+        changes: { isSelected: !entity.isSelected },
+      })
+    );
+  }
 };

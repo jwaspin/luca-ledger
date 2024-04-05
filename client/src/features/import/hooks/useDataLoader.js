@@ -1,44 +1,34 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { getVersion } from '../utils';
+import { actions as entityActions } from '@/store/entities';
+import { actions as transactionActions } from '@/store/transactions';
+import { actions as categoryActions } from '@/store/categories';
 
 export default function useDataLoader() {
-  const [entities, setEntities] = useState([]);
-  const [transactions, setTransactions] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const dipatch = useDispatch();
 
-  const [selectedRows, setSelectedRows] = useState({
-    entities: [],
-    transactions: [],
-    categories: [],
-  });
+  const loadData = useCallback(
+    (jsonData) => {
+      const version = getVersion(jsonData);
+      switch (version) {
+        case '1':
+          console.log('Loading data version 1');
+          break;
+        case '2':
+          dipatch(entityActions.loadEntities(jsonData.entities || []));
+          dipatch(categoryActions.loadCategories(jsonData.categories || []));
+          dipatch(
+            transactionActions.loadTransactions(jsonData.transactions || [])
+          );
+          break;
+        default:
+          console.error('Unsupported version:', version);
+      }
+    },
+    [dipatch]
+  );
 
-  const handleRowSelection = (type, selected) => {
-    setSelectedRows((prev) => ({ ...prev, [type]: selected }));
-  };
-
-  const loadData = useCallback((jsonData) => {
-    const version = getVersion(jsonData);
-    switch (version) {
-      case '1':
-        console.log('Loading data version 1');
-        break;
-      case '2':
-        setEntities(jsonData.entities || []);
-        setTransactions(jsonData.transactions || []);
-        setCategories(jsonData.categories || []);
-        break;
-      default:
-        console.error('Unsupported version:', version);
-    }
-  }, []);
-
-  return {
-    entities,
-    transactions,
-    categories,
-    selectedRows,
-    loadData,
-    handleRowSelection,
-  };
+  return { loadData };
 }

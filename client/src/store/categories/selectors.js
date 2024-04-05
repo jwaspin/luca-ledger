@@ -1,8 +1,13 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-export const selectCategories = (state) => state.categories;
+export const selectCategoriesSlice = (state) => state.categories;
 
 export const selectAllCategories = createSelector(
-  selectCategories,
+  selectCategoriesSlice,
   (categories) => categories.categoriesList
+);
+
+export const selectLoadedCategories = createSelector(
+  selectCategoriesSlice,
+  (categories) => categories.loadedList
 );
