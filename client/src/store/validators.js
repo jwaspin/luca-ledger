@@ -1,6 +1,5 @@
 import Ajv2020 from 'ajv/dist/2020';
 import addFormats from 'ajv-formats';
-// import axios from 'axios';
 
 import {
   lucaSchema,
@@ -12,16 +11,7 @@ import {
   transactionSchema,
 } from 'luca-schema';
 
-// async function loadSchema(uri) {
-//   try {
-//     const response = await axios.get(uri);
-//     return response.data;
-//   } catch (error) {
-//     console.error(`Could not load schema from ${uri}:`, error);
-//   }
-// }
-
-const ajv = new Ajv2020(/* { loadSchema } */);
+const ajv = new Ajv2020();
 addFormats(ajv);
 
 ajv.addSchema(categorySchema, 'category');
