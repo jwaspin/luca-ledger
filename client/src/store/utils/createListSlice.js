@@ -19,111 +19,176 @@ export const createListSlice = (name, validate) => {
     state.error = action.payload;
   };
 
-  const addItemReducer = (state, action) => {
-    const isValid = validate(action.payload);
-    if (!isValid) {
-      console.log('Validation failed for adding item', validate.errors);
-      state.error = 'Validation failed for adding item';
-      return;
+  const addMainItemReducer = (state, action) => {
+    const item = action.payload;
+    const isValid = validate(item);
+    if (isValid) {
+      mainListAdapter.addOne(state.mainList, item);
+    } else {
+      state.error = `Validation failed for adding item: ${validate.errors.map((err) => err.message).join(', ')}`;
     }
-    state[`${name}List`].push(action.payload);
   };
 
-  const updateItemReducer = (state, action) => {
-    const { id, ...updates } = action.payload;
-    const index = state[`${name}List`].findIndex((item) => item.id === id);
-    if (index === -1) {
-      console.log(`Item with id ${id} not found for updating`);
+  const addMainItemsReducer = (state, action) => {
+    const items = action.payload;
+    const validItems = [];
+    let errorMessages = [];
+    items.forEach((item) => {
+      const isValid = validate(item);
+      if (isValid) {
+        validItems.push(item);
+      } else {
+        const itemErrors = validate.errors.map(
+          (err) => `${err.instancePath} ${err.message}`
+        );
+        errorMessages = errorMessages.concat(itemErrors);
+      }
+    });
+    if (validItems.length) {
+      mainListAdapter.addMany(state.mainList, validItems);
+    }
+    if (errorMessages.length) {
+      state.error = `Validation failed for adding items: ${errorMessages.join(', ')}`;
+    }
+  };
+
+  const updateMainItemReducer = (state, action) => {
+    const { id, changes } = action.payload;
+    const item = state.mainList.entities[id];
+    if (!item) {
       state.error = `Item with id ${id} not found for updating`;
       return;
     }
-    const updatedItem = { ...state[`${name}List`][index], ...updates };
+    const updatedItem = { ...item, ...changes };
     const isValid = validate(updatedItem);
-    if (!isValid) {
-      console.log('Validation failed for updating item', validate.errors);
-      state.error = 'Validation failed for updating item';
-      return;
+    if (isValid) {
+      mainListAdapter.updateOne(state.mainList, { id, changes });
+    } else {
+      state.error = `Validation failed for updating item: ${validate.errors.map((err) => err.message).join(', ')}`;
     }
-    state[`${name}List`][index] = updatedItem;
   };
 
-  const removeItemReducer = (state, action) => {
+  const updateMainItemsReducer = (state, action) => {
+    const updates = action.payload; // Assuming this is an array of objects with { id, changes }
+    const errorMessages = [];
+    updates.forEach((update) => {
+      const item = state.mainList.entities[update.id];
+      if (!item) {
+        errorMessages.push(`Item with id ${update.id} not found for updating`);
+        return;
+      }
+      const updatedItem = { ...item, ...update.changes };
+      const isValid = validate(updatedItem);
+      if (!isValid) {
+        errorMessages.push(
+          `Validation failed for item with id ${update.id}: ${validate.errors.map((err) => err.message).join(', ')}`
+        );
+        return;
+      }
+      mainListAdapter.updateOne(state.mainList, update);
+    });
+    if (errorMessages.length) {
+      state.error = `Update errors: ${errorMessages.join('; ')}`;
+    }
+  };
+
+  const removeMainItemReducer = (state, action) => {
     const id = action.payload;
-    state[`${name}List`] = state[`${name}List`].filter(
-      (item) => item.id !== id
-    );
+    mainListAdapter.removeOne(state.mainList, id);
+  };
+
+  const removeMainItemsReducer = (state, action) => {
+    const ids = action.payload;
+    mainListAdapter.removeMany(state.mainList, ids);
+  };
+
+  const addLoadedItemReducer = (state, action) => {
+    const item = action.payload;
+    const isValid = validate(item);
+    const itemWithValidity = {
+      ...item,
+      isValid,
+      validationErrors: isValid ? null : validate.errors,
+    };
+    loadedListAdapter.addOne(state.loadedList, itemWithValidity);
   };
 
   const addLoadedItemsReducer = (state, action) => {
     const items = action.payload;
     items.forEach((item) => {
       const isValid = validate(item);
-      const validFieldsItem = Object.keys(item)
-        .filter((key) =>
-          Object.prototype.hasOwnProperty.call(validate.schema.properties, key)
-        )
-        .reduce((obj, key) => {
-          obj[key] = item[key];
-          return obj;
-        }, {});
-      const loadedItem = {
-        ...validFieldsItem,
-        isValid: isValid,
-        isSelected: false,
-      };
-      const existingIndex = state.loadedList.findIndex(
-        (existingItem) => existingItem.id === item.id
-      );
-      if (existingIndex === -1) {
-        state.loadedList.push(loadedItem);
-      } else {
-        console.log(`Item with id ${item.id} already exists in loadedList`);
-      }
+      loadedListAdapter.addOne(state.loadedList, {
+        ...item,
+        isValid,
+        validationErrors: isValid ? null : validate.errors,
+      });
     });
   };
 
   const updateLoadedItemReducer = (state, action) => {
     const { id, changes } = action.payload;
-    const index = state.loadedList.findIndex((item) => item.id === id);
-    if (index === -1) {
-      console.log(`Item with id ${id} not found in loadedList`);
-      return;
+    const item = state.loadedList.entities[id];
+    if (item) {
+      const updatedItem = { ...item, ...changes };
+      const isValid = validate(updatedItem);
+      loadedListAdapter.updateOne(state.loadedList, {
+        id,
+        changes: {
+          ...changes,
+          isValid,
+          validationErrors: isValid ? null : validate.errors,
+        },
+      });
     }
-    const itemToUpdate = state.loadedList[index];
-    const updatedItem = { ...itemToUpdate, ...changes };
-    const isValid = validate(updatedItem);
-    state.loadedList[index] = { ...updatedItem, isValid };
+  };
+
+  const updateLoadedItemsReducer = (state, action) => {
+    const updates = action.payload;
+    updates.forEach((update) => {
+      const item = state.loadedList.entities[update.id];
+      if (item) {
+        const updatedItem = { ...item, ...update.changes };
+        const isValid = validate(updatedItem);
+        loadedListAdapter.updateOne(state.loadedList, {
+          id: update.id,
+          changes: {
+            ...update.changes,
+            isValid,
+            validationErrors: isValid ? null : validate.errors,
+          },
+        });
+      }
+    });
+  };
+
+  const removeLoadedItemReducer = (state, action) => {
+    const id = action.payload;
+    loadedListAdapter.removeOne(state.loadedList, id);
   };
 
   const removeLoadedItemsReducer = (state, action) => {
-    const idsToRemove = action.payload;
-    state.loadedList = state.loadedList.filter(
-      (item) => !idsToRemove.includes(item.id)
-    );
+    const ids = action.payload;
+    loadedListAdapter.removeMany(state.loadedList, ids);
+  };
+
+  const importLoadedItemReducer = (state, action) => {
+    const id = action.payload;
+    const item = state.loadedList.entities[id];
+
+    if (item && item.isValid && item.isSelected) {
+      mainListAdapter.addOne(state.mainList, item);
+      loadedListAdapter.removeOne(state.loadedList, id);
+    }
   };
 
   const importLoadedItemsReducer = (state) => {
-    const itemsToImport = state.loadedList.filter(
-      (item) => item.isValid && item.isSelected
+    const itemsToImport = Object.values(state.loadedList.entities).filter(
+      (item) => item.isSelected && item.isValid
     );
+
     itemsToImport.forEach((item) => {
-      const isValid = validate(item);
-      if (isValid) {
-        const existingIndex = state[`${name}List`].findIndex(
-          (existingItem) => existingItem.id === item.id
-        );
-        if (existingIndex === -1) {
-          // if item does not exist add it
-          state[`${name}List`].push(item);
-        } else {
-          // if item exists overwrite it
-          state[`${name}List`][existingIndex] = item;
-        }
-        state.loadedList = state.loadedList.filter((item) => !item.isSelected);
-      } else {
-        console.log('Validation failed for importing item', validate.errors);
-        state.error = 'Validation failed for importing item';
-      }
+      mainListAdapter.addOne(state.mainList, item);
+      loadedListAdapter.removeOne(state.loadedList, item.id);
     });
   };
 
@@ -133,12 +198,19 @@ export const createListSlice = (name, validate) => {
     reducers: {
       setLoading: setLoadingReducer,
       setError: setErrorReducer,
-      addItem: addItemReducer,
-      updateItem: updateItemReducer,
-      removeItem: removeItemReducer,
+      addMainItem: addMainItemReducer,
+      addMainItems: addMainItemsReducer,
+      updateMainItem: updateMainItemReducer,
+      updateMainItems: updateMainItemsReducer,
+      removeMainItem: removeMainItemReducer,
+      removeMainItems: removeMainItemsReducer,
+      addLoadedItem: addLoadedItemReducer,
       addLoadedItems: addLoadedItemsReducer,
       updateLoadedItem: updateLoadedItemReducer,
+      updateLoadedItems: updateLoadedItemsReducer,
+      removeLoadedItem: removeLoadedItemReducer,
       removeLoadedItems: removeLoadedItemsReducer,
+      importLoadedItem: importLoadedItemReducer,
       importLoadedItems: importLoadedItemsReducer,
     },
   });
