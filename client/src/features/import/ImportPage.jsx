@@ -44,18 +44,21 @@ export default function ImportPage() {
         data={entities}
         schema={entitySchema}
         validator={validateEntity}
+        displayIsValid
       />
       <SchemaDrivenTable
         title='Transactions'
         data={transactions}
         schema={transactionSchema}
         validator={validateTransaction}
+        displayIsValid
       />
       <SchemaDrivenTable
         title='Categories'
         data={categories}
         schema={categorySchema}
         validator={validateCategory}
+        displayIsValid
       />
       <ImportButton
         onClick={handleImport}
