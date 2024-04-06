@@ -3,7 +3,7 @@ import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 import { createMainListReducers } from './createMainListReducers';
 import { createLoadedListReducers } from './createLoadedListReducers';
 
-export const createListSlice = (name, validate) => {
+export default function createListSlice(name, validate) {
   const mainListAdapter = createEntityAdapter();
   const loadedListAdapter = createEntityAdapter();
 
@@ -56,9 +56,23 @@ export const createListSlice = (name, validate) => {
     ...loadedListReducers,
   };
 
-  return createSlice({
+  const slice = createSlice({
     name,
     initialState,
     reducers,
   });
-};
+
+  const mainListSelectors = mainListAdapter.getSelectors(
+    (state) => state[name].mainList
+  );
+  const loadedListSelectors = loadedListAdapter.getSelectors(
+    (state) => state[name].loadedList
+  );
+
+  return {
+    reducer: slice.reducer,
+    sliceActions: slice.actions,
+    mainListSelectors,
+    loadedListSelectors,
+  };
+}

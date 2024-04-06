@@ -54,7 +54,7 @@ const RepeatedTransactionOccurrenceStatusEnum = Object.freeze({
   DELETED: 'DELETED',
 });
 
-export {
+export default {
   TransactionStateEnum,
   CategoryTypeEnum,
   EntityTypeEnum,
