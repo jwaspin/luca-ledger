@@ -1,15 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-import categories from './categories';
-import entities from './entities';
-import recurringTransactions from './recurringTransactions';
-import recurringTransactionEvents from './recurringTransactionEvents';
-import transactions from './transactions';
+import { slices } from './createListSlicesFromSchemas';
 
-export default combineReducers({
-  categories,
-  entities,
-  recurringTransactions,
-  recurringTransactionEvents,
-  transactions,
-});
+export default combineReducers(
+  Object.keys(slices).reduce((acc, key) => {
+    acc[key] = slices[key].reducer;
+    return acc;
+  }, {})
+);
