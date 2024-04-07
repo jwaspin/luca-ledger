@@ -26,7 +26,7 @@ export default function DynamicColumnsTable({ columns, data }) {
               {columns.map((column) => (
                 <TableCell key={column.field}>
                   {column.component
-                    ? column.component({ ...row })
+                    ? column.component({ ...row }, column)
                     : row[column.field]}
                 </TableCell>
               ))}

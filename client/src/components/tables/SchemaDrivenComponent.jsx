@@ -16,6 +16,9 @@ export default function SchemaDrivenComponent({
   actions,
   readOnly = true,
 }) {
+  if (column.type === 'string,null') {
+    console.log('bad', column, row);
+  }
   const StringComponent = <div>{row[column.field]}</div>;
   const NumberComponent = <div>{row[column.field]}</div>;
   const BooleanComponent = <div>{String(row[column.field])}</div>;

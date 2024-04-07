@@ -39,7 +39,7 @@ export default function SchemaDrivenTable({
     type: Array.isArray(column.type)
       ? column.type.find((type) => type !== 'null')
       : column.type,
-    component: (row) => (
+    component: (row, column) => (
       <SchemaDrivenComponent
         row={row}
         column={column}
@@ -48,6 +48,8 @@ export default function SchemaDrivenTable({
       />
     ),
   }));
+
+  console.log('enhancedColumns', schemaKey, enhancedColumns);
 
   return (
     <Paper>
