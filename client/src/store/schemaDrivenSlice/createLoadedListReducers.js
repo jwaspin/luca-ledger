@@ -14,6 +14,7 @@ const addLoadedItemReducer =
     const itemWithValidity = {
       ...item,
       isValid,
+      isSelected: false,
       validationErrors: isValid ? null : validate.errors,
     };
     loadedListAdapter.addOne(state.loadedList, itemWithValidity);
@@ -27,6 +28,7 @@ const addLoadedItemsReducer =
       loadedListAdapter.addOne(state.loadedList, {
         ...item,
         isValid,
+        isSelected: false,
         validationErrors: isValid ? null : validate.errors,
       });
     });

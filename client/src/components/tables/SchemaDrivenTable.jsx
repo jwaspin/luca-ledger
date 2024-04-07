@@ -36,6 +36,9 @@ export default function SchemaDrivenTable({
 
   const enhancedColumns = columns.map((column) => ({
     ...column,
+    type: Array.isArray(column.type)
+      ? column.type.find((type) => type !== 'null')
+      : column.type,
     component: (row) => (
       <SchemaDrivenComponent
         row={row}

@@ -5,30 +5,30 @@ import { values } from 'lodash';
 import {
   categorySchema,
   entitySchema,
-  lucaSchema,
+  // lucaSchema,
   recurringTransactionEventSchema,
   recurringTransactionSchema,
-  schemaSchema,
+  // schemaSchema,
   transactionSchema,
 } from 'luca-schema';
 
 const SchemaKeys = Object.freeze({
   CATEGORY: 'category',
   ENTITY: 'entity',
-  LUCASCHEMA: 'lucaSchema',
+  // LUCASCHEMA: 'lucaSchema',
   RECURRINGTRANSACTION: 'recurringTransaction',
   RECURRINGTRANSACTIONEVENT: 'recurringTransactionEvent',
-  SCHEMA: 'schema',
+  // SCHEMA: 'schema',
   TRANSACTION: 'transaction',
 });
 
 const schemas = {
   [SchemaKeys.CATEGORY]: categorySchema,
   [SchemaKeys.ENTITY]: entitySchema,
-  [SchemaKeys.LUCASCHEMA]: lucaSchema,
+  // [SchemaKeys.LUCASCHEMA]: lucaSchema,
   [SchemaKeys.RECURRINGTRANSACTION]: recurringTransactionSchema,
   [SchemaKeys.RECURRINGTRANSACTIONEVENT]: recurringTransactionEventSchema,
-  [SchemaKeys.SCHEMA]: schemaSchema,
+  // [SchemaKeys.SCHEMA]: schemaSchema,
   [SchemaKeys.TRANSACTION]: transactionSchema,
 };
 

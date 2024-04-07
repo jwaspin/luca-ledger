@@ -16,11 +16,6 @@ export default function SchemaDrivenComponent({
   actions,
   readOnly = true,
 }) {
-  // check column.type to see if it's an array, if it is, grab the first element that's not "null"
-  const columnType = Array.isArray(column.type)
-    ? column.type.find((type) => type !== 'null')
-    : column.type;
-
   const StringComponent = <div>{row[column.field]}</div>;
   const NumberComponent = <div>{row[column.field]}</div>;
   const BooleanComponent = <div>{String(row[column.field])}</div>;
@@ -32,7 +27,7 @@ export default function SchemaDrivenComponent({
   );
 
   if (readOnly) {
-    switch (columnType) {
+    switch (column.type) {
       case ColumnTypeEnum.STRING:
         return StringComponent;
       case ColumnTypeEnum.NUMBER:
@@ -42,11 +37,11 @@ export default function SchemaDrivenComponent({
       case ColumnTypeEnum.CHECKBOX:
         return CheckboxComponent;
       default:
-        return <div>Unknown column type: {columnType}</div>;
+        return <div>Unknown column type: {column.type}</div>;
     }
   }
 
-  switch (columnType) {
+  switch (column.type) {
     case ColumnTypeEnum.STRING:
       return StringComponent;
     case ColumnTypeEnum.NUMBER:
@@ -56,7 +51,7 @@ export default function SchemaDrivenComponent({
     case ColumnTypeEnum.CHECKBOX:
       return CheckboxComponent;
     default:
-      return <div>Unknown column type: {columnType}</div>;
+      return <div>Unknown column type: {column.type}</div>;
   }
 }
 
