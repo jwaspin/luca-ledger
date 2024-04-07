@@ -1,14 +1,15 @@
-import { Fragment, useEffect } from 'react';
 import { values } from 'lodash';
+import { Fragment, useEffect } from 'react';
 
 import SchemaDrivenTable from '@c/tables/SchemaDrivenTable';
 import { SchemaKeys } from '@s/lucaSchema';
 import { ListTypeEnum } from '@s/schemaDrivenSlice';
 import LoadButton from './components/LoadButton';
-import { useJsonFileReader } from './hooks';
+import { useJsonFileReader, useLoader } from './hooks';
 
 export default function ImportPage() {
   const { readJsonFile, jsonData } = useJsonFileReader();
+  const { loadJsonData } = useLoader();
 
   const handleFileLoad = (file) => {
     readJsonFile(file);
@@ -16,9 +17,9 @@ export default function ImportPage() {
 
   useEffect(() => {
     if (jsonData) {
-      console.log(jsonData);
+      loadJsonData(jsonData);
     }
-  }, [jsonData]);
+  }, [jsonData, loadJsonData]);
 
   return (
     <div>
