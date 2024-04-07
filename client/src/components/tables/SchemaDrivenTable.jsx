@@ -6,7 +6,7 @@ import DynamicColumnsTable from '@c/tables/DynamicColumnsTable';
 import { slices } from '@s';
 import { useSchemaConfig } from '@s/lucaSchema';
 import { ListTypeEnum, useListSlice } from '@s/schemaDrivenSlice';
-// import SchemaDrivenComponent from './SchemaDrivenComponent';
+import SchemaDrivenComponent, { ColumnTypeEnum } from './SchemaDrivenComponent';
 
 export default function SchemaDrivenTable({
   schemaKey,
@@ -15,7 +15,7 @@ export default function SchemaDrivenTable({
   listType,
 }) {
   const { title, columns } = useSchemaConfig(schemaKey);
-  const { /* actions, */ selectors } = useListSlice(slices, schemaKey);
+  const { actions, selectors } = useListSlice(slices, schemaKey);
   const data = selectors.selectList(listType);
 
   if (readOnly) console.log('todo: handleReadOnly');
@@ -24,7 +24,7 @@ export default function SchemaDrivenTable({
     columns.unshift({
       field: 'isSelected',
       title: 'Selected',
-      type: 'checkbox',
+      type: ColumnTypeEnum.CHECKBOX,
     });
   }
 
@@ -32,20 +32,20 @@ export default function SchemaDrivenTable({
     columns.push({
       field: 'isValid',
       title: 'Is Valid',
-      type: 'boolean',
+      type: ColumnTypeEnum.BOOLEAN,
     });
   }
 
   const enhancedColumns = columns.map((column) => ({
     ...column,
-    component: (row) => <div>{row[column.field]}</div>,
-    //   <SchemaDrivenComponent
-    //     row={row}
-    //     column={column}
-    //     actions={actions}
-    //     readOnly={readOnly}
-    //   />
-    // ),
+    component: (row) => (
+      <SchemaDrivenComponent
+        row={row}
+        column={column}
+        actions={actions}
+        readOnly={true}
+      />
+    ),
   }));
 
   return (

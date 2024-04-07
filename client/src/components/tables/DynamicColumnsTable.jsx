@@ -10,6 +10,7 @@ import {
 import PropTypes from 'prop-types';
 
 export default function DynamicColumnsTable({ columns, data }) {
+  console.log('DynamicColumnsTable', columns, data);
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -25,11 +26,9 @@ export default function DynamicColumnsTable({ columns, data }) {
             <TableRow key={row.id}>
               {columns.map((column) => (
                 <TableCell key={column.field}>
-                  {column.component ? (
-                    <column.component row={row} />
-                  ) : (
-                    row[column.field]
-                  )}
+                  {column.component
+                    ? column.component({ row })
+                    : row[column.field]}
                 </TableCell>
               ))}
             </TableRow>
