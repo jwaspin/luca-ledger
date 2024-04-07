@@ -1,3 +1,4 @@
+import { SchemaKeys, validators } from './lucaSchemaConfig';
 import { useSchemaConfig } from './useSchemaConfig';
 
-export { useSchemaConfig };
+export { SchemaKeys, useSchemaConfig, validators };

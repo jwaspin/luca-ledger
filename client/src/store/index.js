@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import { SchemaKeys, validators } from './lucaSchemaConfig';
-import { createListSlicesFromSchemas } from './schemaListSlice';
+import { SchemaKeys, validators } from './lucaSchema';
+import { createListSlicesFromSchemas } from './schemaDrivenSlice';
 
 const slices = createListSlicesFromSchemas(SchemaKeys, validators);
 

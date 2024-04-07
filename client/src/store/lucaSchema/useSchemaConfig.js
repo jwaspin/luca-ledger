@@ -1,4 +1,4 @@
-import { generateColumnsFromSchema } from './generateColumnsFromSchema';
+import generateColumnsFromSchema from './generateColumnsFromSchema';
 import { SchemaKeys, schemas, validators } from './lucaSchemaConfig';
 import constants from './lucaSchemaConstants';
 

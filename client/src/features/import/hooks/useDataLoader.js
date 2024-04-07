@@ -1,10 +1,12 @@
 import { useCallback } from 'react';
 
-import { SchemaKeys, slices } from '@s';
-import { useListSlice } from '@s/schemaListSlice';
+import { slices } from '@s';
+import { useSchemaConfig } from '@s/lucaSchema';
+import { useListSlice } from '@s/schemaDrivenSlice';
 import { getVersion } from '../utils';
 
 export default function useDataLoader() {
+  const { SchemaKeys } = useSchemaConfig();
   const {
     // loading,
     // error,
