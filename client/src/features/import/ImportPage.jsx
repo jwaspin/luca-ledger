@@ -1,15 +1,9 @@
-// import { categorySchema, entitySchema, transactionSchema } from 'luca-schema';
 import { useEffect } from 'react';
-// import { useSelector } from 'react-redux';
 
-// import SchemaDrivenTable from '@c/tables/SchemaDrivenTable';
+import SchemaDrivenTable from '@c/tables/SchemaDrivenTable';
 import LoadButton from './components/LoadButton';
 import { useDataLoader, useJsonFileReader } from './hooks';
-// import {
-//   validateEntity,
-//   validateTransaction,
-//   validateCategory,
-// } from '@/store/validators';
+import { SchemaKeys } from '@s';
 
 export default function ImportPage() {
   const { readJsonFile, jsonData } = useJsonFileReader();
@@ -28,7 +22,12 @@ export default function ImportPage() {
   return (
     <div>
       <LoadButton onFileLoad={handleFileLoad} />
-      <div>todo: tables</div>
+      {Object.keys(SchemaKeys).map((key) => (
+        <SchemaDrivenTable
+          key={key}
+          schemaKey={key}
+        />
+      ))}
     </div>
   );
 }

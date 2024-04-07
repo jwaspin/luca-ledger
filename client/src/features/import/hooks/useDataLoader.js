@@ -1,13 +1,15 @@
 import { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 
+import { SchemaKeys, slices } from '@s';
+import { useListSlice } from '@s/schemaListSlice';
 import { getVersion } from '../utils';
-import { actions as entityActions } from '@/store/entities';
-import { actions as transactionActions } from '@/store/transactions';
-import { actions as categoryActions } from '@/store/categories';
 
 export default function useDataLoader() {
-  const dipatch = useDispatch();
+  const {
+    // loading,
+    // error,
+    actions: entityActions,
+  } = useListSlice(slices, SchemaKeys.ENTITIES);
 
   const loadData = useCallback(
     (jsonData) => {
@@ -17,17 +19,13 @@ export default function useDataLoader() {
           console.log('Loading data version 1');
           break;
         case '2':
-          dipatch(entityActions.loadEntities(jsonData.entities || []));
-          dipatch(categoryActions.loadCategories(jsonData.categories || []));
-          dipatch(
-            transactionActions.loadTransactions(jsonData.transactions || [])
-          );
+          entityActions.loadItems(jsonData.entities || []);
           break;
         default:
           console.error('Unsupported version:', version);
       }
     },
-    [dipatch]
+    [entityActions]
   );
 
   return { loadData };
