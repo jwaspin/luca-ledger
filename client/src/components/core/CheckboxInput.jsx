@@ -10,7 +10,7 @@ export default function CheckboxInput({ label, value, onChange }) {
           checked={value}
           onChange={(e) => onChange(e.target.checked)}
         />
-        {label && <Typography variant='body1'>{label}</Typography>}`
+        {label && <Typography variant='body1'>{label}</Typography>}
       </label>
     </div>
   );

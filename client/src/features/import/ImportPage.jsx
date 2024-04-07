@@ -4,6 +4,7 @@ import { Fragment, useEffect } from 'react';
 import SchemaDrivenTable from '@c/tables/SchemaDrivenTable';
 import { SchemaKeys } from '@s/lucaSchema';
 import { ListTypeEnum } from '@s/schemaDrivenSlice';
+import ImportButton from './components/ImportButton';
 import LoadButton from './components/LoadButton';
 import { useJsonFileReader, useLoader } from './hooks';
 
@@ -24,6 +25,7 @@ export default function ImportPage() {
   return (
     <div>
       <LoadButton onFileLoad={handleFileLoad} />
+      <ImportButton />
       {values(SchemaKeys).map((key) => (
         <Fragment key={key}>
           <SchemaDrivenTable

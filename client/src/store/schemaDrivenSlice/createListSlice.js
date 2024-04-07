@@ -31,15 +31,16 @@ export default function createListSlice(name, validate) {
   const importLoadedItemReducer = (state, action) => {
     const id = action.payload;
     const item = state.loadedList.entities[id];
-    if (item && item.isValid && item.isSelected) {
+    if (item && item.isValid) {
       mainListAdapter.addOne(state.mainList, item);
       loadedListAdapter.removeOne(state.loadedList, id);
     }
   };
 
-  const importLoadedItemsReducer = (state) => {
+  const importLoadedItemsReducer = (state, action) => {
+    const { requireIsSelected } = action.payload || false;
     const itemsToImport = Object.values(state.loadedList.entities).filter(
-      (item) => item.isSelected && item.isValid
+      (item) => item.isValid && (!requireIsSelected || item.isSelected)
     );
     itemsToImport.forEach((item) => {
       mainListAdapter.addOne(state.mainList, item);

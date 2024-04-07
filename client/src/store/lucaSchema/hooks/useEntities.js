@@ -4,6 +4,7 @@ import { useListSlice } from '@s/schemaDrivenSlice';
 
 export default function useEntities() {
   const { actions, selectors } = useListSlice(slices, SchemaKeys.ENTITY);
+
   const entities = selectors.selectItems;
   const loadedEntities = selectors.selectLoadedItems;
 
@@ -11,5 +12,19 @@ export default function useEntities() {
     actions.loadItems(entities);
   };
 
-  return { entities, loadedEntities, loadEntities };
+  const importEntities = () => {
+    actions.importAllItems();
+  };
+
+  const importSelectedEntities = () => {
+    actions.importSelectedItems();
+  };
+
+  return {
+    entities,
+    loadedEntities,
+    loadEntities,
+    importEntities,
+    importSelectedEntities,
+  };
 }

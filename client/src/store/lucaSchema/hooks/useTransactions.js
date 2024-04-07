@@ -11,5 +11,19 @@ export default function useTransactions() {
     actions.loadItems(entities);
   };
 
-  return { transactions, loadedTransactions, loadTransactions };
+  const importTransactions = () => {
+    actions.importAllItems();
+  };
+
+  const importSelectedTransactions = () => {
+    actions.importSelectedItems();
+  };
+
+  return {
+    transactions,
+    loadedTransactions,
+    loadTransactions,
+    importTransactions,
+    importSelectedTransactions,
+  };
 }
