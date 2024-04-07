@@ -18,8 +18,6 @@ export default function SchemaDrivenTable({
   const { actions, selectors } = useListSlice(slices, schemaKey);
   const data = selectors.selectList(listType);
 
-  if (readOnly) console.log('todo: handleReadOnly');
-
   if (listType === ListTypeEnum.LOADED) {
     columns.unshift({
       field: 'isSelected',
@@ -43,7 +41,7 @@ export default function SchemaDrivenTable({
         row={row}
         column={column}
         actions={actions}
-        readOnly={true}
+        readOnly={readOnly}
       />
     ),
   }));

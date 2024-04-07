@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { values } from 'lodash';
 
 import TableRowCheckbox from '@c/input/TableRowCheckbox';
 
@@ -10,16 +11,14 @@ export const ColumnTypeEnum = Object.freeze({
 });
 
 export default function SchemaDrivenComponent({
-  row: rowProp,
+  row,
   column,
   actions,
   readOnly = true,
 }) {
-  const { row } = rowProp;
-  console.log('SchemaDrivenComponent', row, column, actions, readOnly);
   // check column.type to see if it's an array, if it is, grab the first element that's not "null"
   const columnType = Array.isArray(column.type)
-    ? column.type.find((type) => type !== null)
+    ? column.type.find((type) => type !== 'null')
     : column.type;
 
   const StringComponent = <div>{row[column.field]}</div>;
@@ -33,7 +32,6 @@ export default function SchemaDrivenComponent({
   );
 
   if (readOnly) {
-    console.log('read only', columnType);
     switch (columnType) {
       case ColumnTypeEnum.STRING:
         return StringComponent;
@@ -44,11 +42,11 @@ export default function SchemaDrivenComponent({
       case ColumnTypeEnum.CHECKBOX:
         return CheckboxComponent;
       default:
-        return <div>Unknown column type: {column.type}</div>;
+        return <div>Unknown column type: {columnType}</div>;
     }
   }
 
-  switch (column.type) {
+  switch (columnType) {
     case ColumnTypeEnum.STRING:
       return StringComponent;
     case ColumnTypeEnum.NUMBER:
@@ -58,7 +56,7 @@ export default function SchemaDrivenComponent({
     case ColumnTypeEnum.CHECKBOX:
       return CheckboxComponent;
     default:
-      return <div>Unknown column type: {column.type}</div>;
+      return <div>Unknown column type: {columnType}</div>;
   }
 }
 
@@ -67,7 +65,7 @@ SchemaDrivenComponent.propTypes = {
   column: PropTypes.shape({
     field: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(Object.values(ColumnTypeEnum)).isRequired,
+    type: PropTypes.oneOf(values(ColumnTypeEnum)).isRequired,
   }).isRequired,
   actions: PropTypes.object,
   readOnly: PropTypes.bool,
