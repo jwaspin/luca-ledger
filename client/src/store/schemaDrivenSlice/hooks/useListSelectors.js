@@ -1,6 +1,8 @@
 import useMainListSelectors from './useMainListSelectors';
 import useLoadedListSelectors from './useLoadedListSelectors';
 
+import { ListTypeEnum } from '../index';
+
 export default function useListSelectors(
   mainListSelectors,
   loadedListSelectors
@@ -10,10 +12,10 @@ export default function useListSelectors(
     useLoadedListSelectors(loadedListSelectors);
 
   const selectList = (listType) => {
-    if (listType === 'main') {
-      return mainSelectors.selectAllItems();
-    } else if (listType === 'loaded') {
-      return loadedSelectors.selectLoadedItems();
+    if (listType === ListTypeEnum.MAIN) {
+      return mainSelectors.selectAllItems;
+    } else if (listType === ListTypeEnum.LOADED) {
+      return loadedSelectors.selectLoadedItems;
     }
   };
 

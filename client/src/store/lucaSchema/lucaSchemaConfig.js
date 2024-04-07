@@ -22,9 +22,6 @@ const SchemaKeys = Object.freeze({
   TRANSACTION: 'transaction',
 });
 
-console.log('SchemaKeys:', SchemaKeys);
-console.log('values', values(SchemaKeys));
-
 const schemas = {
   [SchemaKeys.CATEGORY]: categorySchema,
   [SchemaKeys.ENTITY]: entitySchema,

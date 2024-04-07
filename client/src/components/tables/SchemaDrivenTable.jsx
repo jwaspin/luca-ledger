@@ -3,6 +3,7 @@ import { values } from 'lodash';
 import PropTypes from 'prop-types';
 
 import DynamicColumnsTable from '@c/tables/DynamicColumnsTable';
+import { slices } from '@s';
 import { useSchemaConfig } from '@s/lucaSchema';
 import { ListTypeEnum, useListSlice } from '@s/schemaDrivenSlice';
 // import SchemaDrivenComponent from './SchemaDrivenComponent';
@@ -14,7 +15,7 @@ export default function SchemaDrivenTable({
   listType,
 }) {
   const { title, columns } = useSchemaConfig(schemaKey);
-  const { /* actions, */ selectors } = useListSlice(schemaKey);
+  const { /* actions, */ selectors } = useListSlice(slices, schemaKey);
   const data = selectors.selectList(listType);
 
   if (readOnly) console.log('todo: handleReadOnly');

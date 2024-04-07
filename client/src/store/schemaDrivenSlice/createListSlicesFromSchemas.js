@@ -20,7 +20,5 @@ export default function createListSlicesFromSchemas(SchemaKeys, validators) {
     }
   });
 
-  console.log('slices:', slices);
-
   return slices;
 }
