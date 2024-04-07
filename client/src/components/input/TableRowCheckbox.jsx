@@ -7,7 +7,8 @@ export default function TableRowCheckbox({ row, toggleIsSelected }) {
   const dispatch = useDispatch();
 
   const handleChange = () => {
-    dispatch(toggleIsSelected(row.id));
+    const updatedItem = { ...row, isSelected: !row.isSelected };
+    dispatch(toggleIsSelected(row.id, updatedItem));
   };
 
   return (

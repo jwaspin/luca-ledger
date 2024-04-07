@@ -40,7 +40,13 @@ const updateLoadedItemReducer =
     const item = state.loadedList.entities[id];
     if (item) {
       const updatedItem = { ...item, ...changes };
-      const isValid = validate(updatedItem);
+      const {
+        isValid: _,
+        isSelected: __,
+        validationErrors: ___,
+        ...relevantFields
+      } = updatedItem;
+      const isValid = validate(relevantFields);
       loadedListAdapter.updateOne(state.loadedList, {
         id,
         changes: {
