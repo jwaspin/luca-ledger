@@ -7,22 +7,22 @@
   {
     "linkTo": "/accounts",
     "navText": "Accounts",
-    "enabled": true
+    "enabled": false
   },
   {
     "linkTo": "/entities",
     "navText": "Entities",
-    "enabled": true
+    "enabled": false
   },
   {
     "linkTo": "/categories",
     "navText": "Categories",
-    "enabled": true
+    "enabled": false
   },
   {
     "linkTo": "/recurring",
     "navText": "Recurring Txs",
-    "enabled": true
+    "enabled": false
   },
   {
     "linkTo": "/businesses",
@@ -37,7 +37,7 @@
   {
     "linkTo": "/export",
     "navText": "Export",
-    "enabled": true
+    "enabled": false
   },
   {
     "linkTo": "/import",
