@@ -1,10 +1,11 @@
 import { Paper, Typography } from '@mui/material';
+import { values } from 'lodash';
 import PropTypes from 'prop-types';
 
-import TableRowCheckbox from '@c/input/TableRowCheckbox';
 import DynamicColumnsTable from '@c/tables/DynamicColumnsTable';
 import { useSchemaConfig } from '@s/lucaSchema';
-import { useListSlice } from '@s/schemaDrivenSlice';
+import { ListTypeEnum, useListSlice } from '@s/schemaDrivenSlice';
+// import SchemaDrivenComponent from './SchemaDrivenComponent';
 
 export default function SchemaDrivenTable({
   schemaKey,
@@ -12,26 +13,17 @@ export default function SchemaDrivenTable({
   readOnly = true,
   listType,
 }) {
-  const { title, validator, columns } = useSchemaConfig(schemaKey);
-  const { actions, selectors } = useListSlice(schemaKey);
+  const { title, columns } = useSchemaConfig(schemaKey);
+  const { /* actions, */ selectors } = useListSlice(schemaKey);
+  const data = selectors.selectList(listType);
 
-  let data = selectors.selectList(listType);
+  if (readOnly) console.log('todo: handleReadOnly');
 
-  const dataWithIsValid = data.map((row) => ({
-    ...row,
-    isValid: validator(row),
-  }));
-
-  if (!readOnly) {
+  if (listType === ListTypeEnum.LOADED) {
     columns.unshift({
       field: 'isSelected',
       title: 'Selected',
-      component: ({ row }) => (
-        <TableRowCheckbox
-          row={row}
-          toggleIsSelected={actions.toggleIsSelected}
-        />
-      ),
+      type: 'checkbox',
     });
   }
 
@@ -39,17 +31,29 @@ export default function SchemaDrivenTable({
     columns.push({
       field: 'isValid',
       title: 'Is Valid',
-      component: ({ row }) => <div>{String(row['isValid'])}</div>,
+      type: 'boolean',
     });
   }
+
+  const enhancedColumns = columns.map((column) => ({
+    ...column,
+    component: (row) => <div>{row[column.field]}</div>,
+    //   <SchemaDrivenComponent
+    //     row={row}
+    //     column={column}
+    //     actions={actions}
+    //     readOnly={readOnly}
+    //   />
+    // ),
+  }));
 
   return (
     <Paper>
       <h3>{title}</h3>
-      {dataWithIsValid.length > 0 ? (
+      {data.length > 0 ? (
         <DynamicColumnsTable
-          columns={columns}
-          data={dataWithIsValid}
+          columns={enhancedColumns}
+          data={data}
         />
       ) : (
         <Typography variant='body1'>No {title} to display</Typography>
@@ -62,5 +66,5 @@ SchemaDrivenTable.propTypes = {
   schemaKey: PropTypes.string.isRequired,
   displayIsValid: PropTypes.bool,
   readOnly: PropTypes.bool,
-  listType: PropTypes.oneOf(['main', 'loaded']).isRequired,
+  listType: PropTypes.oneOf(values(ListTypeEnum)).isRequired,
 };

@@ -1,5 +1,6 @@
 import addFormats from 'ajv-formats';
 import Ajv2020 from 'ajv/dist/2020';
+import { values } from 'lodash';
 
 import {
   categorySchema,
@@ -21,6 +22,9 @@ const SchemaKeys = Object.freeze({
   TRANSACTION: 'transaction',
 });
 
+console.log('SchemaKeys:', SchemaKeys);
+console.log('values', values(SchemaKeys));
+
 const schemas = {
   [SchemaKeys.CATEGORY]: categorySchema,
   [SchemaKeys.ENTITY]: entitySchema,
@@ -34,12 +38,12 @@ const schemas = {
 const ajv = new Ajv2020({ allErrors: true });
 addFormats(ajv);
 
-Object.entries(schemas).forEach(([key, schema]) => {
-  ajv.addSchema(schema, key);
+values(SchemaKeys).forEach((key) => {
+  ajv.addSchema(schemas[key], key);
 });
 
 const validators = Object.fromEntries(
-  Object.entries(schemas).map(([key, schema]) => [key, ajv.compile(schema)])
+  values(SchemaKeys).map((key) => [key, ajv.compile(schemas[key])])
 );
 
 export { SchemaKeys, schemas, validators };
