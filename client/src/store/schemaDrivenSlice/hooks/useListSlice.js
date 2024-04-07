@@ -10,6 +10,7 @@ export default function useListSlice(slices, sliceName) {
     mainListSelectors,
     loadedListSelectors,
   } = slices[sliceName];
+
   const { loading, error } = useSelector(sliceSelector);
   const { actions } = useListActions(sliceActions);
   const { selectors } = useListSelectors(
