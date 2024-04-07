@@ -12,10 +12,13 @@ const localStorageMiddleware = (store) => (next) => (action) => {
 };
 
 const rootReducer = combineReducers(
+  // iterate over all schema keys and add the reducer for each slice
   Object.values(SchemaKeys).reduce((acc, schemaKey) => {
     if (slices[schemaKey]) {
+      // extract the reducer from the slice and add it to the accumulator object
       acc[schemaKey] = slices[schemaKey].reducer;
     }
+    // return the accumulator object containing all the reducers
     return acc;
   }, {})
 );
