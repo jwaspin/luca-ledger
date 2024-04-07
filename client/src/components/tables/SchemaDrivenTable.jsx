@@ -5,16 +5,20 @@ import TableRowCheckbox from '@c/input/TableRowCheckbox';
 import DynamicColumnsTable from '@c/tables/DynamicColumnsTable';
 import { generateColumnsFromSchema } from '@u';
 
-export default function SchemaDrivenTable(props) {
-  const {
-    title,
-    data,
-    schema,
-    validator,
-    actions,
-    displayIsValid = false,
-    readOnly = false,
-  } = props;
+export default function SchemaDrivenTable({
+  schemaKey,
+  readOnly = true,
+  displayIsValid = false,
+}) {
+  // const {
+  //   title,
+  //   data,
+  //   schema,
+  //   validator,
+  //   actions,
+  //   displayIsValid = false,
+  //   readOnly = false,
+  // } = props;
 
   let columns = [];
 
@@ -62,11 +66,12 @@ export default function SchemaDrivenTable(props) {
 }
 
 SchemaDrivenTable.propTypes = {
-  title: PropTypes.string.isRequired,
-  data: PropTypes.array.isRequired,
-  schema: PropTypes.object.isRequired,
-  validator: PropTypes.func.isRequired,
-  actions: PropTypes.object,
+  // title: PropTypes.string.isRequired,
+  // data: PropTypes.array.isRequired,
+  // schema: PropTypes.object.isRequired,
+  // validator: PropTypes.func.isRequired,
+  // actions: PropTypes.object,
+  schemaKey: PropTypes.string.isRequired,
   displayIsValid: PropTypes.bool,
   readOnly: PropTypes.bool,
 };

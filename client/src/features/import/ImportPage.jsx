@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 
 import SchemaDrivenTable from '@c/tables/SchemaDrivenTable';
 import LoadButton from './components/LoadButton';
@@ -23,10 +23,13 @@ export default function ImportPage() {
     <div>
       <LoadButton onFileLoad={handleFileLoad} />
       {Object.keys(SchemaKeys).map((key) => (
-        <SchemaDrivenTable
-          key={key}
-          schemaKey={key}
-        />
+        <Fragment key={key}>
+          <SchemaDrivenTable
+            schemaKey={key}
+            readOnly={false}
+            displayIsValid={true}
+          />
+        </Fragment>
       ))}
     </div>
   );
