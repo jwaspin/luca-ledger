@@ -1,13 +1,15 @@
 import { Fragment, useEffect } from 'react';
 
 import SchemaDrivenTable from '@c/tables/SchemaDrivenTable';
+import { useSchemaConfig } from '@s/lucaSchema';
+import { ListTypeEnum } from '@s/schemaDrivenSlice';
 import LoadButton from './components/LoadButton';
 import { useDataLoader, useJsonFileReader } from './hooks';
-import { SchemaKeys } from '@s';
 
 export default function ImportPage() {
   const { readJsonFile, jsonData } = useJsonFileReader();
   const { loadData } = useDataLoader();
+  const { SchemaKeys } = useSchemaConfig();
 
   const handleFileLoad = (file) => {
     readJsonFile(file);
@@ -26,6 +28,7 @@ export default function ImportPage() {
         <Fragment key={key}>
           <SchemaDrivenTable
             schemaKey={key}
+            listType={ListTypeEnum.LOADED}
             readOnly={false}
             displayIsValid={true}
           />

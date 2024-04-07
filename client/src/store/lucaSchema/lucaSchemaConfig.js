@@ -1,7 +1,6 @@
 import addFormats from 'ajv-formats';
 import Ajv2020 from 'ajv/dist/2020';
 
-import constants from './lucaSchemaConstants';
 import {
   categorySchema,
   entitySchema,
@@ -43,4 +42,4 @@ const validators = Object.fromEntries(
   Object.entries(schemas).map(([key, schema]) => [key, ajv.compile(schema)])
 );
 
-export { SchemaKeys, constants, schemas, validators };
+export { SchemaKeys, schemas, validators };

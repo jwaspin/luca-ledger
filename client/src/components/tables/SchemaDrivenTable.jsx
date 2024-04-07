@@ -3,27 +3,27 @@ import PropTypes from 'prop-types';
 
 import TableRowCheckbox from '@c/input/TableRowCheckbox';
 import DynamicColumnsTable from '@c/tables/DynamicColumnsTable';
-import { generateColumnsFromSchema } from '@u';
+import { useSchemaConfig } from '@s/lucaSchema';
+import { useListSlice } from '@s/schemaDrivenSlice';
 
 export default function SchemaDrivenTable({
   schemaKey,
-  readOnly = true,
   displayIsValid = false,
+  readOnly = true,
+  listType,
 }) {
-  // const {
-  //   title,
-  //   data,
-  //   schema,
-  //   validator,
-  //   actions,
-  //   displayIsValid = false,
-  //   readOnly = false,
-  // } = props;
+  const { title, validator, columns } = useSchemaConfig(schemaKey);
+  const { actions, selectors } = useListSlice(schemaKey);
 
-  let columns = [];
+  let data = selectors.selectList(listType);
+
+  const dataWithIsValid = data.map((row) => ({
+    ...row,
+    isValid: validator(row),
+  }));
 
   if (!readOnly) {
-    columns.push({
+    columns.unshift({
       field: 'isSelected',
       title: 'Selected',
       component: ({ row }) => (
@@ -43,13 +43,6 @@ export default function SchemaDrivenTable({
     });
   }
 
-  columns = columns.concat(generateColumnsFromSchema(schema));
-
-  const dataWithIsValid = data.map((row) => ({
-    ...row,
-    isValid: validator(row),
-  }));
-
   return (
     <Paper>
       <h3>{title}</h3>
@@ -66,12 +59,8 @@ export default function SchemaDrivenTable({
 }
 
 SchemaDrivenTable.propTypes = {
-  // title: PropTypes.string.isRequired,
-  // data: PropTypes.array.isRequired,
-  // schema: PropTypes.object.isRequired,
-  // validator: PropTypes.func.isRequired,
-  // actions: PropTypes.object,
   schemaKey: PropTypes.string.isRequired,
   displayIsValid: PropTypes.bool,
   readOnly: PropTypes.bool,
+  listType: PropTypes.oneOf(['main', 'loaded']).isRequired,
 };

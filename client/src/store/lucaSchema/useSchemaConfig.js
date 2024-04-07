@@ -1,5 +1,6 @@
+import { generateColumnsFromSchema } from './generateColumnsFromSchema';
 import { SchemaKeys, schemas, validators } from './lucaSchemaConfig';
-import { generateColumnsFromSchema } from '@u';
+import constants from './lucaSchemaConstants';
 
 export const useSchemaConfig = (schemaKey) => {
   if (!Object.values(SchemaKeys).includes(schemaKey)) {
@@ -8,11 +9,13 @@ export const useSchemaConfig = (schemaKey) => {
 
   const schema = schemas[schemaKey];
   const validator = validators[schemaKey];
-
   const columns = generateColumnsFromSchema(schema);
 
   return {
     title: schema.title,
+    description: schema.description,
+    SchemaKeys,
+    constants,
     schema,
     validator,
     columns,

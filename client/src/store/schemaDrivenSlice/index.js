@@ -4,4 +4,14 @@ import * as hooks from './hooks';
 
 const { useListSlice } = hooks;
 
-export { createListSlice, createListSlicesFromSchemas, useListSlice };
+const ListTypeEnum = Object.freeze({
+  MAIN: 'main',
+  LOADED: 'loaded',
+});
+
+export {
+  ListTypeEnum,
+  createListSlice,
+  createListSlicesFromSchemas,
+  useListSlice,
+};
