@@ -38,7 +38,7 @@ export default function createListSlice(name, validate) {
   };
 
   const importLoadedItemsReducer = (state, action) => {
-    const { requireIsSelected } = action.payload || false;
+    const requireIsSelected = action.payload?.requireIsSelected;
     const itemsToImport = Object.values(state.loadedList.entities).filter(
       (item) => item.isValid && (!requireIsSelected || item.isSelected)
     );

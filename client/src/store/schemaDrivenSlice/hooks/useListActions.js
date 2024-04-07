@@ -9,7 +9,7 @@ export default function useListActions(sliceActions) {
   const { actions: loadedActions } = useLoadedListActions(sliceActions);
 
   const importAllItems = () => {
-    dispatch(sliceActions.importLoadedItems());
+    dispatch(sliceActions.importLoadedItems({ requireIsSelected: false }));
   };
 
   const importSelectedItems = () => {
