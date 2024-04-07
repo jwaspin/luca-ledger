@@ -49,8 +49,6 @@ export default function SchemaDrivenTable({
     ),
   }));
 
-  console.log('enhancedColumns', schemaKey, enhancedColumns);
-
   return (
     <Paper>
       <h3>{title}</h3>
