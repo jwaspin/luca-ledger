@@ -14,7 +14,7 @@ const localStorageMiddleware = (store) => (next) => (action) => {
 const rootReducer = combineReducers(
   Object.values(SchemaKeys).reduce((acc, schemaKey) => {
     if (slices[schemaKey]) {
-      acc[schemaKey] = slices[schemaKey];
+      acc[schemaKey] = slices[schemaKey].reducer;
     }
     return acc;
   }, {})
