@@ -24,6 +24,8 @@ export default function Home() {
           variant='body1'
           style={{ width: '75%', textAlign: 'justify', marginBottom: '50px' }}
         >
+          <a href='https://lucaledger.app'>Luca Ledger</a>
+          <br />
           {homeText}
         </Typography>
         <Typography
