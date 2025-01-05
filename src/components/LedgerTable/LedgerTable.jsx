@@ -66,7 +66,6 @@ export default function LedgerTable({ filterValue }) {
         (month, index, self) =>
           self.indexOf(month) === index &&
           ![
-            getMonthIdentifier(dayjs().subtract(1, 'month')),
             getMonthIdentifier(dayjs()),
             getMonthIdentifier(dayjs().add(1, 'month')),
           ].includes(month)
