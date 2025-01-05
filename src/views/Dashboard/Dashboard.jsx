@@ -1,168 +1,67 @@
+import { useAccountBalances } from '@/hooks/useAccountBalances';
+import { selectors } from '@/store/accounts';
 import { Box, Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
-
-import { constants, selectors } from '@/store/accounts';
-import { doublePrecisionFormatString } from '@/utils';
-import AccountContainer from './AccountContainer';
-
-const calculateBalance = (transactions, statuses) => {
-  return transactions
-    .filter((tx) => statuses.includes(tx.status))
-    .reduce((acc, tx) => acc + Number(tx.amount), 0);
-};
-
-function subtractPositiveBalance(totalBalance, currentBalance) {
-  return totalBalance - (currentBalance > 0 ? currentBalance : 0);
-}
+import AccountRow from './AccountRow';
+import BalanceCard from './BalanceCard';
 
 export default function Dashboard() {
   const accounts = useSelector(selectors.selectAccounts);
-
-  let totalCurrentBalance = 0;
-  let totalPendingBalance = 0;
-  let totalScheduledBalance = 0;
-  let totalFutureBalance = 0;
-
-  const accountsWithBalances = accounts.map((account) => {
-    const currentBalance = calculateBalance(account.transactions, [
-      'complete ',
-    ]);
-    const pendingBalance = calculateBalance(account.transactions, [
-      'complete ',
-      'pending ',
-    ]);
-    const scheduledBalance = calculateBalance(account.transactions, [
-      'complete ',
-      'pending ',
-      'scheduled ',
-    ]);
-    const futureBalance = calculateBalance(account.transactions, [
-      'complete ',
-      'pending ',
-      'scheduled ',
-      'planned ',
-    ]);
-
-    if (account.type === constants.AccountType.CREDIT_CARD) {
-      totalCurrentBalance = subtractPositiveBalance(
-        totalCurrentBalance,
-        currentBalance
-      );
-      totalPendingBalance = subtractPositiveBalance(
-        totalPendingBalance,
-        pendingBalance
-      );
-      totalScheduledBalance = subtractPositiveBalance(
-        totalScheduledBalance,
-        scheduledBalance
-      );
-      totalFutureBalance = subtractPositiveBalance(
-        totalFutureBalance,
-        futureBalance
-      );
-    } else {
-      totalCurrentBalance += currentBalance;
-      totalPendingBalance += pendingBalance;
-      totalScheduledBalance += scheduledBalance;
-      totalFutureBalance += futureBalance;
-    }
-    return {
-      ...account,
-      currentBalance,
-      pendingBalance,
-      scheduledBalance,
-      futureBalance,
-    };
-  });
+  const { accounts: accountsWithBalances, totals } =
+    useAccountBalances(accounts);
 
   return (
-    <Box ml='50px'>
-      <h2>Accounts</h2>
+    <Box sx={{ p: 3 }}>
+      <Typography
+        variant='h4'
+        sx={{ mb: 4 }}
+      >
+        Financial Overview
+      </Typography>
+
       <Grid
         container
-        spacing={2}
+        spacing={3}
+        sx={{ mb: 4 }}
       >
-        <Grid
-          item
-          xs={2}
-        >
-          <Typography variant='h4'>Name</Typography>
-        </Grid>
-        <Grid
-          item
-          xs={2}
-        >
-          <Typography variant='h4'>Current</Typography>
-        </Grid>
-        <Grid
-          item
-          xs={2}
-        >
-          <Typography variant='h4'>Pending</Typography>
-        </Grid>
-        <Grid
-          item
-          xs={2}
-        >
-          <Typography variant='h4'>Scheduled</Typography>
-        </Grid>
-        <Grid
-          item
-          xs={2}
-        >
-          <Typography variant='h4'>Future</Typography>
-        </Grid>
+        {[
+          {
+            title: 'Current Balance',
+            amount: totals.current,
+            color: '#2196f3',
+          },
+          { title: 'Pending', amount: totals.pending, color: '#ff9800' },
+          { title: 'Scheduled', amount: totals.scheduled, color: '#4caf50' },
+          { title: 'Future Balance', amount: totals.future, color: '#9c27b0' },
+        ].map((balance) => (
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={3}
+            key={balance.title}
+          >
+            <BalanceCard
+              {...balance}
+              total={totals.future}
+            />
+          </Grid>
+        ))}
       </Grid>
-      {accountsWithBalances.map((a, i) => (
-        <AccountContainer
-          account={a}
-          key={i}
+
+      <Typography
+        variant='h5'
+        sx={{ mb: 3 }}
+      >
+        Accounts
+      </Typography>
+
+      {accountsWithBalances.map((account, index) => (
+        <AccountRow
+          key={account.id || index}
+          account={account}
         />
       ))}
-      <Grid
-        container
-        spacing={2}
-        style={{ marginTop: '10px' }}
-      >
-        <Grid
-          item
-          xs={2}
-        >
-          <Typography variant='h5'>Totals</Typography>
-        </Grid>
-        <Grid
-          item
-          xs={2}
-        >
-          <Typography variant='h5'>
-            $ {doublePrecisionFormatString(totalCurrentBalance)}
-          </Typography>
-        </Grid>
-        <Grid
-          item
-          xs={2}
-        >
-          <Typography variant='h5'>
-            $ {doublePrecisionFormatString(totalPendingBalance)}
-          </Typography>
-        </Grid>
-        <Grid
-          item
-          xs={2}
-        >
-          <Typography variant='h5'>
-            $ {doublePrecisionFormatString(totalScheduledBalance)}
-          </Typography>
-        </Grid>
-        <Grid
-          item
-          xs={2}
-        >
-          <Typography variant='h5'>
-            $ {doublePrecisionFormatString(totalFutureBalance)}
-          </Typography>
-        </Grid>
-      </Grid>
     </Box>
   );
 }
