@@ -1,14 +1,16 @@
 import { useAccountBalances } from '@/hooks/useAccountBalances';
 import { selectors } from '@/store/accounts';
-import { Box, Grid, Typography } from '@mui/material';
+import { AccountType } from '@/store/accounts/constants';
+import { Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import AccountRow from './AccountRow';
-import BalanceCard from './BalanceCard';
+import BalanceGroup from './BalanceGroup';
 
 export default function Dashboard() {
   const accounts = useSelector(selectors.selectAccounts);
-  const { accounts: accountsWithBalances, totals } =
-    useAccountBalances(accounts);
+  const { accounts: accountsWithBalances } = useAccountBalances(accounts);
+
+  const { SAVINGS, CHECKING, CREDIT_CARD } = AccountType;
 
   return (
     <Box sx={{ p: 3 }}>
@@ -19,35 +21,20 @@ export default function Dashboard() {
         Financial Overview
       </Typography>
 
-      <Grid
-        container
-        spacing={3}
-        sx={{ mb: 4 }}
-      >
-        {[
-          {
-            title: 'Current Balance',
-            amount: totals.current,
-            color: '#2196f3',
-          },
-          { title: 'Pending', amount: totals.pending, color: '#ff9800' },
-          { title: 'Scheduled', amount: totals.scheduled, color: '#4caf50' },
-          { title: 'Future Balance', amount: totals.future, color: '#9c27b0' },
-        ].map((balance) => (
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={3}
-            key={balance.title}
-          >
-            <BalanceCard
-              {...balance}
-              total={totals.future}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      <Box>
+        <Typography>Checking Account</Typography>
+        <BalanceGroup accountType={CHECKING} />
+      </Box>
+
+      <Box>
+        <Typography>Savings Account</Typography>
+        <BalanceGroup accountType={SAVINGS} />
+      </Box>
+
+      <Box>
+        <Typography>Credit Card</Typography>
+        <BalanceGroup accountType={CREDIT_CARD} />
+      </Box>
 
       <Typography
         variant='h5'
