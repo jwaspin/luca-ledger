@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { constants } from '@/store/accounts';
+import { TransactionStatusEnum } from '../store/transactions/constants';
 
 export const useAccountBalances = (accounts) => {
   return useMemo(() => {
@@ -10,23 +11,22 @@ export const useAccountBalances = (accounts) => {
       future: 0,
     };
 
+    const { COMPLETE, PENDING, SCHEDULED, PLANNED } = TransactionStatusEnum;
+
     const processedAccounts = accounts.map((account) => {
       const balances = {
-        current: calculateBalance(account.transactions, ['complete']),
-        pending: calculateBalance(account.transactions, [
-          'complete',
-          'pending',
-        ]),
+        current: calculateBalance(account.transactions, [COMPLETE]),
+        pending: calculateBalance(account.transactions, [COMPLETE, PENDING]),
         scheduled: calculateBalance(account.transactions, [
-          'complete',
-          'pending',
-          'scheduled',
+          COMPLETE,
+          PENDING,
+          SCHEDULED,
         ]),
         future: calculateBalance(account.transactions, [
-          'complete',
-          'pending',
-          'scheduled',
-          'planned',
+          COMPLETE,
+          PENDING,
+          SCHEDULED,
+          PLANNED,
         ]),
       };
 
