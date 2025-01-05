@@ -1,4 +1,5 @@
 import AppContent from './AppContent';
+import AppFooter from './AppFooter/AppFooter';
 import AppHeader from './AppHeader';
 
 export default function MainLayout() {
@@ -6,6 +7,7 @@ export default function MainLayout() {
     <>
       <AppHeader />
       <AppContent />
+      <AppFooter />
     </>
   );
 }
