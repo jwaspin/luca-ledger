@@ -16,7 +16,6 @@ export default function Accounts() {
       display='flex'
       flexDirection='column'
       alignItems='center'
-      height='100vh'
     >
       <Typography
         variant='h3'
