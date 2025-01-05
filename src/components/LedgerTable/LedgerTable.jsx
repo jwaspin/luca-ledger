@@ -4,7 +4,7 @@ import { constants, selectors } from '@/store/accounts';
 import { Paper, Table, TableBody, TableContainer } from '@mui/material';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import LedgerHeader from './LedgerHeader';
@@ -12,11 +12,14 @@ import MonthSeparatorRow from './MonthSeparatorRow';
 import StatementSeparatorRow from './StatementSeparatorRow';
 import { dateCompareFn } from './utils';
 
-export default function LedgerTable({ filterValue }) {
+export default function LedgerTable({
+  filterValue,
+  collapsedGroups,
+  setCollapsedGroups,
+}) {
   const { accountId } = useParams();
   const account = useSelector(selectors.selectAccountById(accountId));
   const { transactions } = account;
-  const [collapsedGroups, setCollapsedGroups] = useState([]);
 
   const sortedTransactions = useMemo(
     () => [...transactions].sort(dateCompareFn),
@@ -124,4 +127,6 @@ export default function LedgerTable({ filterValue }) {
 
 LedgerTable.propTypes = {
   filterValue: PropTypes.string,
+  collapsedGroups: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setCollapsedGroups: PropTypes.func.isRequired,
 };
