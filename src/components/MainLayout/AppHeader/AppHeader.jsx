@@ -22,17 +22,13 @@ export default function AppHeader() {
             />
           </Link>
           <NavItem
-            linkTo='/dashboard'
-            navText='Dashboard'
-          />
-          <NavItem
             linkTo='/accounts'
             navText='Accounts'
           />
-          <NavItem
+          {/* <NavItem
             linkTo='/categories'
             navText='Categories'
-          />
+          /> */}
         </Box>
         <Typography
           variant='h4'

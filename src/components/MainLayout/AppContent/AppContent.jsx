@@ -3,7 +3,6 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import Accounts from '@/views/Accounts';
 import Categories from '@/views/Categories';
 import Dashboard from '@/views/Dashboard';
-import Home from '@/views/Home';
 import Ledger from '@/views/Ledger';
 
 export default function AppContent() {
@@ -11,11 +10,16 @@ export default function AppContent() {
     <Routes>
       <Route
         path='/'
-        element={<Home />}
+        element={<Dashboard />}
       />
       <Route
         path='/dashboard'
-        element={<Dashboard />}
+        element={
+          <Navigate
+            to='/'
+            replace
+          />
+        }
       />
       <Route
         path='/accounts'

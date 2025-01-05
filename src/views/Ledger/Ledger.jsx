@@ -30,29 +30,29 @@ export default function Ledger() {
     <Box
       sx={{
         width: '100%',
-        height: 'calc(100vh - 65px)',
+        height: 'calc(100vh - 100px)',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around',
+        overflow: 'hidden',
       }}
     >
       <Box
         sx={{
           width: '18%',
-          padding: '5px',
-          height: '100%',
           borderRight: '1px solid black',
         }}
       >
         <SettingsPanel account={account} />
       </Box>
-      <Box sx={{ width: '82%', padding: '5px' }}>
+      <Box sx={{ width: '82%', overflow: 'hidden' }}>
         <Box
           style={{
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
+            padding: '15px',
           }}
         >
           <AccountName account={account} />
@@ -62,11 +62,9 @@ export default function Ledger() {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-between',
-            paddingLeft: '50px',
-            paddingRight: '50px',
+            padding: '15px',
           }}
-        ></Box>
-        <Box>
+        >
           <TextField
             id='filter'
             label='Filter'
@@ -74,7 +72,7 @@ export default function Ledger() {
             onChange={(e) => setFilterValue(e.target.value)}
             variant='outlined'
             size='small'
-            sx={{ width: '100%' }}
+            sx={{ width: '700px' }}
           />
         </Box>
         <LedgerTable filterValue={filterValue} />
