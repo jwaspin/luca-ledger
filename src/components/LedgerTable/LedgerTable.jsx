@@ -79,7 +79,7 @@ export default function LedgerTable({ filterValue }) {
   return (
     <TableContainer
       component={Paper}
-      style={{ height: 'calc(100vh - 250px)' }}
+      style={{ overflow: 'auto', height: 'calc(100vh - 300px)' }}
     >
       <Table stickyHeader>
         <LedgerHeader />
