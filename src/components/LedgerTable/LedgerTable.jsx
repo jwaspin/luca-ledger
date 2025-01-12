@@ -3,11 +3,11 @@ import { constants, selectors } from '@/store/accounts';
 import { Paper, Table, TableBody, TableContainer } from '@mui/material';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
-import { Fragment, useEffect, useMemo } from 'react';
+import { Fragment, useEffect, useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import LedgerHeader from './LedgerHeader';
-import MonthSeparatorRow from './MonthSeparatorRow';
+import SeparatorRow from './SeparatorRow';
 import StatementSeparatorRow from './StatementSeparatorRow';
 import { dateCompareFn } from './utils';
 
@@ -30,7 +30,7 @@ export default function LedgerTable({
     return sortedTransactions.map((transaction) => {
       currentBalance += transaction.amount;
       return { ...transaction, balance: currentBalance };
-    });
+    }, []);
   }, [sortedTransactions]);
 
   const filteredTransactions = useMemo(() => {
@@ -50,17 +50,20 @@ export default function LedgerTable({
     );
   };
 
-  const getYearIdentifier = (date) => {
+  const getYearIdentifier = useCallback((date) => {
     return dayjs(date).format('YYYY');
-  };
+  }, []);
 
-  const getMonthIdentifier = (date) => {
+  const getMonthIdentifier = useCallback((date) => {
     return dayjs(date).format('MMMM');
-  };
+  }, []);
 
-  const getYearMonthKey = (date) => {
-    return `${getYearIdentifier(date)}-${getMonthIdentifier(date)}`;
-  };
+  const getYearMonthKey = useCallback(
+    (date) => {
+      return `${getYearIdentifier(date)}-${getMonthIdentifier(date)}`;
+    },
+    [getYearIdentifier, getMonthIdentifier]
+  );
 
   const getPreviousTransaction = (index) => {
     if (index === 0) {
@@ -93,7 +96,7 @@ export default function LedgerTable({
       // Year group
       return group < currentYear;
     });
-  }, [filteredTransactions]);
+  }, [filteredTransactions, getYearIdentifier, getYearMonthKey]);
 
   useEffect(() => {
     setCollapsedGroups(initialCollapsedGroups);
@@ -123,7 +126,7 @@ export default function LedgerTable({
             return (
               <Fragment key={transaction.id}>
                 {isNewYear && (
-                  <MonthSeparatorRow
+                  <SeparatorRow
                     transaction={transaction}
                     isYear
                     isCollapsed={collapsedGroups.includes(yearId)}
@@ -131,7 +134,7 @@ export default function LedgerTable({
                   />
                 )}
                 {isNewMonth && !collapsedGroups.includes(yearId) && (
-                  <MonthSeparatorRow
+                  <SeparatorRow
                     transaction={transaction}
                     previousTransaction={previousTransaction}
                     isCollapsed={collapsedGroups.includes(yearMonthKey)}

@@ -7,7 +7,7 @@ import {
   ExpandMore as ExpandMoreIcon,
 } from '@mui/icons-material';
 
-export default function MonthSeparatorRow({
+export default function SeparatorRow({
   transaction,
   previousTransaction,
   isCollapsed,
@@ -17,6 +17,20 @@ export default function MonthSeparatorRow({
   const headerStyle = {
     backgroundColor: isYear ? '#f0f0f0' : '#f8f8f8',
     cursor: 'pointer',
+  };
+
+  const containerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '8px',
+    padding: '4px 0',
+  };
+
+  const textStyle = {
+    fontWeight: isYear ? 600 : 500,
+    fontSize: isYear ? '1.2rem' : '1.1rem',
+    lineHeight: 1,
   };
 
   const getDisplayDate = () => {
@@ -41,20 +55,19 @@ export default function MonthSeparatorRow({
     <TableRow
       onClick={onToggleCollapse}
       style={headerStyle}
+      sx={{ '& .MuiTableCell-root': { padding: isYear ? '16px' : '8px' } }}
     >
       <TableCell colSpan={6}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={containerStyle}>
           {isCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-          <span style={{ marginLeft: isYear ? 0 : 24 }}>
-            {getDisplayDate()}
-          </span>
+          <span style={textStyle}>{getDisplayDate()}</span>
         </div>
       </TableCell>
     </TableRow>
   );
 }
 
-MonthSeparatorRow.propTypes = {
+SeparatorRow.propTypes = {
   transaction: PropTypes.shape({
     date: PropTypes.string.isRequired,
   }).isRequired,
@@ -66,6 +79,6 @@ MonthSeparatorRow.propTypes = {
   isYear: PropTypes.bool,
 };
 
-MonthSeparatorRow.defaultProps = {
+SeparatorRow.defaultProps = {
   isYear: false,
 };
