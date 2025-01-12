@@ -49,7 +49,7 @@ export default function DescriptionCell({ transaction }) {
     }
   };
 
-  const buttonStyle = { height: '40px', width: '75px' };
+  const buttonStyle = { height: '35px', width: '50px', marginLeft: '8px' };
 
   return (
     <TableCell style={{ width: '500px' }}>
@@ -61,6 +61,13 @@ export default function DescriptionCell({ transaction }) {
             onChange={(event) => setDescription(event.target.value)}
             onKeyDown={handleKeyPress}
             inputRef={inputRef}
+            sx={{
+              width: '100%',
+              '.MuiFilledInput-root': {
+                height: '30px',
+                paddingBottom: '8px',
+              },
+            }}
           />
           <Button
             variant='contained'

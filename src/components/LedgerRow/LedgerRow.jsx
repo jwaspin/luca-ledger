@@ -29,7 +29,9 @@ export default function LedgerRow({ row, balance }) {
   const bgColor = setBgColor(row.status);
 
   return (
-    <TableRow style={{ background: bgColor }}>
+    <TableRow
+      sx={{ background: bgColor, '& .MuiTableCell-root': { padding: '4px' } }}
+    >
       <StatusCell transaction={row} />
       <DateCell transaction={row} />
       <DescriptionCell transaction={row} />

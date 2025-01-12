@@ -7,8 +7,8 @@ export default function StatusCell({ transaction }) {
   return (
     <TableCell
       style={{
-        width: '175px',
-        padding: '0px 0px 0px 10px',
+        width: '130px',
+        paddingLeft: '10px',
       }}
     >
       <TransactionStatusSelect transaction={transaction} />

@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { FormControl, MenuItem, Select } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -26,11 +26,18 @@ export default function TransactionStatusSelect({ transaction }) {
 
   return (
     <FormControl
-      sx={{ width: '125px' }}
+      sx={{
+        width: '120px',
+        '& .MuiInput-underline:before': {
+          borderBottom: 'none',
+        },
+        '& .MuiInput-underline:after': {
+          borderBottom: 'none',
+        },
+      }}
       variant='standard'
       fullWidth
     >
-      <InputLabel id='demo-simple-select-label'>Status</InputLabel>
       <Select
         labelId='demo-simple-select-label'
         id='demo-simple-select'

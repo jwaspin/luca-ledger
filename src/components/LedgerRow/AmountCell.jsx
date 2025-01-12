@@ -93,6 +93,14 @@ export default function AmountCell({ transaction }) {
             inputRef={inputRef}
             onChange={handleChange}
             onKeyDown={handleKeyPress}
+            sx={{
+              width: '130px',
+              '.MuiFilledInput-root': {
+                height: '30px',
+                marginRight: '8px',
+                paddingBottom: '8px',
+              },
+            }}
             inputProps={{ step: '0.01' }}
             InputProps={{
               startAdornment: (
@@ -102,16 +110,14 @@ export default function AmountCell({ transaction }) {
           />
           <Button
             variant='contained'
-            width='100px'
-            height='30px'
+            style={{ width: '50px', height: '35px', marginRight: '8px' }}
             onClick={handleSave}
           >
             <Check />
           </Button>
           <Button
             variant='outlined'
-            width='100px'
-            height='30px'
+            style={{ width: '50px', height: '35px' }}
             onClick={handleCancel}
           >
             <Cancel />
