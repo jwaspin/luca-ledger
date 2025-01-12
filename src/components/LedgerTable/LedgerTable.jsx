@@ -1,5 +1,4 @@
 import LedgerRow from '@/components/LedgerRow';
-import config from '@/config';
 import { constants, selectors } from '@/store/accounts';
 import { Paper, Table, TableBody, TableContainer } from '@mui/material';
 import dayjs from 'dayjs';
@@ -51,8 +50,16 @@ export default function LedgerTable({
     );
   };
 
+  const getYearIdentifier = (date) => {
+    return dayjs(date).format('YYYY');
+  };
+
   const getMonthIdentifier = (date) => {
-    return dayjs(date).format(config.monthFormatString);
+    return dayjs(date).format('MMMM');
+  };
+
+  const getYearMonthKey = (date) => {
+    return `${getYearIdentifier(date)}-${getMonthIdentifier(date)}`;
   };
 
   const getPreviousTransaction = (index) => {
@@ -63,16 +70,29 @@ export default function LedgerTable({
   };
 
   const initialCollapsedGroups = useMemo(() => {
-    return filteredTransactions
-      .map((transaction) => getMonthIdentifier(transaction.date))
-      .filter(
-        (month, index, self) =>
-          self.indexOf(month) === index &&
-          ![
-            getMonthIdentifier(dayjs()),
-            getMonthIdentifier(dayjs().add(1, 'month')),
-          ].includes(month)
-      );
+    const currentYear = dayjs().format('YYYY');
+    const currentMonth = dayjs().format('MMMM');
+    const nextMonth = dayjs().add(1, 'month').format('MMMM');
+
+    const years = new Set(
+      filteredTransactions.map((t) => getYearIdentifier(t.date))
+    );
+    const yearMonths = new Set(
+      filteredTransactions.map((t) => getYearMonthKey(t.date))
+    );
+
+    return [...years, ...yearMonths].filter((group) => {
+      if (group.includes('-')) {
+        // Month group
+        const [year, month] = group.split('-');
+        if (year === currentYear) {
+          return ![currentMonth, nextMonth].includes(month);
+        }
+        return true;
+      }
+      // Year group
+      return group < currentYear;
+    });
   }, [filteredTransactions]);
 
   useEffect(() => {
@@ -88,37 +108,57 @@ export default function LedgerTable({
       <Table stickyHeader>
         <LedgerHeader />
         <TableBody>
-          {filteredTransactions.map((transaction, index) => (
-            <Fragment key={transaction.id}>
-              <MonthSeparatorRow
-                transaction={transaction}
-                previousTransaction={getPreviousTransaction(index)}
-                isCollapsed={collapsedGroups.includes(
-                  getMonthIdentifier(transaction.date)
-                )}
-                onToggleCollapse={() =>
-                  toggleGroupCollapse(getMonthIdentifier(transaction.date))
-                }
-              />
-              {index > 0 &&
-                account.type === constants.AccountType.CREDIT_CARD && (
-                  <StatementSeparatorRow
-                    statementDay={account.statementDay || 1}
+          {filteredTransactions.map((transaction, index) => {
+            const yearId = getYearIdentifier(transaction.date);
+            const monthId = getMonthIdentifier(transaction.date);
+            const yearMonthKey = getYearMonthKey(transaction.date);
+            const previousTransaction = getPreviousTransaction(index);
+            const isNewYear =
+              !previousTransaction ||
+              getYearIdentifier(previousTransaction.date) !== yearId;
+            const isNewMonth =
+              !previousTransaction ||
+              getMonthIdentifier(previousTransaction.date) !== monthId;
+
+            return (
+              <Fragment key={transaction.id}>
+                {isNewYear && (
+                  <MonthSeparatorRow
                     transaction={transaction}
-                    previousTransaction={getPreviousTransaction(index)}
+                    isYear
+                    isCollapsed={collapsedGroups.includes(yearId)}
+                    onToggleCollapse={() => toggleGroupCollapse(yearId)}
                   />
                 )}
-              {!collapsedGroups.includes(
-                getMonthIdentifier(transaction.date)
-              ) && (
-                <LedgerRow
-                  key={transaction.id}
-                  row={transaction}
-                  balance={transaction.balance}
-                />
-              )}
-            </Fragment>
-          ))}
+                {isNewMonth && !collapsedGroups.includes(yearId) && (
+                  <MonthSeparatorRow
+                    transaction={transaction}
+                    previousTransaction={previousTransaction}
+                    isCollapsed={collapsedGroups.includes(yearMonthKey)}
+                    onToggleCollapse={() => toggleGroupCollapse(yearMonthKey)}
+                  />
+                )}
+                {!collapsedGroups.includes(yearId) &&
+                  !collapsedGroups.includes(yearMonthKey) && (
+                    <>
+                      {index > 0 &&
+                        account.type === constants.AccountType.CREDIT_CARD && (
+                          <StatementSeparatorRow
+                            statementDay={account.statementDay || 1}
+                            transaction={transaction}
+                            previousTransaction={previousTransaction}
+                          />
+                        )}
+                      <LedgerRow
+                        key={transaction.id}
+                        row={transaction}
+                        balance={transaction.balance}
+                      />
+                    </>
+                  )}
+              </Fragment>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>

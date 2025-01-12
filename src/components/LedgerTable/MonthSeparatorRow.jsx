@@ -1,8 +1,6 @@
-import { IconButton, TableCell, TableRow, Typography } from '@mui/material';
+import { TableCell, TableRow } from '@mui/material';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
-
-import config from '@/config';
 
 import {
   ExpandLess as ExpandLessIcon,
@@ -14,46 +12,45 @@ export default function MonthSeparatorRow({
   previousTransaction,
   isCollapsed,
   onToggleCollapse,
+  isYear,
 }) {
-  const transactionDate = dayjs(transaction.date);
-  const transactionMonth = transactionDate.format(config.monthFormatString);
+  const headerStyle = {
+    backgroundColor: isYear ? '#f0f0f0' : '#f8f8f8',
+    cursor: 'pointer',
+  };
 
-  let isMonthDifferent = false;
-  if (!previousTransaction) {
-    isMonthDifferent = true;
-  } else {
-    const previousTransactionDate = dayjs(previousTransaction.date);
-    const previousMonth = previousTransactionDate.format(
-      config.monthFormatString
-    );
-    isMonthDifferent = transactionMonth !== previousMonth;
+  const getDisplayDate = () => {
+    if (isYear) {
+      return dayjs(transaction.date).format('YYYY');
+    }
+    return dayjs(transaction.date).format('MMMM YYYY');
+  };
+
+  if (
+    previousTransaction &&
+    (isYear
+      ? dayjs(transaction.date).year() ===
+        dayjs(previousTransaction.date).year()
+      : dayjs(transaction.date).format('MMYYYY') ===
+        dayjs(previousTransaction.date).format('MMYYYY'))
+  ) {
+    return null;
   }
 
   return (
-    isMonthDifferent && (
-      <TableRow>
-        <TableCell colSpan={6}>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <IconButton
-              onClick={onToggleCollapse}
-              size='small'
-            >
-              {isCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-            </IconButton>
-            <Typography
-              variant='h4'
-              style={{
-                justifyContent: 'center',
-                textAlign: 'center',
-                fontWeight: 'bold',
-              }}
-            >
-              {transactionMonth}
-            </Typography>
-          </div>
-        </TableCell>
-      </TableRow>
-    )
+    <TableRow
+      onClick={onToggleCollapse}
+      style={headerStyle}
+    >
+      <TableCell colSpan={6}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          {isCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+          <span style={{ marginLeft: isYear ? 0 : 24 }}>
+            {getDisplayDate()}
+          </span>
+        </div>
+      </TableCell>
+    </TableRow>
   );
 }
 
@@ -66,4 +63,9 @@ MonthSeparatorRow.propTypes = {
   }),
   isCollapsed: PropTypes.bool.isRequired,
   onToggleCollapse: PropTypes.func.isRequired,
+  isYear: PropTypes.bool,
+};
+
+MonthSeparatorRow.defaultProps = {
+  isYear: false,
 };
