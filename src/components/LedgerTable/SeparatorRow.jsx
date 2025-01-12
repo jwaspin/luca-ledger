@@ -1,4 +1,4 @@
-import { TableCell, TableRow } from '@mui/material';
+import { TableCell, TableRow, Box } from '@mui/material';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 
@@ -14,25 +14,6 @@ export default function SeparatorRow({
   onToggleCollapse,
   isYear,
 }) {
-  const headerStyle = {
-    backgroundColor: isYear ? '#f0f0f0' : '#f8f8f8',
-    cursor: 'pointer',
-  };
-
-  const containerStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '8px',
-    padding: '4px 0',
-  };
-
-  const textStyle = {
-    fontWeight: isYear ? 600 : 500,
-    fontSize: isYear ? '1.2rem' : '1.1rem',
-    lineHeight: 1,
-  };
-
   const getDisplayDate = () => {
     if (isYear) {
       return dayjs(transaction.date).format('YYYY');
@@ -54,14 +35,30 @@ export default function SeparatorRow({
   return (
     <TableRow
       onClick={onToggleCollapse}
-      style={headerStyle}
-      sx={{ '& .MuiTableCell-root': { padding: isYear ? '16px' : '8px' } }}
+      sx={{
+        backgroundColor: isYear ? '#A0A0A0' : '#e0e0e0',
+        cursor: 'pointer',
+        '& .MuiTableCell-root': { padding: isYear ? '16px' : '8px' },
+      }}
     >
       <TableCell colSpan={6}>
-        <div style={containerStyle}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+            padding: '4px 0',
+            '& > span': {
+              fontWeight: isYear ? 600 : 500,
+              fontSize: isYear ? '1.2rem' : '1.1rem',
+              lineHeight: 1,
+            },
+          }}
+        >
           {isCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-          <span style={textStyle}>{getDisplayDate()}</span>
-        </div>
+          <span>{getDisplayDate()}</span>
+        </Box>
       </TableCell>
     </TableRow>
   );
