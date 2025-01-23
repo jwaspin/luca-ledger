@@ -38,16 +38,11 @@ export default function Ledger() {
       ].sort((a, b) => (dayjs(a).isAfter(dayjs(b)) ? -1 : 1))
     : [];
 
-  console.log('Current months:', allMonths);
-  console.log('Current collapsed groups:', collapsedGroups);
-
   const handleCollapseAll = () => {
-    console.log('Collapsing groups:', allMonths);
     setCollapsedGroups([...allMonths]);
   };
 
   const handleExpandAll = () => {
-    console.log('Expanding all');
     setCollapsedGroups([]);
   };
 

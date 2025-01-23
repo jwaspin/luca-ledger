@@ -60,9 +60,7 @@ export default function LedgerTable({
 
   const getYearMonthKey = useCallback(
     (date) => {
-      const key = `${getYearIdentifier(date)}-${getMonthIdentifier(date)}`;
-      console.log('Generated key:', key); // Add this line
-      return key;
+      return `${getYearIdentifier(date)}-${getMonthIdentifier(date)}`;
     },
     [getYearIdentifier, getMonthIdentifier]
   );
