@@ -1,16 +1,17 @@
 {
   "name": "luca-ledger",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "homepage": "https://jwaspin.github.io/luca-ledger/",
   "type": "module",
   "license": "MIT",
   "description": "A simple ledger app for tracking your expenses.",
   "scripts": {
-    "dev": "vite",
     "build": "yarn && vite build && cp CNAME dist/CNAME && cp dist/index.html dist/404.html",
+    "deploy": "gh-pages -d dist",
+    "dev": "vite",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "deploy": "gh-pages -d dist"
+    "start": "vite"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
