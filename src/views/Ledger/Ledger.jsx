@@ -3,13 +3,12 @@ import RepeatedTransactionsModal from '@/components/RepeatedTransactionsModal';
 import SettingsPanel from '@/components/SettingsPanel';
 import { selectors } from '@/store/accounts';
 import { Box, Button, TextField } from '@mui/material';
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import AccountName from './AccountName';
 import NewTransactionButton from './NewTransactionButton';
-import dayjs from 'dayjs';
-import config from '@/config';
 
 export default function Ledger() {
   const { accountId } = useParams();
@@ -28,11 +27,19 @@ export default function Ledger() {
     return null;
   }
 
+  const allMonths = account.transactions?.length
+    ? [
+        ...new Set(
+          account.transactions.map((t) => {
+            const date = dayjs(t.date);
+            return `${date.format('YYYY')}-${date.format('MMMM')}`;
+          })
+        ),
+      ].sort((a, b) => (dayjs(a).isAfter(dayjs(b)) ? -1 : 1))
+    : [];
+
   const handleCollapseAll = () => {
-    const allMonths = account.transactions
-      .map((t) => dayjs(t.date).format(config.monthFormatString))
-      .filter((month, index, self) => self.indexOf(month) === index);
-    setCollapsedGroups(allMonths);
+    setCollapsedGroups([...allMonths]);
   };
 
   const handleExpandAll = () => {

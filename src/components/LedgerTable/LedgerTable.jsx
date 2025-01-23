@@ -3,7 +3,7 @@ import { constants, selectors } from '@/store/accounts';
 import { Paper, Table, TableBody, TableContainer } from '@mui/material';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
-import { Fragment, useEffect, useMemo, useCallback } from 'react';
+import { Fragment, useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import LedgerHeader from './LedgerHeader';
@@ -71,37 +71,6 @@ export default function LedgerTable({
     }
     return filteredTransactions[index - 1];
   };
-
-  const initialCollapsedGroups = useMemo(() => {
-    const currentYear = dayjs().format('YYYY');
-    const currentMonth = dayjs().format('MMMM');
-    const nextMonth = dayjs().add(1, 'month').format('MMMM');
-
-    const years = new Set(
-      filteredTransactions.map((t) => getYearIdentifier(t.date))
-    );
-    const yearMonths = new Set(
-      filteredTransactions.map((t) => getYearMonthKey(t.date))
-    );
-
-    return [...years, ...yearMonths].filter((group) => {
-      if (group.includes('-')) {
-        // Month group
-        const [year, month] = group.split('-');
-        if (year === currentYear) {
-          return ![currentMonth, nextMonth].includes(month);
-        }
-        return true;
-      }
-      // Year group
-      return group < currentYear;
-    });
-  }, [filteredTransactions, getYearIdentifier, getYearMonthKey]);
-
-  useEffect(() => {
-    setCollapsedGroups(initialCollapsedGroups);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <TableContainer
