@@ -77,6 +77,10 @@ export default function Ledger() {
     setCollapsedGroups([]);
   };
 
+  const handleReset = () => {
+    setCollapsedGroups(getDefaultCollapsedGroups());
+  };
+
   return (
     <Box
       sx={{
@@ -126,6 +130,7 @@ export default function Ledger() {
           />
           <Button onClick={handleCollapseAll}>Collapse All</Button>
           <Button onClick={handleExpandAll}>Expand All</Button>
+          <Button onClick={handleReset}>Reset</Button>
         </Box>
         <LedgerTable
           filterValue={filterValue}
