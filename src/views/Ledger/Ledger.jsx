@@ -66,7 +66,11 @@ export default function Ledger() {
   }
 
   const handleCollapseAll = () => {
-    setCollapsedGroups([...allMonths]);
+    // Include both month identifiers and year identifiers
+    setCollapsedGroups([
+      ...allMonths,
+      ...new Set(allMonths.map((month) => month.split('-')[0])),
+    ]);
   };
 
   const handleExpandAll = () => {
