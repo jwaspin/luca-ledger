@@ -14,8 +14,42 @@ export default function Ledger() {
   const { accountId } = useParams();
   const navigate = useNavigate();
   const [filterValue, setFilterValue] = useState('');
-  const [collapsedGroups, setCollapsedGroups] = useState([]);
   const account = useSelector(selectors.selectAccountById(accountId));
+
+  const allMonths = account?.transactions?.length
+    ? [
+        ...new Set(
+          account.transactions.map((t) => {
+            const date = dayjs(t.date);
+            return `${date.format('YYYY')}-${date.format('MMMM')}`;
+          })
+        ),
+      ].sort((a, b) => (dayjs(a).isAfter(dayjs(b)) ? -1 : 1))
+    : [];
+
+  const getDefaultCollapsedGroups = () => {
+    const current = dayjs();
+    const next = current.add(1, 'month');
+    const currentMonthStr = `${current.format('YYYY')}-${current.format(
+      'MMMM'
+    )}`;
+    const nextMonthStr = `${next.format('YYYY')}-${next.format('MMMM')}`;
+
+    return allMonths.filter(
+      (month) => month !== currentMonthStr && month !== nextMonthStr
+    );
+  };
+
+  const [collapsedGroups, setCollapsedGroups] = useState(() =>
+    getDefaultCollapsedGroups()
+  );
+
+  // Update collapsed groups when transactions change
+  useEffect(() => {
+    if (allMonths.length) {
+      setCollapsedGroups(getDefaultCollapsedGroups());
+    }
+  }, [allMonths]);
 
   useEffect(() => {
     if (!account) {
@@ -26,17 +60,6 @@ export default function Ledger() {
   if (!account) {
     return null;
   }
-
-  const allMonths = account.transactions?.length
-    ? [
-        ...new Set(
-          account.transactions.map((t) => {
-            const date = dayjs(t.date);
-            return `${date.format('YYYY')}-${date.format('MMMM')}`;
-          })
-        ),
-      ].sort((a, b) => (dayjs(a).isAfter(dayjs(b)) ? -1 : 1))
-    : [];
 
   const handleCollapseAll = () => {
     setCollapsedGroups([...allMonths]);
