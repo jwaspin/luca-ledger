@@ -1,25 +1,20 @@
-import { TableCell, TableRow, Box } from '@mui/material';
+import { KeyboardArrowDown, KeyboardArrowRight } from '@mui/icons-material';
+import { IconButton, TableCell, TableRow } from '@mui/material';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
-
-import {
-  ExpandLess as ExpandLessIcon,
-  ExpandMore as ExpandMoreIcon,
-} from '@mui/icons-material';
+import YearControls from './YearControls';
 
 export default function SeparatorRow({
   transaction,
   previousTransaction,
+  isYear,
   isCollapsed,
   onToggleCollapse,
-  isYear,
+  onExpandYear,
+  onCollapseYear,
 }) {
-  const getDisplayDate = () => {
-    if (isYear) {
-      return dayjs(transaction.date).format('YYYY');
-    }
-    return dayjs(transaction.date).format('MMMM YYYY');
-  };
+  const date = dayjs(transaction.date);
+  const format = isYear ? 'YYYY' : 'MMMM YYYY';
 
   if (
     previousTransaction &&
@@ -34,46 +29,56 @@ export default function SeparatorRow({
 
   return (
     <TableRow
-      onClick={onToggleCollapse}
       sx={{
-        backgroundColor: isYear ? '#A0A0A0' : '#e0e0e0',
-        cursor: 'pointer',
-        '& .MuiTableCell-root': { padding: isYear ? '16px' : '8px' },
+        '& td': {
+          borderBottom: 'unset',
+          bgcolor: isYear ? 'grey.200' : 'grey.100',
+          py: isYear ? 0.5 : 1,
+          px: 2,
+        },
       }}
     >
-      <TableCell colSpan={6}>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px',
-            padding: '4px 0',
-            '& > span': {
-              fontWeight: isYear ? 600 : 500,
-              fontSize: isYear ? '1.2rem' : '1.1rem',
-              lineHeight: 1,
-            },
-          }}
-        >
-          {isCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-          <span>{getDisplayDate()}</span>
-        </Box>
+      <TableCell
+        colSpan={6}
+        sx={{
+          backgroundColor: isYear ? '#f5f5f5' : '#fafafa',
+          fontWeight: isYear ? 'bold' : 'normal',
+          paddingLeft: isYear ? '16px' : '32px',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <IconButton
+            size='small'
+            onClick={onToggleCollapse}
+          >
+            {isCollapsed ? (
+              <KeyboardArrowRight fontSize='small' />
+            ) : (
+              <KeyboardArrowDown fontSize='small' />
+            )}
+          </IconButton>
+          {date.format(format)}
+          {isYear && onExpandYear && onCollapseYear && (
+            <YearControls
+              yearId={date.format('YYYY')}
+              onExpandYear={onExpandYear}
+              onCollapseYear={onCollapseYear}
+            />
+          )}
+        </div>
       </TableCell>
     </TableRow>
   );
 }
 
 SeparatorRow.propTypes = {
-  transaction: PropTypes.shape({
-    date: PropTypes.string.isRequired,
-  }).isRequired,
-  previousTransaction: PropTypes.shape({
-    date: PropTypes.string.isRequired,
-  }),
+  transaction: PropTypes.object.isRequired,
+  previousTransaction: PropTypes.object,
+  isYear: PropTypes.bool,
   isCollapsed: PropTypes.bool.isRequired,
   onToggleCollapse: PropTypes.func.isRequired,
-  isYear: PropTypes.bool,
+  onExpandYear: PropTypes.func,
+  onCollapseYear: PropTypes.func,
 };
 
 SeparatorRow.defaultProps = {

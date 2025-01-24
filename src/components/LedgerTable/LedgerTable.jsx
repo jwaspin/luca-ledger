@@ -50,6 +50,28 @@ export default function LedgerTable({
     );
   };
 
+  const handleExpandYear = (yearId) => {
+    setCollapsedGroups((prevCollapsedGroups) => {
+      const monthsInYear = filteredTransactions
+        .filter((t) => getYearIdentifier(t.date) === yearId)
+        .map((t) => getYearMonthKey(t.date));
+      const uniqueMonths = [...new Set(monthsInYear)];
+      return prevCollapsedGroups.filter(
+        (id) => !uniqueMonths.includes(id) && id !== yearId
+      );
+    });
+  };
+
+  const handleCollapseYear = (yearId) => {
+    setCollapsedGroups((prevCollapsedGroups) => {
+      const monthsInYear = filteredTransactions
+        .filter((t) => getYearIdentifier(t.date) === yearId)
+        .map((t) => getYearMonthKey(t.date));
+      const uniqueMonths = [...new Set(monthsInYear)];
+      return [...prevCollapsedGroups, yearId, ...uniqueMonths];
+    });
+  };
+
   const getYearIdentifier = useCallback((date) => {
     return dayjs(date).format('YYYY');
   }, []);
@@ -100,6 +122,8 @@ export default function LedgerTable({
                     isYear
                     isCollapsed={collapsedGroups.includes(yearId)}
                     onToggleCollapse={() => toggleGroupCollapse(yearId)}
+                    onExpandYear={() => handleExpandYear(yearId)}
+                    onCollapseYear={() => handleCollapseYear(yearId)}
                   />
                 )}
                 {isNewMonth && !collapsedGroups.includes(yearId) && (
