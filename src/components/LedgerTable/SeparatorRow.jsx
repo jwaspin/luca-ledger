@@ -28,7 +28,16 @@ export default function SeparatorRow({
   }
 
   return (
-    <TableRow>
+    <TableRow
+      sx={{
+        '& td': {
+          borderBottom: 'unset',
+          bgcolor: isYear ? 'grey.200' : 'grey.100',
+          py: isYear ? 0.5 : 1,
+          px: 2,
+        },
+      }}
+    >
       <TableCell
         colSpan={6}
         sx={{
