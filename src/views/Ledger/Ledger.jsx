@@ -34,22 +34,26 @@ export default function Ledger() {
       'MMMM'
     )}`;
     const nextMonthStr = `${next.format('YYYY')}-${next.format('MMMM')}`;
+    const currentYear = current.format('YYYY');
 
-    return allMonths.filter(
-      (month) => month !== currentMonthStr && month !== nextMonthStr
-    );
+    // Return both year identifiers and month identifiers for collapsing
+    return [
+      ...allMonths.filter((month) => {
+        const [year] = month.split('-');
+        return (
+          year !== currentYear ||
+          (month !== currentMonthStr && month !== nextMonthStr)
+        );
+      }),
+      ...allMonths
+        .map((month) => month.split('-')[0])
+        .filter((year) => year !== currentYear),
+    ];
   };
 
   const [collapsedGroups, setCollapsedGroups] = useState(() =>
     getDefaultCollapsedGroups()
   );
-
-  // Update collapsed groups when transactions change
-  useEffect(() => {
-    if (allMonths.length) {
-      setCollapsedGroups(getDefaultCollapsedGroups());
-    }
-  }, [allMonths]);
 
   useEffect(() => {
     if (!account) {
