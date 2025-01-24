@@ -14,8 +14,46 @@ export default function Ledger() {
   const { accountId } = useParams();
   const navigate = useNavigate();
   const [filterValue, setFilterValue] = useState('');
-  const [collapsedGroups, setCollapsedGroups] = useState([]);
   const account = useSelector(selectors.selectAccountById(accountId));
+
+  const allMonths = account?.transactions?.length
+    ? [
+        ...new Set(
+          account.transactions.map((t) => {
+            const date = dayjs(t.date);
+            return `${date.format('YYYY')}-${date.format('MMMM')}`;
+          })
+        ),
+      ].sort((a, b) => (dayjs(a).isAfter(dayjs(b)) ? -1 : 1))
+    : [];
+
+  const getDefaultCollapsedGroups = () => {
+    const current = dayjs();
+    const next = current.add(1, 'month');
+    const currentMonthStr = `${current.format('YYYY')}-${current.format(
+      'MMMM'
+    )}`;
+    const nextMonthStr = `${next.format('YYYY')}-${next.format('MMMM')}`;
+    const currentYear = current.format('YYYY');
+
+    // Return both year identifiers and month identifiers for collapsing
+    return [
+      ...allMonths.filter((month) => {
+        const [year] = month.split('-');
+        return (
+          year !== currentYear ||
+          (month !== currentMonthStr && month !== nextMonthStr)
+        );
+      }),
+      ...allMonths
+        .map((month) => month.split('-')[0])
+        .filter((year) => year !== currentYear),
+    ];
+  };
+
+  const [collapsedGroups, setCollapsedGroups] = useState(() =>
+    getDefaultCollapsedGroups()
+  );
 
   useEffect(() => {
     if (!account) {
@@ -27,19 +65,12 @@ export default function Ledger() {
     return null;
   }
 
-  const allMonths = account.transactions?.length
-    ? [
-        ...new Set(
-          account.transactions.map((t) => {
-            const date = dayjs(t.date);
-            return `${date.format('YYYY')}-${date.format('MMMM')}`;
-          })
-        ),
-      ].sort((a, b) => (dayjs(a).isAfter(dayjs(b)) ? -1 : 1))
-    : [];
-
   const handleCollapseAll = () => {
-    setCollapsedGroups([...allMonths]);
+    // Include both month identifiers and year identifiers
+    setCollapsedGroups([
+      ...allMonths,
+      ...new Set(allMonths.map((month) => month.split('-')[0])),
+    ]);
   };
 
   const handleExpandAll = () => {
