@@ -19,17 +19,17 @@ export default function Accounts() {
     >
       <Typography
         variant='h3'
-        style={{ fontWeight: 'bold', padding: '18px' }}
+        style={{ fontWeight: 'bold', padding: '25px' }}
       >
         Accounts
       </Typography>
       <Grid
         container
-        spacing={2}
+        spacing={3}
         style={{
           display: 'flex',
           justifyContent: 'center',
-          width: '60%',
+          width: '98%',
         }}
       >
         {sortedAccounts.map((account) => (
