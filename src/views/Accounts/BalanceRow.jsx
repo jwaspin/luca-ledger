@@ -1,6 +1,8 @@
 import { Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 
+import BalanceDifference from './BalanceDifference';
+
 export default function BalanceRow({ account, balanceType, filterArray }) {
   return (
     <Typography
@@ -13,7 +15,13 @@ export default function BalanceRow({ account, balanceType, filterArray }) {
         borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
       }}
     >
-      <span>{balanceType}</span>
+      <span>
+        {balanceType}
+        <BalanceDifference
+          transactions={account.transactions}
+          filterArray={filterArray}
+        />
+      </span>
       <span>
         {'$ '}
         {account.transactions
