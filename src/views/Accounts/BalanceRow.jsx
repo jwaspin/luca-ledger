@@ -35,7 +35,7 @@ export default function BalanceRow({ account, balanceType, filterArray }) {
         <span>{balanceType}</span>
         <span style={{ marginLeft: 'auto', textAlign: 'right', minWidth: 100 }}>
           <BalanceDifference
-            transactions={account}
+            account={account}
             filterArray={filterArray}
           />
         </span>
