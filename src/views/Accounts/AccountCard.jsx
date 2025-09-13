@@ -22,7 +22,7 @@ export default function AccountCard({ account }) {
       onClick={handleClick}
       sx={{
         width: cardLength,
-        height: cardLength,
+        // height: cardLength,
         '&:hover': {
           backgroundColor: 'rgba(0, 0, 0, 0.04)',
           cursor: 'pointer',
@@ -54,16 +54,16 @@ export default function AccountCard({ account }) {
             constants.TransactionStatusEnum.SCHEDULED,
           ]}
         />
-        <BalanceRow
+        {/* <BalanceRow
           account={account}
-          balanceType={'Future'}
+          balanceType={'Planned'}
           filterArray={[
             constants.TransactionStatusEnum.COMPLETE,
             constants.TransactionStatusEnum.PENDING,
             constants.TransactionStatusEnum.SCHEDULED,
-            constants.TransactionStatusEnum.FUTURE,
+            constants.TransactionStatusEnum.PLANNED,
           ]}
-        />
+        /> */}
         <ActionsMenu account={account} />
       </CardContent>
     </Card>
