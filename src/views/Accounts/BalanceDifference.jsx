@@ -11,8 +11,31 @@ export default function BalanceDifference({ transactions, filterArray }) {
     .reduce((acc, t) => acc + Number(t.amount), 0);
 
   return (
-    <span style={{ color: difference >= 0 ? 'green' : 'red' }}>
-      {difference >= 0 ? ' + $' : ' - $'}
+    <span
+      style={{
+        color: difference >= 0 ? 'green' : 'red',
+        display: 'inline-flex',
+        alignItems: 'center',
+      }}
+    >
+      {difference >= 0 ? (
+        <span
+          style={{ marginLeft: 4, marginRight: 4 }}
+          aria-label='increase'
+          title='Increase'
+        >
+          ▲
+        </span>
+      ) : (
+        <span
+          style={{ marginLeft: 4, marginRight: 4 }}
+          aria-label='decrease'
+          title='Decrease'
+        >
+          ▼
+        </span>
+      )}
+      $
       {Math.abs(difference).toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
