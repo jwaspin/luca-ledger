@@ -13,6 +13,12 @@ export default function BalanceRow({ account, balanceType, filterArray }) {
     maximumFractionDigits: 2,
   });
 
+  // Determine color for negative balance
+  let negativeColor;
+  if (total < 0) {
+    negativeColor = account.type === 'Credit Card' ? 'green' : 'red';
+  }
+
   return (
     <Typography
       variant='body1'
@@ -29,14 +35,14 @@ export default function BalanceRow({ account, balanceType, filterArray }) {
         <span>{balanceType}</span>
         <span style={{ marginLeft: 'auto', textAlign: 'right', minWidth: 100 }}>
           <BalanceDifference
-            transactions={account.transactions}
+            transactions={account}
             filterArray={filterArray}
           />
         </span>
       </span>
       <span
         style={{
-          color: total < 0 ? 'red' : undefined,
+          color: total < 0 ? negativeColor : undefined,
           textAlign: 'right',
           minWidth: 100,
           fontVariantNumeric: 'tabular-nums',
