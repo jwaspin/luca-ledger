@@ -28,14 +28,18 @@ export const extraReducers = (builder) => {
     }
   });
   builder.addCase(reducers.updateTransaction, (state, action) => {
-    const { accountId, transaction } = action.payload;
+    const { accountId, transaction: updatedTransaction } = action.payload;
     const accountIndex = state.findIndex((account) => account.id === accountId);
     if (accountIndex !== -1) {
       const transactionIndex = state[accountIndex].transactions.findIndex(
-        (t) => t.id === transaction.id
+        (t) => t.id === updatedTransaction.id
       );
       if (transactionIndex !== -1) {
-        state[accountIndex].transactions[transactionIndex] = transaction;
+        const existing = state[accountIndex].transactions[transactionIndex];
+        state[accountIndex].transactions[transactionIndex] = {
+          ...existing,
+          ...updatedTransaction,
+        };
       }
     }
   });

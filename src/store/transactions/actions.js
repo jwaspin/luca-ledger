@@ -86,8 +86,10 @@ export const createRepeatTransaction = createAsyncThunk(
 
 export const updateTransactionProperty =
   (accountId, transaction, property, value) => (dispatch) => {
+    // Dispatch only the id and the changed property to avoid overwriting
+    // other fields from a potentially stale transaction snapshot.
     const updatedTransaction = {
-      ...transaction,
+      id: transaction.id,
       [property]: value,
     };
     const actionPayload = { accountId, transaction: updatedTransaction };
