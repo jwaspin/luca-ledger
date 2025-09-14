@@ -87,7 +87,7 @@ export const createRepeatTransaction = createAsyncThunk(
 export const updateTransactionProperty =
   (accountId, transaction, property, value) => (dispatch) => {
     const updatedTransaction = {
-      ...transaction,
+      id: transaction.id,
       [property]: value,
     };
     const actionPayload = { accountId, transaction: updatedTransaction };

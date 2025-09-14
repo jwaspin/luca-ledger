@@ -1,6 +1,6 @@
 import { FormControl, MenuItem, Select } from '@mui/material';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -10,6 +10,10 @@ export default function TransactionStatusSelect({ transaction }) {
   const dispatch = useDispatch();
   const { accountId } = useParams();
   const [status, setStatus] = useState(transaction.status);
+
+  useEffect(() => {
+    setStatus(transaction.status);
+  }, [transaction.status]);
 
   const handleChange = (event) => {
     const { value } = event.target;
