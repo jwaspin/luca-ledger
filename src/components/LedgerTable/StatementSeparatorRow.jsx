@@ -8,7 +8,20 @@ export default function StatementSeparatorRow({
   statementDay,
   transaction,
   previousTransaction,
+  statementDate, // New prop for direct date display
 }) {
+  // If statementDate is provided directly, use it
+  if (statementDate) {
+    return (
+      <TableRow>
+        <TableCell colSpan={6}>
+          <Typography>Statement {statementDate}</Typography>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  // Legacy behavior for backward compatibility
   if (!previousTransaction) {
     return null;
   }
@@ -24,7 +37,7 @@ export default function StatementSeparatorRow({
   const isStatementMonthDifferent =
     currentStatementMonth !== previousStatementMonth;
 
-  const statementDate = dayjs(
+  const computedStatementDate = dayjs(
     `${statementDay} ${previousStatementMonth}`,
     'D MMMM YYYY'
   ).format('MMMM DD YYYY');
@@ -33,7 +46,7 @@ export default function StatementSeparatorRow({
     isStatementMonthDifferent && (
       <TableRow>
         <TableCell colSpan={6}>
-          <Typography>Statement {statementDate}</Typography>
+          <Typography>Statement {computedStatementDate}</Typography>
         </TableCell>
       </TableRow>
     )
@@ -41,11 +54,12 @@ export default function StatementSeparatorRow({
 }
 
 StatementSeparatorRow.propTypes = {
-  statementDay: PropTypes.number.isRequired,
+  statementDay: PropTypes.number,
   transaction: PropTypes.shape({
     date: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
   previousTransaction: PropTypes.shape({
     date: PropTypes.string.isRequired,
   }),
+  statementDate: PropTypes.string, // New prop
 };

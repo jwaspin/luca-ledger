@@ -9,7 +9,11 @@ import { useParams } from 'react-router-dom';
 import LedgerHeader from './LedgerHeader';
 import SeparatorRow from './SeparatorRow';
 import StatementSeparatorRow from './StatementSeparatorRow';
-import { dateCompareFn } from './utils';
+import {
+  dateCompareFn,
+  computeStatementMonth,
+  getStatementDisplayMonth,
+} from './utils';
 
 export default function LedgerTable({
   filterValue,
@@ -41,6 +45,52 @@ export default function LedgerTable({
       transaction.description.toLowerCase().includes(filterValue.toLowerCase())
     );
   }, [filterValue, transactionsWithBalance]);
+
+  // Calculate statement separators for credit card accounts
+  const statementSeparatorsByMonth = useMemo(() => {
+    if (account.type !== constants.AccountType.CREDIT_CARD) {
+      return {};
+    }
+
+    const separators = {};
+    const statementDay = account.statementDay || 1;
+    const seenStatementMonths = new Set();
+
+    filteredTransactions.forEach((transaction, index) => {
+      if (index === 0) return; // Skip first transaction
+
+      const previousTransaction = filteredTransactions[index - 1];
+      const currentStatementMonth = computeStatementMonth(
+        transaction,
+        statementDay
+      );
+      const previousStatementMonth = computeStatementMonth(
+        previousTransaction,
+        statementDay
+      );
+
+      if (
+        currentStatementMonth !== previousStatementMonth &&
+        !seenStatementMonths.has(previousStatementMonth)
+      ) {
+        seenStatementMonths.add(previousStatementMonth);
+
+        // Determine which month section this separator should appear under
+        const displayMonth = getStatementDisplayMonth(previousStatementMonth);
+
+        if (!separators[displayMonth]) {
+          separators[displayMonth] = [];
+        }
+
+        separators[displayMonth].push({
+          statementMonth: previousStatementMonth,
+          statementDay: statementDay,
+        });
+      }
+    });
+
+    return separators;
+  }, [filteredTransactions, account.type, account.statementDay]);
 
   const toggleGroupCollapse = (groupId) => {
     setCollapsedGroups((prevCollapsedGroups) =>
@@ -94,6 +144,28 @@ export default function LedgerTable({
     return filteredTransactions[index - 1];
   };
 
+  // Helper function to render statement separators for a given month
+  const renderStatementSeparatorsForMonth = (yearMonthKey) => {
+    const separators = statementSeparatorsByMonth[yearMonthKey];
+    if (!separators || separators.length === 0) {
+      return null;
+    }
+
+    return separators.map((separator, index) => {
+      const statementDate = dayjs(
+        `${separator.statementDay} ${separator.statementMonth}`,
+        'D MMMM YYYY'
+      ).format('MMMM DD YYYY');
+
+      return (
+        <StatementSeparatorRow
+          key={`statement-${separator.statementMonth}-${index}`}
+          statementDate={statementDate}
+        />
+      );
+    });
+  };
+
   return (
     <TableContainer
       component={Paper}
@@ -137,14 +209,9 @@ export default function LedgerTable({
                 {!collapsedGroups.includes(yearId) &&
                   !collapsedGroups.includes(yearMonthKey) && (
                     <>
-                      {index > 0 &&
-                        account.type === constants.AccountType.CREDIT_CARD && (
-                          <StatementSeparatorRow
-                            statementDay={account.statementDay || 1}
-                            transaction={transaction}
-                            previousTransaction={previousTransaction}
-                          />
-                        )}
+                      {/* Render statement separators at the beginning of each month */}
+                      {isNewMonth &&
+                        renderStatementSeparatorsForMonth(yearMonthKey)}
                       <LedgerRow
                         key={transaction.id}
                         row={transaction}
