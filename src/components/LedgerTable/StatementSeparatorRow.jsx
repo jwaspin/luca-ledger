@@ -30,13 +30,20 @@ export default function StatementSeparatorRow({
     'D MMMM YYYY'
   ).format('MMMM DD YYYY');
 
-  // Calculate balance for the statement period that just ended
-  const statementBalance = transactions
+  // Find the last transaction in the statement period that just ended
+  // and use its balance as the statement balance
+  const transactionsInPeriod = transactions
     .filter((t) => {
       const tStatementMonth = computeStatementMonth(t, statementDay);
       return tStatementMonth === previousStatementMonth;
     })
-    .reduce((acc, t) => acc + Number(t.amount), 0);
+    .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  const lastTransactionInPeriod =
+    transactionsInPeriod[transactionsInPeriod.length - 1];
+  const statementBalance = lastTransactionInPeriod
+    ? lastTransactionInPeriod.balance
+    : 0;
 
   const formattedBalance = Math.abs(statementBalance).toLocaleString(
     undefined,
@@ -86,6 +93,7 @@ StatementSeparatorRow.propTypes = {
       date: PropTypes.string.isRequired,
       amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
         .isRequired,
+      balance: PropTypes.number.isRequired,
     })
   ).isRequired,
 };
