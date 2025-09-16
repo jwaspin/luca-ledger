@@ -9,7 +9,6 @@ export default function StatementSeparatorRow({
   transaction,
   previousTransaction,
   statementDate, // New prop for direct date display
-  currentYearMonthKey, // New prop to help determine if separator should show here
 }) {
   // If statementDate is provided directly, use it
   if (statementDate) {
@@ -42,19 +41,10 @@ export default function StatementSeparatorRow({
     return null;
   }
 
-  // NEW LOGIC: Check if this separator should appear in this month section
-  if (currentYearMonthKey) {
-    // The separator should only appear if the previousStatementMonth belongs to the current month section
-    // For example, if previousStatementMonth is "November 2024", it should appear under "November 2024" section
-    const expectedYearMonthKey = dayjs(
-      previousStatementMonth,
-      'MMMM YYYY'
-    ).format('YYYY-MMMM');
-
-    if (currentYearMonthKey !== expectedYearMonthKey) {
-      return null; // Don't render separator in this month section
-    }
-  }
+  // REVISED LOGIC: Always show the separator when there's a statement month change
+  // This ensures separators appear when there are transactions on both sides of the statement boundary
+  // The separator will appear inline with the current transaction, which is acceptable since
+  // it indicates the end of the previous statement period
 
   const computedStatementDate = dayjs(
     `${statementDay} ${previousStatementMonth}`,
@@ -79,5 +69,4 @@ StatementSeparatorRow.propTypes = {
     date: PropTypes.string.isRequired,
   }),
   statementDate: PropTypes.string, // New prop
-  currentYearMonthKey: PropTypes.string, // New prop
 };

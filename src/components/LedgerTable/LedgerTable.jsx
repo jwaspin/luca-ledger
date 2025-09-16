@@ -143,7 +143,6 @@ export default function LedgerTable({
                             statementDay={account.statementDay || 1}
                             transaction={transaction}
                             previousTransaction={previousTransaction}
-                            currentYearMonthKey={yearMonthKey}
                           />
                         )}
                       <LedgerRow
