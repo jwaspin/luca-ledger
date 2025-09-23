@@ -8,7 +8,6 @@ export default function StatementSeparatorRow({
   statementDay,
   transaction,
   previousTransaction,
-  transactions,
 }) {
   if (!previousTransaction) {
     return null;
@@ -30,20 +29,9 @@ export default function StatementSeparatorRow({
     'D MMMM YYYY'
   ).format('MMMM DD YYYY');
 
-  // Find the last transaction in the statement period that just ended
-  // and use its balance as the statement balance
-  const transactionsInPeriod = transactions
-    .filter((t) => {
-      const tStatementMonth = computeStatementMonth(t, statementDay);
-      return tStatementMonth === previousStatementMonth;
-    })
-    .sort((a, b) => new Date(a.date) - new Date(b.date));
-
-  const lastTransactionInPeriod =
-    transactionsInPeriod[transactionsInPeriod.length - 1];
-  const statementBalance = lastTransactionInPeriod
-    ? lastTransactionInPeriod.balance
-    : 0;
+  // Use the balance from the previous transaction, which represents
+  // the account balance at the end of the previous statement period
+  const statementBalance = previousTransaction.balance || 0;
 
   const formattedBalance = Math.abs(statementBalance).toLocaleString(
     undefined,
@@ -67,7 +55,7 @@ export default function StatementSeparatorRow({
             <span>Statement {statementDate}</span>
             <span
               style={{
-                color: statementBalance < 0 ? 'red' : 'green',
+                color: statementBalance < 0 ? 'green' : 'black',
                 fontWeight: 'bold',
               }}
             >
@@ -87,13 +75,6 @@ StatementSeparatorRow.propTypes = {
   }).isRequired,
   previousTransaction: PropTypes.shape({
     date: PropTypes.string.isRequired,
+    balance: PropTypes.number.isRequired,
   }),
-  transactions: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.string.isRequired,
-      amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-        .isRequired,
-      balance: PropTypes.number.isRequired,
-    })
-  ).isRequired,
 };
