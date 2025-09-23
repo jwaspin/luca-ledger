@@ -77,9 +77,6 @@ export default function StatementSeparatorRow({
           >
             <span>Statement {statementDate}</span>
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-              <span style={{ color: 'black' }}>
-                All: ${formatAmount(allCharges)}
-              </span>
               {pendingCharges > 0 && (
                 <span style={{ color: '#cc8800' }}>
                   Pending: ${formatAmount(pendingCharges)}
@@ -90,6 +87,9 @@ export default function StatementSeparatorRow({
                   Scheduled: ${formatAmount(scheduledCharges)}
                 </span>
               )}
+              <span style={{ color: 'black' }}>
+                ${formatAmount(allCharges)}
+              </span>
             </div>
           </Typography>
         </TableCell>
