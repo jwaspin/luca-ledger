@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import LedgerHeader from './LedgerHeader';
 import SeparatorRow from './SeparatorRow';
 import StatementSeparatorRow from './StatementSeparatorRow';
-import { dateCompareFn, getStatementDateForMonth } from './utils';
+import { dateCompareFn, getClosingDateForMonth, isTransactionBeforeClosing } from './utils';
 
 export default function LedgerTable({
   filterValue,
@@ -87,6 +87,34 @@ export default function LedgerTable({
     [getYearIdentifier, getMonthIdentifier]
   );
 
+  // Check if we need a statement separator between current and previous transaction
+  const needsStatementSeparator = (currentTransaction, previousTransaction, account) => {
+    if (!previousTransaction || account.type !== constants.AccountType.CREDIT_CARD) {
+      return false;
+    }
+
+    const currentDate = dayjs(currentTransaction.date);
+    const previousDate = dayjs(previousTransaction.date);
+    const currentYear = currentDate.format('YYYY');
+    const currentMonth = currentDate.format('MMMM');
+    const previousYear = previousDate.format('YYYY');
+    const previousMonth = previousDate.format('MMMM');
+    const closingDay = account.statementDay || 1;
+
+    // Only check for separators within the same month
+    if (currentYear === previousYear && currentMonth === previousMonth) {
+      const closingDate = dayjs(`${currentYear}-${currentMonth}-${closingDay}`, 'YYYY-MMMM-D');
+      
+      // Check if we crossed the closing date boundary
+      const previousBeforeClosing = previousDate.isSameOrBefore(closingDate, 'day');
+      const currentAfterClosing = currentDate.isAfter(closingDate, 'day');
+      
+      return previousBeforeClosing && currentAfterClosing;
+    }
+
+    return false;
+  };
+
   const getPreviousTransaction = (index) => {
     if (index === 0) {
       return null;
@@ -114,6 +142,8 @@ export default function LedgerTable({
               !previousTransaction ||
               getMonthIdentifier(previousTransaction.date) !== monthId;
 
+            const showStatementSeparator = needsStatementSeparator(transaction, previousTransaction, account);
+
             return (
               <Fragment key={transaction.id}>
                 {isNewYear && (
@@ -134,14 +164,13 @@ export default function LedgerTable({
                     onToggleCollapse={() => toggleGroupCollapse(yearMonthKey)}
                   />
                 )}
-                {/* Show statement separator for credit card accounts within each month */}
-                {isNewMonth &&
+                {/* Show statement separator when crossing closing date boundary */}
+                {showStatementSeparator &&
                   !collapsedGroups.includes(yearId) &&
-                  !collapsedGroups.includes(yearMonthKey) &&
-                  account.type === constants.AccountType.CREDIT_CARD && (
+                  !collapsedGroups.includes(yearMonthKey) && (
                     <StatementSeparatorRow
-                      statementDay={account.statementDay || 1}
-                      statementDate={getStatementDateForMonth(
+                      closingDay={account.statementDay || 1}
+                      closingDate={getClosingDateForMonth(
                         yearId,
                         monthId,
                         account.statementDay || 1

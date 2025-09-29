@@ -5,20 +5,22 @@ import dayjs from 'dayjs';
 import { computeStatementMonth } from './utils';
 
 export default function StatementSeparatorRow({
-  statementDay,
+  closingDay,
   transactions,
-  statementDate, // New prop for direct date display - this is now the primary way
+  closingDate, // The closing date for this statement period
 }) {
-  // If statementDate is provided directly, use it (this is now the primary approach)
-  if (statementDate) {
-    // Get all transactions for the statement period to calculate charges
-    const statementMonth = dayjs(statementDate, 'MMMM DD YYYY').format(
-      'MMMM YYYY'
-    );
-
+  // If closingDate is provided, use it to calculate the statement period and charges
+  if (closingDate) {
+    // Parse the closing date to get the statement period
+    const closingDateObj = dayjs(closingDate, 'MMMM DD YYYY');
+    const startDate = closingDateObj.subtract(1, 'month').add(1, 'day');
+    
+    // Get all transactions for this statement period to calculate charges
+    const statementMonth = closingDateObj.format('MMMM YYYY');
+    
     const statementTransactions = transactions
       .filter((t) => {
-        const tStatementMonth = computeStatementMonth(t, statementDay);
+        const tStatementMonth = computeStatementMonth(t, closingDay);
         return tStatementMonth === statementMonth;
       })
       .filter((t) => {
@@ -59,7 +61,9 @@ export default function StatementSeparatorRow({
               fontWeight: 'bold',
             }}
           >
-            <span>Statement {statementDate}</span>
+            <span>
+              Statement {startDate.format('MMMM DD')} - {closingDate}
+            </span>
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
               {pendingCharges > 0 && (
                 <span style={{ color: '#cc8800' }}>
@@ -86,7 +90,7 @@ export default function StatementSeparatorRow({
 }
 
 StatementSeparatorRow.propTypes = {
-  statementDay: PropTypes.number.isRequired,
+  closingDay: PropTypes.number.isRequired,
   transactions: PropTypes.arrayOf(
     PropTypes.shape({
       date: PropTypes.string.isRequired,
@@ -96,5 +100,5 @@ StatementSeparatorRow.propTypes = {
       status: PropTypes.string,
     })
   ).isRequired,
-  statementDate: PropTypes.string.isRequired, // Now the primary prop
+  closingDate: PropTypes.string.isRequired, // Now the primary prop
 };
