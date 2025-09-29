@@ -14,10 +14,10 @@ export default function StatementSeparatorRow({
     // Parse the closing date to get the statement period
     const closingDateObj = dayjs(closingDate, 'MMMM DD YYYY');
     const startDate = closingDateObj.subtract(1, 'month').add(1, 'day');
-    
+
     // Get all transactions for this statement period to calculate charges
     const statementMonth = closingDateObj.format('MMMM YYYY');
-    
+
     const statementTransactions = transactions
       .filter((t) => {
         const tStatementMonth = computeStatementMonth(t, closingDay);

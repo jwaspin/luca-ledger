@@ -24,36 +24,18 @@ export const computeStatementMonth = (transaction, closingDay) => {
 // Get the closing date for a given month/year combination
 export const getClosingDateForMonth = (year, month, closingDay) => {
   // Create a date for the closing day of the given month/year
-  const closingDate = dayjs(
-    `${year}-${month}-${closingDay}`,
-    'YYYY-MMMM-D'
-  );
+  // month is in "MMMM" format (e.g., "January"), so we need to convert it
+  const closingDate = dayjs(`${closingDay} ${month} ${year}`, 'D MMMM YYYY');
   return closingDate.format('MMMM DD YYYY');
-};
-
-// Check if a transaction should appear before the closing date for that month
-export const isTransactionBeforeClosing = (transaction, year, month, closingDay) => {
-  const transactionDate = dayjs(transaction.date);
-  const transactionYear = transactionDate.format('YYYY');
-  const transactionMonth = transactionDate.format('MMMM');
-  const closingDate = dayjs(`${year}-${month}-${closingDay}`, 'YYYY-MMMM-D');
-  
-  // If transaction is in the same month and year
-  if (transactionYear === year && transactionMonth === month) {
-    // Include transactions on the same day as closing day as part of the statement (before separator)
-    return transactionDate.isSameOrBefore(closingDate, 'day');
-  }
-  
-  return false;
 };
 
 // Get the statement period dates (start and end) for a closing date
 export const getStatementPeriod = (year, month, closingDay) => {
-  const closingDate = dayjs(`${year}-${month}-${closingDay}`, 'YYYY-MMMM-D');
+  const closingDate = dayjs(`${closingDay} ${month} ${year}`, 'D MMMM YYYY');
   const startDate = closingDate.subtract(1, 'month').add(1, 'day');
-  
+
   return {
     start: startDate.format('MMMM DD YYYY'),
-    end: closingDate.format('MMMM DD YYYY')
+    end: closingDate.format('MMMM DD YYYY'),
   };
 };

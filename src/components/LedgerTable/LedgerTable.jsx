@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import LedgerHeader from './LedgerHeader';
 import SeparatorRow from './SeparatorRow';
 import StatementSeparatorRow from './StatementSeparatorRow';
-import { dateCompareFn, getClosingDateForMonth, isTransactionBeforeClosing } from './utils';
+import { dateCompareFn, getClosingDateForMonth } from './utils';
 
 export default function LedgerTable({
   filterValue,
@@ -88,8 +88,15 @@ export default function LedgerTable({
   );
 
   // Check if we need a statement separator between current and previous transaction
-  const needsStatementSeparator = (currentTransaction, previousTransaction, account) => {
-    if (!previousTransaction || account.type !== constants.AccountType.CREDIT_CARD) {
+  const needsStatementSeparator = (
+    currentTransaction,
+    previousTransaction,
+    account
+  ) => {
+    if (
+      !previousTransaction ||
+      account.type !== constants.AccountType.CREDIT_CARD
+    ) {
       return false;
     }
 
@@ -103,12 +110,16 @@ export default function LedgerTable({
 
     // Only check for separators within the same month
     if (currentYear === previousYear && currentMonth === previousMonth) {
-      const closingDate = dayjs(`${currentYear}-${currentMonth}-${closingDay}`, 'YYYY-MMMM-D');
-      
+      // Use the current date to build the closing date for the same month/year
+      const closingDate = dayjs(currentDate).date(closingDay).startOf('day');
+
       // Check if we crossed the closing date boundary
-      const previousBeforeClosing = previousDate.isSameOrBefore(closingDate, 'day');
+      const previousBeforeClosing = previousDate.isSameOrBefore(
+        closingDate,
+        'day'
+      );
       const currentAfterClosing = currentDate.isAfter(closingDate, 'day');
-      
+
       return previousBeforeClosing && currentAfterClosing;
     }
 
@@ -142,7 +153,11 @@ export default function LedgerTable({
               !previousTransaction ||
               getMonthIdentifier(previousTransaction.date) !== monthId;
 
-            const showStatementSeparator = needsStatementSeparator(transaction, previousTransaction, account);
+            const showStatementSeparator = needsStatementSeparator(
+              transaction,
+              previousTransaction,
+              account
+            );
 
             return (
               <Fragment key={transaction.id}>
