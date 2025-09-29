@@ -20,10 +20,3 @@ export const computeStatementMonth = (transaction, statementDay) => {
     ? transactionDate.add(1, 'month').format('MMMM YYYY')
     : transactionDate.format('MMMM YYYY');
 };
-
-// Get the month that a statement separator should be displayed under
-export const getStatementDisplayMonth = (statementMonth) => {
-  // The statement separator should appear under the same month as the statement month
-  // For example, "Statement November 15" should appear under "November 2024"
-  return statementMonth;
-};
