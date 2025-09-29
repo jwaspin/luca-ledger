@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import LedgerHeader from './LedgerHeader';
 import SeparatorRow from './SeparatorRow';
 import StatementSeparatorRow from './StatementSeparatorRow';
-import { dateCompareFn } from './utils';
+import { dateCompareFn, getStatementDateForMonth } from './utils';
 
 export default function LedgerTable({
   filterValue,
@@ -134,24 +134,28 @@ export default function LedgerTable({
                     onToggleCollapse={() => toggleGroupCollapse(yearMonthKey)}
                   />
                 )}
+                {/* Show statement separator for credit card accounts within each month */}
+                {isNewMonth &&
+                  !collapsedGroups.includes(yearId) &&
+                  !collapsedGroups.includes(yearMonthKey) &&
+                  account.type === constants.AccountType.CREDIT_CARD && (
+                    <StatementSeparatorRow
+                      statementDay={account.statementDay || 1}
+                      statementDate={getStatementDateForMonth(
+                        yearId,
+                        monthId,
+                        account.statementDay || 1
+                      )}
+                      transactions={transactionsWithBalance}
+                    />
+                  )}
                 {!collapsedGroups.includes(yearId) &&
                   !collapsedGroups.includes(yearMonthKey) && (
-                    <>
-                      {index > 0 &&
-                        account.type === constants.AccountType.CREDIT_CARD && (
-                          <StatementSeparatorRow
-                            statementDay={account.statementDay || 1}
-                            transaction={transaction}
-                            previousTransaction={previousTransaction}
-                            transactions={transactionsWithBalance}
-                          />
-                        )}
-                      <LedgerRow
-                        key={transaction.id}
-                        row={transaction}
-                        balance={transaction.balance}
-                      />
-                    </>
+                    <LedgerRow
+                      key={transaction.id}
+                      row={transaction}
+                      balance={transaction.balance}
+                    />
                   )}
               </Fragment>
             );

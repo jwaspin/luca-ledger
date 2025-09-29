@@ -20,3 +20,13 @@ export const computeStatementMonth = (transaction, statementDay) => {
     ? transactionDate.add(1, 'month').format('MMMM YYYY')
     : transactionDate.format('MMMM YYYY');
 };
+
+// Get the statement date for a given month/year combination
+export const getStatementDateForMonth = (year, month, statementDay) => {
+  // Create a date for the statement day of the given month/year
+  const statementDate = dayjs(
+    `${year}-${month}-${statementDay}`,
+    'YYYY-MMMM-D'
+  );
+  return statementDate.format('MMMM DD YYYY');
+};
