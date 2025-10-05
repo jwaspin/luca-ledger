@@ -1,54 +1,39 @@
-import { useAccountBalances } from '@/hooks/useAccountBalances';
-import { selectors } from '@/store/accounts';
-import { AccountType } from '@/store/accounts/constants';
-import { Box, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
-import AccountRow from './AccountRow';
-import BalanceGroup from './BalanceGroup';
+import { Box, Link, Typography } from '@mui/material';
 
 export default function Dashboard() {
-  const accounts = useSelector(selectors.selectAccounts);
-  const { accounts: accountsWithBalances } = useAccountBalances(accounts);
-
-  const { SAVINGS, CHECKING, CREDIT_CARD } = AccountType;
-
   return (
-    <Box sx={{ p: 3 }}>
+    <Box
+      sx={{
+        p: 3,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '400px',
+      }}
+    >
       <Typography
         variant='h4'
-        sx={{ mb: 4 }}
+        sx={{ mb: 3, textAlign: 'center' }}
       >
-        Financial Overview
+        This Website Has Moved
       </Typography>
-
-      <Box>
-        <Typography>Checking Account</Typography>
-        <BalanceGroup accountType={CHECKING} />
-      </Box>
-
-      <Box>
-        <Typography>Savings Account</Typography>
-        <BalanceGroup accountType={SAVINGS} />
-      </Box>
-
-      <Box>
-        <Typography>Credit Card</Typography>
-        <BalanceGroup accountType={CREDIT_CARD} />
-      </Box>
 
       <Typography
-        variant='h5'
-        sx={{ mb: 3 }}
+        variant='h6'
+        sx={{ mb: 2, textAlign: 'center' }}
       >
-        Accounts
+        Please visit our new location:
       </Typography>
 
-      {accountsWithBalances.map((account, index) => (
-        <AccountRow
-          key={account.id || index}
-          account={account}
-        />
-      ))}
+      <Link
+        href='https://lucaledger.app'
+        target='_blank'
+        rel='noopener noreferrer'
+        sx={{ fontSize: '1.5rem', fontWeight: 'bold' }}
+      >
+        https://lucaledger.app
+      </Link>
     </Box>
   );
 }
